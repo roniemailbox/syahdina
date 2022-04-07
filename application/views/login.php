@@ -31,7 +31,7 @@
         <!-- <p style="text-align: center">
           <img src="<?php echo base_url('img/logo-ngawi-sidebar.png'); ?>">
         </p> -->
-        <p style="font-size: 16px"><strong>SYAHDINA LAND PROJECTOne</strong></p>
+        <p style="font-size: 16px"><strong>SYAHDINA LAND PROJECTOnePride</strong></p>
       </div>
 
       <form action="<?php echo site_url('Login/login'); ?>" method="post">
