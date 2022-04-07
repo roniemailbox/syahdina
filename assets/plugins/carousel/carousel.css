@@ -1,0 +1,84 @@
+
+/* ==================================================
+   CAROUSEL
+================================================== */
+#carousel-container {
+position:relative;
+webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+float: left;
+clear: both;
+width: 100%;
+}
+
+#carousel-container a {
+color: #333;
+}
+
+#carousel {
+float:left; 
+width: 100%; 
+overflow: hidden; 
+}
+
+#carousel ul {
+position:relative;
+left:-247px; 
+list-style-type: none; 
+margin: 0px !important;
+padding: 0px !important;
+width:9999px;
+padding-bottom:10px;
+}
+
+#carousel ul li{
+list-style-type:none;
+float: left;
+width: 237px; 
+padding:0px;
+margin: 0 5px  !important;
+}
+
+#carousel ul li:first-child{
+margin-left:0px !important;
+}
+
+#carousel ul li:last-child{
+margin-right:0px !important;
+}
+
+.carousel-thumb {
+width:237px;
+height:170px;
+}
+
+.carousel-thumb img {
+width:100%;
+height:100%;
+}
+#nav-carousel-left, #nav-carousel-right{
+position:absolute;
+z-index:2;
+height:48px;
+width:48px;
+}
+#nav-carousel-left a, #nav-carousel-right a{
+font-size:22px;
+background: rgba(0, 0, 0, 0.34);
+color:white;
+padding: 10px;
+}
+
+#nav-carousel-left a:hover, #nav-carousel-right a:hover{
+background: rgba(0, 0, 0, 1);
+}
+
+#nav-carousel-left {
+top:50%;
+left:0px;
+} 
+#nav-carousel-right {
+top:50%;
+right:-16px;
+}
