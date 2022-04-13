@@ -28,7 +28,10 @@ class Beranda extends CI_Controller {
 						'separator' => '',
   						'subtitle' => 'Beranda',
   						'ttl' => 'Beranda',
-						'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
+						'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai']),
+						'menu' => $this->MainModel->menu($id['id_pegawai']),
+						'submenu' => $this->MainModel->submenu($id['id_pegawai']),
+						'subsubmenu' => $this->MainModel->subsubmenu($id['id_pegawai'])
 					 );
 
 		/*echo $id['id_pegawai'];*/
@@ -37,6 +40,28 @@ class Beranda extends CI_Controller {
 		$this->load->view('templates/sidebar');
 		$this->load->view('beranda');
 		$this->load->view('templates/foot');
+	}
+
+	public function menu(){
+		$menu = $this->MainModel->menu($id['id_pegawai']);
+
+		foreach ($menu as $rowmnu) {
+		
+          if($rowmnu->menu != "") {
+?>
+          <li class="nav-item">
+            <a href="<?php echo site_url($rowmnu->link); ?>" class="nav-link <?php if($ttl==$rowmnu->menu) { echo 'active'; } else { echo 'text-light'; } ?>">
+              <i class="nav-icon fas <?php echo $rowmnu->icon; ?>"></i>
+              <p>
+                <?php echo $rowmnu->menu; ?>
+              </p>
+            </a>
+<?php
+          }
+w?>
+          </li>
+<?php
+		}
 	}
 
 	public function logout(){

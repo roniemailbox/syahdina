@@ -32,22 +32,91 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+          <?php
+          foreach ($menu as $rowmnu) {
+          
+            if($rowmnu->menu != "") {
+          ?>
           <li class="nav-item">
-            <a href="<?php echo site_url('Beranda'); ?>" class="nav-link <?php if($ttl=='Beranda') { echo 'active'; } else { echo 'text-light'; } ?>">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="<?php echo site_url($rowmnu->link); ?>" class="nav-link <?php if($ttl==$rowmnu->menu) { echo 'active'; } else { echo 'text-light'; } ?>">
+              <i class="nav-icon fas <?php echo $rowmnu->icon; ?>"></i>
               <p>
-                Beranda
+                <?php
+                echo $rowmnu->menu;
+
+                foreach ($submenu as $rowsmn) {
+                  if ($rowsmn->kode_menu==$rowmnu->kode_menu) {
+                    $tanda = '<i class="right fas fa-angle-left"></i>';
+                  } else {
+                    $tanda = '';
+                  }
+                }
+
+                echo $tanda;
+                ?>
               </p>
             </a>
+          <?php
+              foreach ($submenu as $rowsmn) {
+          ?>
+            <ul class="nav nav-treeview ml-2">
+          <?php
+                if ($rowsmn->kode_menu==$rowmnu->kode_menu) {
+          ?>
+              <li class="nav-item">
+                <a href="<?php echo site_url($rowsmn->link); ?>" class="nav-link <?php if($ttl==$rowmnu->submenu) { echo 'text-light active'; } else { echo 'text-light'; }  ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+          <?php
+                  echo $rowsmn->submenu;
+
+                  $h=1;
+
+                  foreach ($subsubmenu as $rowssm) {
+                    if ($rowssm->kode_submenu==$rowsmn->kode_submenu) {
+                      $tanda2 = '<i class="right fas fa-angle-left"></i>';
+                    } else {
+                      $tanda2 = '';
+                    }
+                  }
+
+                  echo $tanda2;
+          ?>
+                  </p>
+                </a>
+          <?php
+                  foreach ($subsubmenu as $rowssm) {
+          ?>
+                <ul class="nav nav-treeview ml-2">
+          <?php
+                    if ($rowssm->kode_submenu==$rowsmn->kode_submenu) {
+          ?>
+                  <li class="nav-item">
+                    <a href="<?php echo site_url($rowssm->link); ?>" class="nav-link <?php if($ttl==$rowssm->subsubmenu) { echo 'text-light active'; } else { echo 'text-light'; }  ?>">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p><?php echo $rowssm->subsubmenu; ?></p>
+                    </a>
+                  </li>
+          <?php
+                    }
+          ?>
+                </ul>
+          <?php
+                  }
+          ?>
+              </li>
+          <?php
+                }
+          ?>
+            </ul>
+          <?php
+              }
+          ?>
           </li>
-          <li class="nav-item">
-            <a href="<?php echo site_url('Profil'); ?>" class="nav-link <?php if($ttl=='Profil') { echo 'active'; } else { echo 'text-light'; } ?>">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Profil
-              </p>
-            </a>
-          </li>
+          <?php
+            }
+          }
+          ?>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

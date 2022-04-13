@@ -41,14 +41,36 @@ class MainModel extends CI_Model {
         $query = $this->db->query($sql);
         return $query;
     }
-
-    public function tambah_tambah($i){
-    	$ttt = 'SL222801000'.$i;
-        $sql = 'UPDATE jawaban SET kode_soal="'.$ttt.'" WHERE kode_soal="'.$i.'"';
-        $query = $this->db->query($sql);
-        return $query;
-    }
 /*akhir UMUM*/
+
+/*MENU HANDLING*/
+	function menu($id) {
+        return $this->db->query("SELECT *
+        							FROM h_menu AS hm
+        						LEFT JOIN menu AS m
+        							ON hm.kode_menu = m.kode_menu
+        						WHERE hm.id_pegawai = '$id'
+        							AND m.status_aktif='1'")->result();
+    }
+
+    function submenu($id) {
+        return $this->db->query("SELECT *
+        							FROM h_submenu AS hm
+        						LEFT JOIN submenu AS m
+        							ON hm.kode_submenu = m.kode_submenu
+        						WHERE hm.id_pegawai = '$id'
+        							AND m.status_aktif='1'")->result();
+    }
+
+    function subsubmenu($id) {
+        return $this->db->query("SELECT *
+        							FROM h_subsubmenu AS hm
+        						LEFT JOIN subsubmenu AS m
+        							ON hm.kode_subsubmenu = m.kode_subsubmenu
+        						WHERE hm.id_pegawai = '$id'
+        							AND m.status_aktif='1'")->result();
+    }
+/*akhir MENU HANDLING*/
 
 /*tabel pegawai*/
 	public function user_pegawai($id,$psw) {
