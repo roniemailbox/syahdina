@@ -53,22 +53,44 @@ class MainModel extends CI_Model {
         							AND m.status_aktif='1'")->result();
     }
 
-    function submenu($id) {
+    function submenu($id,$kode_menu) {
         return $this->db->query("SELECT *
         							FROM h_submenu AS hm
         						LEFT JOIN submenu AS m
         							ON hm.kode_submenu = m.kode_submenu
         						WHERE hm.id_pegawai = '$id'
+        							AND m.kode_menu='$kode_menu'
         							AND m.status_aktif='1'")->result();
     }
 
-    function subsubmenu($id) {
+    function cek_submenu($id,$kode_menu) {
+        return $this->db->query("SELECT *
+        							FROM h_submenu AS hm
+        						LEFT JOIN submenu AS m
+        							ON hm.kode_submenu = m.kode_submenu
+        						WHERE hm.id_pegawai = '$id'
+        							AND m.kode_menu='$kode_menu'
+        							AND m.status_aktif='1'")->num_rows();
+    }
+
+    function subsubmenu($id,$kode_submenu) {
         return $this->db->query("SELECT *
         							FROM h_subsubmenu AS hm
         						LEFT JOIN subsubmenu AS m
         							ON hm.kode_subsubmenu = m.kode_subsubmenu
         						WHERE hm.id_pegawai = '$id'
+        							AND m.kode_submenu='$kode_submenu'
         							AND m.status_aktif='1'")->result();
+    }
+
+    function cek_subsubmenu($id,$kode_submenu) {
+        return $this->db->query("SELECT *
+        							FROM h_subsubmenu AS hm
+        						LEFT JOIN subsubmenu AS m
+        							ON hm.kode_subsubmenu = m.kode_subsubmenu
+        						WHERE hm.id_pegawai = '$id'
+        							AND m.kode_submenu='$kode_submenu'
+        							AND m.status_aktif='1'")->num_rows();
     }
 /*akhir MENU HANDLING*/
 

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Beranda extends CI_Controller {
+class Akses extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
@@ -18,22 +18,22 @@ class Beranda extends CI_Controller {
 		}
 	}
 
-	public function index(){
+	public function atur_menu(){
 		$this->cek_sesi();
 
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
 		$data = array(
-						'title' => '',
+						'title' => '&ensp;/&ensp;Hak Akses',
 						'separator' => '',
-  						'subtitle' => 'Beranda',
-  						'ttl' => 'Beranda',
+  						'subtitle' => 'Menu',
+  						'ttl' => 'Hak Akses',
 						'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
 					 );
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/sidebar',$this->menu());
-		$this->load->view('beranda');
+		$this->load->view('hak_akses');
 		$this->load->view('templates/foot');
 	}
 
@@ -131,10 +131,5 @@ class Beranda extends CI_Controller {
 					 );
 
 		return $data_menu;
-	}
-
-	public function logout(){
-		$this->session->sess_destroy(); // Hapus semua session
-		redirect('Login'); // Redirect ke halaman login
 	}
 }

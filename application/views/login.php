@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>SYAHDINA LAND</title>
+  <title>SYAHDINA LAND DEVELOPMENT</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="icon" type="image/png" href="" />
+  <link rel="icon" type="image/png" href="<?php echo base_url('img/icon.png'); ?>" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo base_url('assets/'); ?>plugins/fontawesome-free/css/all.min.css">
@@ -22,34 +22,34 @@
   <!-- Google Font: Source Sans Pro -->
   <!-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url(<?php echo base_url('img/bg-login.jpg'); ?>); background-size: cover">
 <div class="login-box">
   <!-- /.login-logo -->
-  <div class="card pt-2" style="border-radius: 5px">
+  <div class="pt-2" style="border-radius: 5px; border: none">
     <div class="card-body login-card-body">
-      <div class="pb-4" style="text-align: center">
-        <!-- <p style="text-align: center">
-          <img src="<?php echo base_url('img/logo-ngawi-sidebar.png'); ?>">
-        </p> -->
-        <p style="font-size: 16px"><strong>SYAHDINA LAND PROJECT</strong></p>
+      <div class="pb-4 pt-3" style="text-align: center">
+        <p style="text-align: center">
+          <img src="<?php echo base_url('img/logo.png'); ?>" style="width: 50%">
+        </p>
+        <!-- <p style="font-size: 16px"><strong>SYAHDINA LAND PROJECT</strong></p> -->
       </div>
 
       <form action="<?php echo site_url('Login/login'); ?>" method="post">
         <div class="input-group mb-3">
-          <input type="text" class="form-control form-control-sm" id="id" name="id" placeholder="ID">
           <div class="input-group-append">
-            <div class="input-group-text">
+            <div class="input-group-text" style="border: none">
               <span class="fas fa-user"></span>
             </div>
           </div>
+          <input type="text" class="form-control form-control-sm" id="id" name="id" placeholder="ID" style="border: none">
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control form-control-sm" id="psw" name="psw" placeholder="Password">
           <div class="input-group-append">
-            <div class="input-group-text">
+            <div class="input-group-text" style="border: none">
               <span class="fas fa-lock"></span>
             </div>
           </div>
+          <input type="password" class="form-control form-control-sm" id="psw" name="psw" placeholder="Password" style="border: none">
         </div>
         <div class="row">
           <!-- /.col -->
