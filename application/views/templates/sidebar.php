@@ -84,11 +84,11 @@
               for ($ss=1; $ss <= $jumji[$nn][$oo] ; $ss++) {
           ?>
               <li class="nav-item">
-                <a href="<?php echo site_url($ss_link[$nn][$oo]); ?>" class="nav-link <?php if($ttl==$subsubmenu[$nn][$oo]) { echo 'text-light active'; } else { echo 'text-light'; }  ?>">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="<?php echo site_url($ss_link[$nn][$oo][$ss]); ?>" class="nav-link <?php if($ttl==$subsubmenu[$nn][$oo][$ss]) { echo 'text-light active'; } else { echo 'text-light'; }  ?>">
+                  <i class="fas fa-circle nav-icon"></i>
                   <p>
           <?php
-                  echo $subsubmenu[$nn][$oo];
+                  echo $subsubmenu[$nn][$oo][$ss];
           ?>
                   </p>
                 </a>

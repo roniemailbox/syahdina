@@ -24,12 +24,12 @@ class Akses extends CI_Controller {
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
 		$data = array(
-						'title' => '&ensp;/&ensp;Hak Akses',
-						'separator' => '',
-  						'subtitle' => 'Menu',
-  						'ttl' => 'Hak Akses',
-						'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
-					 );
+		'title' => '&ensp;/&ensp;Hak Akses',
+		'separator' => '',
+		'subtitle' => 'Menu',
+		'ttl' => 'Hak Akses',
+		'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
+		);
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/sidebar',$this->menu());

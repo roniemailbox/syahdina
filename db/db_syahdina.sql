@@ -11,7 +11,7 @@
  Target Server Version : 50626
  File Encoding         : 65001
 
- Date: 13/04/2022 14:23:58
+ Date: 16/04/2022 13:33:43
 */
 
 SET NAMES utf8mb4;
@@ -82,6 +82,7 @@ CREATE TABLE `h_menu`  (
 -- ----------------------------
 INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL);
 INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 3, NULL, NULL, NULL, NULL);
+INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 4, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_submenu
@@ -130,9 +131,6 @@ CREATE TABLE `h_subsubmenu`  (
 -- ----------------------------
 -- Records of h_subsubmenu
 -- ----------------------------
-INSERT INTO `h_subsubmenu` VALUES ('PG000001', 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL);
-INSERT INTO `h_subsubmenu` VALUES ('PG000001', 0, 0, 0, 0, 0, 2, NULL, NULL, NULL, NULL);
-INSERT INTO `h_subsubmenu` VALUES ('PG000001', 0, 0, 0, 0, 0, 3, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for jabatan
@@ -169,7 +167,7 @@ CREATE TABLE `menu`  (
 INSERT INTO `menu` VALUES (1, 'Beranda', 1, 'Beranda', 'fa-tachometer-alt', b'1');
 INSERT INTO `menu` VALUES (2, 'Profil', 2, 'Profil', 'fa-user', b'1');
 INSERT INTO `menu` VALUES (3, 'Master Data', 3, '#', 'fa-database', b'1');
-INSERT INTO `menu` VALUES (4, 'Hak Akses', 4, 'Akses', 'fa-lock', b'1');
+INSERT INTO `menu` VALUES (4, 'Hak Akses', 4, '#', 'fa-lock', b'1');
 
 -- ----------------------------
 -- Table structure for pegawai
@@ -263,8 +261,8 @@ CREATE TABLE `submenu`  (
 -- ----------------------------
 -- Records of submenu
 -- ----------------------------
-INSERT INTO `submenu` VALUES (1, 3, 'Master Pegawai', 1, 'MasterPegawai', 'fa-user', b'1');
-INSERT INTO `submenu` VALUES (2, 3, 'Master Admin', 2, 'MasterAdmin', 'fa-user', b'1');
+INSERT INTO `submenu` VALUES (1, 4, 'Menu', 1, 'Akses/atur_menu', NULL, b'1');
+INSERT INTO `submenu` VALUES (2, 4, 'Atur Akses', 2, 'Akses/akses', NULL, b'1');
 
 -- ----------------------------
 -- Table structure for subsubmenu
@@ -279,14 +277,11 @@ CREATE TABLE `subsubmenu`  (
   `icon` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `status_aktif` bit(1) NULL DEFAULT b'1',
   PRIMARY KEY (`kode_subsubmenu`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of subsubmenu
 -- ----------------------------
-INSERT INTO `subsubmenu` VALUES (1, 1, 'Pegawai Honorer', 1, 'PegawaiHonorer', '', b'1');
-INSERT INTO `subsubmenu` VALUES (2, 1, 'Pegawai Harian', 2, 'PegawaiHarian', '', b'1');
-INSERT INTO `subsubmenu` VALUES (3, 1, 'Pegawai Tetap', 3, 'PegawaiTetap', NULL, b'1');
 
 -- ----------------------------
 -- Table structure for type
