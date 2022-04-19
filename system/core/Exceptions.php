@@ -244,7 +244,7 @@ class CI_Exceptions {
 		$severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
 
 		// For safety reasons we don't show the full file path in non-CLI requests
-		if ( ! is_cli())
+		if ( ! is_cli())S
 		{
 			$filepath = str_replace('\\', '/', $filepath);
 			if (FALSE !== strpos($filepath, '/'))
@@ -265,7 +265,7 @@ class CI_Exceptions {
 			ob_end_flush();
 		}
 		ob_start();
-		//include($templates_path.$template.'.php');
+		include($templates_path.$template.'.php');
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
