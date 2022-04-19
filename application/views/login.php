@@ -29,7 +29,7 @@
     <div class="card-body login-card-body">
       <div class="pb-4 pt-3" style="text-align: center">
         <p style="text-align: center">
-          <img src="<?php echo base_url('img/logo.png'); ?>" style="width: 50%">
+          <img src="<?php echo base_url('img/logo.png'); ?>" style="width: 70%">
         </p>
         <!-- <p style="font-size: 16px"><strong>SYAHDINA LAND PROJECT</strong></p> -->
       </div>
