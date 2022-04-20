@@ -5,18 +5,15 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="card card-default collapsed-card">
+        <div class="card card-teal collapsed-card">
           <div class="card-header">
-            <h3 class="card-title" data-card-widget="collapse">
-              Tambah Menu
+            <h3 class="card-title" data-card-widget="collapse" style="cursor:pointer">
+              <i class="fas fa-plus"></i>&ensp;Tambah Menu
             </h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="maximize">
                 <i class="fas fa-expand"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-plus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
                 <i class="fas fa-times"></i>
@@ -25,7 +22,29 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-
+            <form id="form" class="form-horizontal" action="<?php echo site_url('Akses/proses_tambah_menu'); ?>" method="post">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label form-control-sm">Nama Menu</label>
+                <div class="col-sm-9 form-group">
+                  <input type="text" class="form-control form-control-sm" id="menu" name="menu" placeholder="Nama Menu" maxlength="100" required>
+                </div>
+              </div>
+              <div class="form-group row" style="margin-top: -20px">
+                <label class="col-sm-3 col-form-label form-control-sm">Link</label>
+                <div class="col-sm-9 form-group">
+                  <input type="text" class="form-control form-control-sm" id="link" name="link" placeholder="Link" maxlength="100" required>
+                </div>
+              </div>
+              <div class="form-group row" style="margin-top: -20px">
+                <label class="col-sm-3 col-form-label form-control-sm">Icon</label>
+                <div class="col-sm-9 form-group">
+                  <input type="text" class="form-control form-control-sm" id="icon" name="icon" placeholder="Icon" maxlength="100" required>
+                </div>
+              </div>
+              <div class="form-group float-right" style="margin-top: -10px">
+                <button type="submit" class="btn bg-gradient-teal"><i class="fas fa-save"></i>&ensp;Simpan</button>
+              </div>
+            </form>
           </div>
         </div>
 

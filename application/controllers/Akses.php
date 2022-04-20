@@ -37,6 +37,51 @@ class Akses extends CI_Controller {
 		$this->load->view('templates/foot');
 	}
 
+	public function proses_tambah_menu(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$tgl = date('Y-m-d H:i:s');
+
+	    $menu = ucwords($this->input->post('menu'));
+	    $link = $this->input->post('link');
+	    $icon = strtolower($this->input->post('icon'));
+
+	    $data_umn = $this->MainModel->nuMenu();
+	    $kode_menu = $data_umn['umn']+1;
+
+	    $data_ummn = $this->MainModel->numMenu();
+	    $no_menu = $data_ummn['ummn']+1;
+
+        $data_menu = array(
+                      'kode_menu' => $kode_menu,
+                      'menu' => $menu,
+                      'no_menu' => $no_menu,
+                      'link' => $link,
+                      'icon' => 'fas fa-'.$icon,
+                      'status_aktif' => 1
+                    );
+
+        $this->MainModel->insertMenu($data_menu);
+
+        $data_hmenu = array(
+        			  'id_pegawai' => $id['id_pegawai'],
+        			  'c' => 1,
+        			  'r' => 1,
+        			  'u' => 1,
+        			  'd' => 1,
+        			  'p' => 1,
+                      'kode_menu' => $kode_menu,
+                      'user_entry' => $id['id_pegawai'],
+                      'tgl_entry' => $tgl
+                    );
+
+        $this->MainModel->insertHMenu($data_hmenu);
+
+        $this->session->set_flashdata('sukses', ' Data Menu berhasil ditambahkan !!');
+
+		redirect('Akses/atur_menu');
+	}
+
 	public function menu() {
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 

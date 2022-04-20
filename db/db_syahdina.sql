@@ -11,7 +11,7 @@
  Target Server Version : 50626
  File Encoding         : 65001
 
- Date: 16/04/2022 13:33:43
+ Date: 20/04/2022 15:24:10
 */
 
 SET NAMES utf8mb4;
@@ -80,9 +80,10 @@ CREATE TABLE `h_menu`  (
 -- ----------------------------
 -- Records of h_menu
 -- ----------------------------
-INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL);
-INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 3, NULL, NULL, NULL, NULL);
-INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 4, NULL, NULL, NULL, NULL);
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, NULL, NULL);
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, NULL, NULL, NULL, NULL);
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, NULL, NULL, NULL, NULL);
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 5, 'PG000001', '2022-04-20 11:03:01', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_submenu
@@ -152,14 +153,14 @@ CREATE TABLE `jabatan`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu`  (
-  `kode_menu` int(9) NOT NULL AUTO_INCREMENT,
+  `kode_menu` int(9) NOT NULL,
   `menu` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `no_menu` int(6) NULL DEFAULT NULL,
   `link` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `icon` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `status_aktif` bit(1) NULL DEFAULT b'1',
   PRIMARY KEY (`kode_menu`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of menu
@@ -168,6 +169,7 @@ INSERT INTO `menu` VALUES (1, 'Beranda', 1, 'Beranda', 'fa-tachometer-alt', b'1'
 INSERT INTO `menu` VALUES (2, 'Profil', 2, 'Profil', 'fa-user', b'1');
 INSERT INTO `menu` VALUES (3, 'Master Data', 3, '#', 'fa-database', b'1');
 INSERT INTO `menu` VALUES (4, 'Hak Akses', 4, '#', 'fa-lock', b'1');
+INSERT INTO `menu` VALUES (5, 'Transaksi', 5, 'Transaksi', 'fas fa-cart-plus', b'1');
 
 -- ----------------------------
 -- Table structure for pegawai
@@ -248,7 +250,7 @@ CREATE TABLE `perusahaan`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `submenu`;
 CREATE TABLE `submenu`  (
-  `kode_submenu` int(10) NOT NULL AUTO_INCREMENT,
+  `kode_submenu` int(10) NOT NULL,
   `kode_menu` int(9) NULL DEFAULT NULL,
   `submenu` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `no_submenu` int(6) NULL DEFAULT NULL,
@@ -256,7 +258,7 @@ CREATE TABLE `submenu`  (
   `icon` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `status_aktif` bit(1) NULL DEFAULT b'1',
   PRIMARY KEY (`kode_submenu`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of submenu
@@ -269,7 +271,7 @@ INSERT INTO `submenu` VALUES (2, 4, 'Atur Akses', 2, 'Akses/akses', NULL, b'1');
 -- ----------------------------
 DROP TABLE IF EXISTS `subsubmenu`;
 CREATE TABLE `subsubmenu`  (
-  `kode_subsubmenu` int(11) NOT NULL AUTO_INCREMENT,
+  `kode_subsubmenu` int(11) NOT NULL,
   `kode_submenu` int(10) NULL DEFAULT NULL,
   `subsubmenu` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `no_subsubmenu` int(6) NULL DEFAULT NULL,
@@ -277,7 +279,7 @@ CREATE TABLE `subsubmenu`  (
   `icon` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `status_aktif` bit(1) NULL DEFAULT b'1',
   PRIMARY KEY (`kode_subsubmenu`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of subsubmenu

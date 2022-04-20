@@ -111,6 +111,36 @@ class MainModel extends CI_Model {
 	}
 /*akhir tabel pegawai*/
 
+/*tabel menu*/
+	public function nuMenu(){
+		$query=$this->db->query("SELECT
+										MAX(kode_menu) AS umn
+								FROM menu")->row_array();
+		return $query;
+	}
+
+	public function numMenu(){
+		$query=$this->db->query("SELECT
+										MAX(no_menu) AS ummn
+								FROM menu")->row_array();
+		return $query;
+	}
+
+	public function insertMenu($data){
+		$query=$this->db->insert("menu",$data);
+		return $query;
+	}
+/*akhir tabel menu*/
+
+/*tabel h_menu*/
+	public function insertHMenu($data){
+		$query=$this->db->insert("h_menu",$data);
+		return $query;
+	}
+/*akhir tabel h_menu*/
+
+/*------------------------------------------------------------------------------------------*/
+
 /*tabel admin*/
 	public function cekUserAdmin($id) {
 		$query=$this->db->query("SELECT * FROM admin WHERE username='$id'")->num_rows();
