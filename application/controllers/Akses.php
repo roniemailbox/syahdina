@@ -33,7 +33,7 @@ class Akses extends CI_Controller {
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/sidebar',$this->menu());
-		$this->load->view('hak_akses');
+		$this->load->view('hak_akses',$this->menu2());
 		$this->load->view('templates/foot');
 	}
 
@@ -82,6 +82,72 @@ class Akses extends CI_Controller {
 		redirect('Akses/atur_menu');
 	}
 
+	public function proses_edit_menu(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$kode_menu = $this->input->post('kode_menu');
+	    $menu = ucwords($this->input->post('menu'));
+	    $link = $this->input->post('link');
+	    $icon = strtolower($this->input->post('icon'));
+	    $status_aktif = $this->input->post('status_aktif');
+
+        $data_menu = array(
+                      'menu' => $menu,
+                      'link' => $link,
+                      'icon' => 'fas fa-'.$icon,
+                      'status_aktif' => (int)$status_aktif
+                    );
+
+        $this->MainModel->updateData('menu',$data_menu,'kode_menu',$kode_menu);
+
+        $this->session->set_flashdata('sukses', ' Data Menu berhasil diupdate !!');
+
+		redirect('Akses/atur_menu');
+	}
+
+	public function proses_hapus_menu($kode_menu){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$cek_menu = $this->MainModel->cekMnSbm($kode_menu);
+
+		if ($cek_menu!=0) {
+			$data_menu = $this->MainModel->getMnSbm($kode_menu);
+
+			foreach ($data_menu as $rowdmn) {
+				$kode_submenu = $rowdmn->kode_submenu;
+
+				$cek_menu = $this->MainModel->cekMnSbb($kode_submenu);
+
+				if ($cek_menu!=0) {
+					$data_submenu = $this->MainModel->getMnSbb($kode_submenu);
+
+					foreach ($data_submenu as $rowdsb) {
+						$kode_subsubmenu = $rowdsb->kode_subsubmenu;
+
+						$this->MainModel->deleteData('h_subsubmenu','kode_subsubmenu',$kode_subsubmenu);
+						$this->MainModel->deleteData('subsubmenu','kode_subsubmenu',$kode_subsubmenu);
+					}
+
+					$this->MainModel->deleteData('h_submenu','kode_submenu',$kode_submenu);
+					$this->MainModel->deleteData('submenu','kode_submenu',$kode_submenu);
+				} else {
+					$this->MainModel->deleteData('h_submenu','kode_submenu',$kode_submenu);
+					$this->MainModel->deleteData('submenu','kode_submenu',$kode_submenu);
+				}
+			}
+
+			$this->MainModel->deleteData('h_menu','kode_menu',$kode_menu);
+			$this->MainModel->deleteData('menu','kode_menu',$kode_menu);
+		} else {
+			$this->MainModel->deleteData('h_menu','kode_menu',$kode_menu);
+			$this->MainModel->deleteData('menu','kode_menu',$kode_menu);
+		}
+
+        $this->session->set_flashdata('sukses', ' Data berhasil dihapus !!');
+
+		redirect('Akses/atur_menu');
+	}
+
 	public function menu() {
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
@@ -93,11 +159,13 @@ class Akses extends CI_Controller {
 		$submenu[1][1] = '';
 		$s_link[1][1] = '';
 		$s_icon[1][1] = '';
+		$s_status[1][1] = '';
 		$jff[1][1] = 0;
 		$kode_subsubmenu[1][1][1] = '';
 		$subsubmenu[1][1][1] = '';
 		$ss_link[1][1][1] = '';
 		$ss_icon[1][1][1] = '';
+		$ss_status[1][1][1] = '';
 		$jii[1][1][1] = 0;
 		$jumji[1][1] = 0;
 		$jumjf[1] = 0;
@@ -107,6 +175,7 @@ class Akses extends CI_Controller {
 			$menu[$dd] = $rowmnu->menu;
 			$m_link[$dd] = $rowmnu->link;
 			$m_icon[$dd] = $rowmnu->icon;
+			$m_status[$dd] = $rowmnu->status_aktif;
 
 			$csm = $this->MainModel->cek_submenu($id['id_pegawai'],$kode_menu[$dd]);
 
@@ -120,6 +189,7 @@ class Akses extends CI_Controller {
 					$submenu[$dd][$ff] = $rowdsm->submenu;
 					$s_link[$dd][$ff] = $rowdsm->link;
 					$s_icon[$dd][$ff] = $rowdsm->icon;
+					$s_status[$dd][$ff] = $rowdsm->status_aktif;
 					$jff[$dd][$ff] = $ff;
 
 					$css = $this->MainModel->cek_subsubmenu($id['id_pegawai'],$kode_submenu[$dd][$ff]);
@@ -134,6 +204,7 @@ class Akses extends CI_Controller {
 							$subsubmenu[$dd][$ff][$ii] = $rowdss->subsubmenu;
 							$ss_link[$dd][$ff][$ii] = $rowdss->link;
 							$ss_icon[$dd][$ff][$ii] = $rowdss->icon;
+							$ss_status[$dd][$ff][$ii] = $rowdss->status_aktif;
 							$jii[$dd][$ff][$ii] = $ii;
 
 							$ii++;
@@ -165,14 +236,121 @@ class Akses extends CI_Controller {
 						'menu' => $menu,
 						'm_link' => $m_link,
 						'm_icon' => $m_icon,
+						'm_status' => $m_status,
 						'kode_submenu' => $kode_submenu,
 						'submenu' => $submenu,
 						's_link' => $s_link,
 						's_icon' => $s_icon,
+						's_status' => $s_status,
 						'kode_subsubmenu' => $kode_subsubmenu,
 						'subsubmenu' => $subsubmenu,
 						'ss_link' => $ss_link,
-						'ss_icon' => $ss_icon
+						'ss_icon' => $ss_icon,
+						'ss_status' => $ss_status
+					 );
+
+		return $data_menu;
+	}
+
+	public function menu2() {
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$mnu = $this->MainModel->menu2($id['id_pegawai']);
+
+		$dd = 1;
+		
+		$kode_subsubmenu[1][1] = '';
+		$submenu[1][1] = '';
+		$s_link[1][1] = '';
+		$s_icon[1][1] = '';
+		$s_status[1][1] = '';
+		$jff[1][1] = 0;
+		$kode_subsubmenu[1][1][1] = '';
+		$subsubmenu[1][1][1] = '';
+		$ss_link[1][1][1] = '';
+		$ss_icon[1][1][1] = '';
+		$ss_status[1][1][1] = '';
+		$jii[1][1][1] = 0;
+		$jumji[1][1] = 0;
+		$jumjf[1] = 0;
+
+		foreach ($mnu as $rowmnu) {
+			$kode_menu[$dd] = $rowmnu->kode_menu;
+			$menu[$dd] = $rowmnu->menu;
+			$m_link[$dd] = $rowmnu->link;
+			$m_icon[$dd] = $rowmnu->icon;
+			$m_status[$dd] = $rowmnu->status_aktif;
+
+			$csm = $this->MainModel->cek_submenu2($id['id_pegawai'],$kode_menu[$dd]);
+
+			if ($csm!=0) {
+				$ff = 1;
+
+				$dsm = $this->MainModel->submenu2($id['id_pegawai'],$kode_menu[$dd]);
+
+				foreach ($dsm as $rowdsm) {
+					$kode_submenu[$dd][$ff] = $rowdsm->kode_submenu;
+					$submenu[$dd][$ff] = $rowdsm->submenu;
+					$s_link[$dd][$ff] = $rowdsm->link;
+					$s_icon[$dd][$ff] = $rowdsm->icon;
+					$s_status[$dd][$ff] = $rowdsm->status_aktif;
+					$jff[$dd][$ff] = $ff;
+
+					$css = $this->MainModel->cek_subsubmenu2($id['id_pegawai'],$kode_submenu[$dd][$ff]);
+
+					if ($css!=0) {
+						$ii = 1;
+
+						$dss = $this->MainModel->subsubmenu2($id['id_pegawai'],$kode_submenu[$dd][$ff]);
+
+						foreach ($dss as $rowdss) {
+							$kode_subsubmenu[$dd][$ff][$ii] = $rowdss->kode_subsubmenu;
+							$subsubmenu[$dd][$ff][$ii] = $rowdss->subsubmenu;
+							$ss_link[$dd][$ff][$ii] = $rowdss->link;
+							$ss_icon[$dd][$ff][$ii] = $rowdss->icon;
+							$ss_status[$dd][$ff][$ii] = $rowdss->status_aktif;
+							$jii[$dd][$ff][$ii] = $ii;
+
+							$ii++;
+						}
+
+						$jumji[$dd][$ff] = $ii-1;
+					} else {
+						$jumji[$dd][$ff] = 0;
+					}
+
+					$ff++;
+				}
+
+				$jumjf[$dd] = $ff-1;
+			} else {
+				$jumjf[$dd] = 0;
+			}
+
+			$dd++;
+		}
+
+		$data_menu = array(
+						'jum_menu' => $dd-1,
+						'jum_submenu' => $jff,
+						'jum_subsubmenu' => $jii,
+						'jumjf' => $jumjf,
+						'jumji' => $jumji,
+						'kode_menu' => $kode_menu,
+						'menu' => $menu,
+						'm_link' => $m_link,
+						'm_icon' => $m_icon,
+						'm_status' => $m_status,
+						'kode_submenu' => $kode_submenu,
+						'submenu' => $submenu,
+						's_link' => $s_link,
+						's_icon' => $s_icon,
+						's_status' => $s_status,
+						'kode_subsubmenu' => $kode_subsubmenu,
+						'subsubmenu' => $subsubmenu,
+						'ss_link' => $ss_link,
+						'ss_icon' => $ss_icon,
+						'ss_status' => $ss_status
 					 );
 
 		return $data_menu;

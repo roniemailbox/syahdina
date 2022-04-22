@@ -92,6 +92,51 @@ class MainModel extends CI_Model {
         							AND m.kode_submenu='$kode_submenu'
         							AND m.status_aktif='1'")->num_rows();
     }
+
+    /*================================================================*/
+    function menu2($id) {
+        return $this->db->query("SELECT *
+        							FROM h_menu AS hm
+        						LEFT JOIN menu AS m
+        							ON hm.kode_menu = m.kode_menu
+        						WHERE hm.id_pegawai = '$id'")->result();
+    }
+
+    function submenu2($id,$kode_menu) {
+        return $this->db->query("SELECT *
+        							FROM h_submenu AS hm
+        						LEFT JOIN submenu AS m
+        							ON hm.kode_submenu = m.kode_submenu
+        						WHERE hm.id_pegawai = '$id'
+        							AND m.kode_menu='$kode_menu'")->result();
+    }
+
+    function cek_submenu2($id,$kode_menu) {
+        return $this->db->query("SELECT *
+        							FROM h_submenu AS hm
+        						LEFT JOIN submenu AS m
+        							ON hm.kode_submenu = m.kode_submenu
+        						WHERE hm.id_pegawai = '$id'
+        							AND m.kode_menu='$kode_menu'")->num_rows();
+    }
+
+    function subsubmenu2($id,$kode_submenu) {
+        return $this->db->query("SELECT *
+        							FROM h_subsubmenu AS hm
+        						LEFT JOIN subsubmenu AS m
+        							ON hm.kode_subsubmenu = m.kode_subsubmenu
+        						WHERE hm.id_pegawai = '$id'
+        							AND m.kode_submenu='$kode_submenu'")->result();
+    }
+
+    function cek_subsubmenu2($id,$kode_submenu) {
+        return $this->db->query("SELECT *
+        							FROM h_subsubmenu AS hm
+        						LEFT JOIN subsubmenu AS m
+        							ON hm.kode_subsubmenu = m.kode_subsubmenu
+        						WHERE hm.id_pegawai = '$id'
+        							AND m.kode_submenu='$kode_submenu'")->num_rows();
+    }
 /*akhir MENU HANDLING*/
 
 /*tabel pegawai*/
@@ -138,6 +183,54 @@ class MainModel extends CI_Model {
 		return $query;
 	}
 /*akhir tabel h_menu*/
+
+/*tabel submenu*/
+	public function cekMnSbm($kode_menu) {
+		$query=$this->db->query("SELECT * FROM submenu WHERE kode_menu='$kode_menu'")->num_rows();
+		return $query;
+	}
+
+	public function getMnSbm($kode_menu) {
+		$query=$this->db->query("SELECT * FROM submenu WHERE kode_menu='$kode_menu'")->result();
+		return $query;
+	}
+/*akhir tabel submenu*/
+
+/*tabel h_submenu*/
+	public function cekHMnSbm($kode_submenu){
+		$query=$this->db->query("SELECT * FROM h_submenu WHERE kode_submenu='$kode_submenu'")->num_rows();
+		return $query;
+	}
+
+	public function getHMnSbm($kode_submenu) {
+		$query=$this->db->query("SELECT * FROM h_submenu WHERE kode_submenu='$kode_submenu'")->result();
+		return $query;
+	}
+/*akhir tabel h_submenu*/
+
+/*tabel subsubmenu*/
+	public function cekMnSbb($kode_submenu) {
+		$query=$this->db->query("SELECT * FROM subsubmenu WHERE kode_submenu='$kode_submenu'")->num_rows();
+		return $query;
+	}
+
+	public function getMnSbb($kode_submenu) {
+		$query=$this->db->query("SELECT * FROM subsubmenu WHERE kode_submenu='$kode_submenu'")->result();
+		return $query;
+	}
+/*akhir tabel subsubmenu*/
+
+/*tabel h_subsubmenu*/
+	public function cekHMnSbb($kode_subsubmenu){
+		$query=$this->db->query("SELECT * FROM h_subsubmenu WHERE kode_subsubmenu='$kode_subsubmenu'")->num_rows();
+		return $query;
+	}
+
+	public function getHMnSbb($kode_subsubmenu) {
+		$query=$this->db->query("SELECT * FROM h_subsubmenu WHERE kode_subsubmenu='$kode_subsubmenu'")->result();
+		return $query;
+	}
+/*akhir tabel h_subsubmenu*/
 
 /*------------------------------------------------------------------------------------------*/
 

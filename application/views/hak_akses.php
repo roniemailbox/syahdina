@@ -69,8 +69,29 @@
                     if ($tanda==TRUE) {
                   ?>
                     <tr data-widget="expandable-table" aria-expanded="true">
-                      <td>
-                        <i class="nav-icon fas <?php echo $m_icon[$nn]; ?>"></i>&ensp;&ensp;<?php echo $menu[$nn]; ?>
+                      <td class="icon-tools">
+                        <i class="nav-icon <?php echo $m_icon[$nn]; ?>"></i>&ensp;&ensp;<?php echo $menu[$nn]; ?>&ensp;
+                        <?php
+                        if ($m_status[$nn]==1) {
+                        ?>
+                          <small class="badge bg-primary btn-flat mt-1">Aktif</small>
+                        <?php
+                        } else {
+                        ?>
+                          <small class="badge bg-danger btn-flat mt-1">Non-Aktif</small>
+                        <?php
+                        }
+                        ?>
+                        &ensp;
+                        <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Tambah Submenu">
+                          <i class="fas fa-plus"></i>
+                        </a>
+                        <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus"data-target="#modal-hm<?php echo $kode_menu[$nn]; ?>">
+                            <i class="fas fa-trash"></i>
+                        </a>
                       </td>
                     </tr>
                     <tr class="expandable-body">
@@ -90,7 +111,28 @@
                   ?>
                               <tr data-widget="expandable-table" aria-expanded="true">
                                 <td style="padding-left: 3%">
-                                  <i class="far fa-circle nav-icon"></i>&ensp;<?php echo $submenu[$nn][$oo]; ?></td>
+                                  <i class="far fa-circle nav-icon"></i>&ensp;<?php echo $submenu[$nn][$oo]; ?>&ensp;
+                                  <?php
+                                  if ($s_status[$nn][$oo]==1) {
+                                  ?>
+                                    <small class="badge bg-primary btn-flat mt-1">Aktif</small>
+                                  <?php
+                                  } else {
+                                  ?>
+                                    <small class="badge bg-danger btn-flat mt-1">Non-Aktif</small>
+                                  <?php
+                                  }
+                                  ?>
+                                  &ensp;
+                                  <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Tambah Subsubmenu">
+                                    <i class="fas fa-plus"></i>
+                                  </a>
+                                  <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                  </a>
+                                  <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                    <i class="fas fa-trash"></i>
+                                  </a>
                                 </td>
                               </tr>
                               <tr class="expandable-body">
@@ -102,7 +144,26 @@
                           for ($ss=1; $ss <= $jumji[$nn][$oo] ; $ss++) {
                   ?>
                                         <tr>
-                                          <td class="border-0" style="padding-left: 3%"><i class="far fa-dot-circle nav-icon"></i>&ensp;<?php echo $subsubmenu[$nn][$oo][$ss]; ?></td>
+                                          <td class="border-0 icon-tools" style="padding-left: 3%"><i class="far fa-dot-circle nav-icon"></i>&ensp;<?php echo $subsubmenu[$nn][$oo][$ss]; ?>&ensp;
+                                            <?php
+                                            if ($ss_status[$nn][$oo][$ss]==1) {
+                                            ?>
+                                              <small class="badge bg-primary btn-flat mt-1">Aktif</small>
+                                            <?php
+                                            } else {
+                                            ?>
+                                              <small class="badge bg-danger btn-flat mt-1">Non-Aktif</small>
+                                            <?php
+                                            }
+                                            ?>
+                                            &ensp;
+                                            <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
+                                              <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                              <i class="fas fa-trash"></i>
+                                            </a>
+                                          </td>
                                         </tr>
                   <?php
                           }
@@ -116,7 +177,30 @@
                         } else {
                   ?>
                               <tr>
-                                <td class="border-0" style="padding-left: 3%"><i class="far fa-circle nav-icon"></i>&ensp;<?php echo $submenu[$nn][$oo]; ?></td>
+                                <td class="border-0 icon-tools" style="padding-left: 3%">
+                                  <i class="far fa-circle nav-icon"></i>&ensp;<?php echo $submenu[$nn][$oo]; ?>&ensp;
+                                  <?php
+                                  if ($s_status[$nn][$oo]==1) {
+                                  ?>
+                                    <small class="badge bg-primary btn-flat mt-1">Aktif</small>
+                                  <?php
+                                  } else {
+                                  ?>
+                                    <small class="badge bg-danger btn-flat mt-1">Non-Aktif</small>
+                                  <?php
+                                  }
+                                  ?>
+                                  &ensp;
+                                  <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Tambah Subsubmenu">
+                                    <i class="fas fa-plus"></i>
+                                  </a>
+                                  <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                  </a>
+                                  <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                    <i class="fas fa-trash"></i>
+                                  </a>
+                                </td>
                               </tr>
                   <?php
                         }
@@ -131,10 +215,109 @@
                     } else {
                   ?>
                     <tr>
-                      <td class="border-0"><i class="nav-icon fas <?php echo $m_icon[$nn]; ?>"></i>&ensp;&ensp;<?php echo $menu[$nn]; ?></td>
+                      <td class="border-0 icon-tools">
+                          <i class="nav-icon <?php echo $m_icon[$nn]; ?>"></i>&ensp;&ensp;<?php echo $menu[$nn]; ?>&ensp;
+                          <?php
+                          if ($m_status[$nn]==1) {
+                          ?>
+                            <small class="badge bg-primary btn-flat mt-1">Aktif</small>
+                          <?php
+                          } else {
+                          ?>
+                            <small class="badge bg-danger btn-flat mt-1">Non-Aktif</small>
+                          <?php
+                          }
+                          ?>
+                          &ensp;
+                          <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Tambah Submenu">
+                            <i class="fas fa-plus"></i>
+                          </a>
+                          <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Edit" data-target="#modal-em<?php echo $kode_menu[$nn]; ?>">
+                            <i class="fas fa-edit"></i>
+                          </a>
+                          <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hm<?php echo $kode_menu[$nn]; ?>">
+                            <i class="fas fa-trash"></i>
+                          </a>
+                      </td>
                     </tr>
                   <?php
                     }
+                  ?>
+<div class="modal fade mt-4" id="modal-em<?php echo $kode_menu[$nn]; ?>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Edit Data Menu</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="<?php echo site_url('Akses/proses_edit_menu'); ?>" method="post">
+          <input type="hidden" id="kode_menu" name="kode_menu" value="<?php echo $kode_menu[$nn]; ?>">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Menu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="menu" name="menu" placeholder="Nama Menu" maxlength="100" value="<?php echo $menu[$nn]; ?>" required>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Link</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="link" name="link" placeholder="Link" maxlength="100" value="<?php echo $m_link[$nn]; ?>" required>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Icon</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="icon" name="icon" placeholder="Icon" maxlength="100" value="<?php $jmn = strlen($m_icon[$nn]); $ambil[$nn] = $jmn - 6; echo substr($m_icon[$nn], 7); ?>" required>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px; margin-bottom: -10px">
+            <label class="col-sm-3 col-form-label form-control-sm">Status</label>
+            <div class="col-sm-9 form-group">
+              <select class="form-control form-control-sm" id="status_aktif" name="status_aktif">
+                <option value="1" <?php if ($m_status[$nn]==1) {echo 'selected';} ?>>Aktif</option>
+                <option value="0" <?php if ($m_status[$nn]==0) {echo 'selected';} ?>>Non-Aktif</option>
+              </select>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
+        <button type="submit" class="btn bg-gradient-primary btn-xs"><i class="fas fa-save"></i>&ensp;Simpan Perubahan</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade mt-4" id="modal-hm<?php echo $kode_menu[$nn]; ?>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Hapus Data Menu</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Yakin ingin menghapus menu <b><?php echo $menu[$nn]; ?></b> ?<br></p>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
+        <a href="<?php echo site_url('Akses/proses_hapus_menu/'.$kode_menu[$nn]); ?>" class="btn bg-gradient-danger btn-xs"><i class="fas fa-check"></i>&ensp;Ya !</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+                  <?php
                   }
                   ?>                    
                   </tbody>

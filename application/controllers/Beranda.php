@@ -48,11 +48,13 @@ class Beranda extends CI_Controller {
 		$submenu[1][1] = '';
 		$s_link[1][1] = '';
 		$s_icon[1][1] = '';
+		$s_status[1][1] = '';
 		$jff[1][1] = 0;
 		$kode_subsubmenu[1][1][1] = '';
 		$subsubmenu[1][1][1] = '';
 		$ss_link[1][1][1] = '';
 		$ss_icon[1][1][1] = '';
+		$ss_status[1][1][1] = '';
 		$jii[1][1][1] = 0;
 		$jumji[1][1] = 0;
 		$jumjf[1] = 0;
@@ -62,6 +64,7 @@ class Beranda extends CI_Controller {
 			$menu[$dd] = $rowmnu->menu;
 			$m_link[$dd] = $rowmnu->link;
 			$m_icon[$dd] = $rowmnu->icon;
+			$m_status[$dd] = $rowmnu->status_aktif;
 
 			$csm = $this->MainModel->cek_submenu($id['id_pegawai'],$kode_menu[$dd]);
 
@@ -75,6 +78,7 @@ class Beranda extends CI_Controller {
 					$submenu[$dd][$ff] = $rowdsm->submenu;
 					$s_link[$dd][$ff] = $rowdsm->link;
 					$s_icon[$dd][$ff] = $rowdsm->icon;
+					$s_status[$dd][$ff] = $rowdsm->status_aktif;
 					$jff[$dd][$ff] = $ff;
 
 					$css = $this->MainModel->cek_subsubmenu($id['id_pegawai'],$kode_submenu[$dd][$ff]);
@@ -89,6 +93,7 @@ class Beranda extends CI_Controller {
 							$subsubmenu[$dd][$ff][$ii] = $rowdss->subsubmenu;
 							$ss_link[$dd][$ff][$ii] = $rowdss->link;
 							$ss_icon[$dd][$ff][$ii] = $rowdss->icon;
+							$ss_status[$dd][$ff][$ii] = $rowdss->status_aktif;
 							$jii[$dd][$ff][$ii] = $ii;
 
 							$ii++;
@@ -120,14 +125,17 @@ class Beranda extends CI_Controller {
 						'menu' => $menu,
 						'm_link' => $m_link,
 						'm_icon' => $m_icon,
+						'm_status' => $m_status,
 						'kode_submenu' => $kode_submenu,
 						'submenu' => $submenu,
 						's_link' => $s_link,
 						's_icon' => $s_icon,
+						's_status' => $s_status,
 						'kode_subsubmenu' => $kode_subsubmenu,
 						'subsubmenu' => $subsubmenu,
 						'ss_link' => $ss_link,
-						'ss_icon' => $ss_icon
+						'ss_icon' => $ss_icon,
+						'ss_status' => $ss_status
 					 );
 
 		return $data_menu;

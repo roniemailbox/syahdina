@@ -36,7 +36,7 @@
           ?>
           <li class="nav-item">
             <a href="<?php echo site_url($m_link[$nn]); ?>" class="nav-link <?php if($ttl==$menu[$nn]) { echo 'active'; } else { echo 'text-light'; } ?>">
-              <i class="nav-icon fas <?php echo $m_icon[$nn]; ?>"></i>
+              <i class="nav-icon <?php echo $m_icon[$nn]; ?>"></i>
               <p>
                 <?php
                 echo $menu[$nn];

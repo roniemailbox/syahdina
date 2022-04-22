@@ -45,6 +45,19 @@
     table.dataTable tbody td {
      vertical-align: middle;
     }
+
+    .icon-tools .o {
+      margin-left: .5rem;
+      opacity: 0;
+      transition: opacity .1s ease-out;
+      cursor: pointer;
+      transition-delay: .5s;
+    }
+
+    .icon-tools:hover .o {
+      opacity: 1;
+      transition-delay: 0s;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed">
