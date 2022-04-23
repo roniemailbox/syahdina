@@ -148,6 +148,78 @@ class Akses extends CI_Controller {
 		redirect('Akses/atur_menu');
 	}
 
+	public function proses_tambah_submenu(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$tgl = date('Y-m-d H:i:s');
+
+		$kode_menu = $this->input->post('kode_menu');
+	    $submenu = ucwords($this->input->post('submenu'));
+	    $link = $this->input->post('link');
+
+	    $data_usm = $this->MainModel->nuSubmenu();
+	    $kode_submenu = $data_usm['usm']+1;
+
+	    $data_ussm = $this->MainModel->numSubmenu();
+	    $no_submenu = $data_ussm['ussm']+1;
+
+        $data_submenu = array(
+        			  'kode_submenu' => $kode_submenu,
+                      'kode_menu' => $kode_menu,
+                      'submenu' => $submenu,
+                      'no_submenu' => $no_submenu,
+                      'link' => $link,
+                      'status_aktif' => 1
+                    );
+
+        $this->MainModel->insertSubmenu($data_submenu);
+
+        $data_hsubmenu = array(
+        			  'id_pegawai' => $id['id_pegawai'],
+        			  'c' => 1,
+        			  'r' => 1,
+        			  'u' => 1,
+        			  'd' => 1,
+        			  'p' => 1,
+                      'kode_submenu' => $kode_submenu,
+                      'user_entry' => $id['id_pegawai'],
+                      'tgl_entry' => $tgl
+                    );
+
+        $this->MainModel->insertHSubmenu($data_hsubmenu);
+
+        $this->session->set_flashdata('sukses', ' Data Submenu berhasil ditambahkan !!');
+
+		redirect('Akses/atur_menu');
+	}
+
+	public function proses_hapus_submenu($kode_submenu){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$cek_menu = $this->MainModel->cekMnSbb($kode_submenu);
+
+		if ($cek_menu!=0) {
+			$data_submenu = $this->MainModel->getMnSbb($kode_submenu);
+
+			foreach ($data_submenu as $rowdsb) {
+				$kode_subsubmenu = $rowdsb->kode_subsubmenu;
+
+				$this->MainModel->deleteData('h_subsubmenu','kode_subsubmenu',$kode_subsubmenu);
+				$this->MainModel->deleteData('subsubmenu','kode_subsubmenu',$kode_subsubmenu);
+			}
+
+			$this->MainModel->deleteData('h_submenu','kode_submenu',$kode_submenu);
+			$this->MainModel->deleteData('submenu','kode_submenu',$kode_submenu);
+		} else {
+			$this->MainModel->deleteData('h_submenu','kode_submenu',$kode_submenu);
+			$this->MainModel->deleteData('submenu','kode_submenu',$kode_submenu);
+		}
+
+        $this->session->set_flashdata('sukses', ' Data berhasil dihapus !!');
+
+		redirect('Akses/atur_menu');
+	}
+
 	public function menu() {
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 

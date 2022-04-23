@@ -83,11 +83,11 @@
                         }
                         ?>
                         &ensp;
-                        <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Tambah Submenu">
+                        <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Tambah Submenu" data-target="#modal-tb<?php echo $kode_menu[$nn]; ?>">
                           <i class="fas fa-plus"></i>
                         </a>
-                        <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
-                          <i class="fas fa-edit"></i>
+                        <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Edit" data-target="#modal-em<?php echo $kode_menu[$nn]; ?>">
+                            <i class="fas fa-edit"></i>
                         </a>
                         <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus"data-target="#modal-hm<?php echo $kode_menu[$nn]; ?>">
                             <i class="fas fa-trash"></i>
@@ -130,7 +130,7 @@
                                   <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
                                     <i class="fas fa-edit"></i>
                                   </a>
-                                  <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                  <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hsm<?php echo $kode_submenu[$nn][$oo]; ?>">
                                     <i class="fas fa-trash"></i>
                                   </a>
                                 </td>
@@ -197,13 +197,37 @@
                                   <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
                                     <i class="fas fa-edit"></i>
                                   </a>
-                                  <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                  <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hsm<?php echo $kode_submenu[$nn][$oo]; ?>">
                                     <i class="fas fa-trash"></i>
                                   </a>
                                 </td>
                               </tr>
                   <?php
                         }
+                  ?>
+<div class="modal fade mt-4" id="modal-hsm<?php echo $kode_submenu[$nn][$oo]; ?>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Hapus Data Submenu</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Yakin ingin menghapus submenu <b><?php echo $submenu[$nn][$oo]; ?></b> ?<br></p>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
+        <a href="<?php echo site_url('Akses/proses_hapus_submenu/'.$kode_submenu[$nn][$oo]); ?>" class="btn bg-gradient-danger btn-xs"><i class="fas fa-check"></i>&ensp;Ya !</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+                  <?php
                       }
                   ?>
                             </tbody>
@@ -229,7 +253,7 @@
                           }
                           ?>
                           &ensp;
-                          <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Tambah Submenu">
+                          <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Tambah Submenu" data-target="#modal-tb<?php echo $kode_menu[$nn]; ?>">
                             <i class="fas fa-plus"></i>
                           </a>
                           <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Edit" data-target="#modal-em<?php echo $kode_menu[$nn]; ?>">
@@ -243,6 +267,49 @@
                   <?php
                     }
                   ?>
+<div class="modal fade mt-4" id="modal-tb<?php echo $kode_menu[$nn]; ?>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Tambah Submenu</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="<?php echo site_url('Akses/proses_tambah_submenu'); ?>" method="post">
+          <input type="hidden" id="kode_menu" name="kode_menu" value="<?php echo $kode_menu[$nn]; ?>">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Menu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="menu" name="menu" placeholder="Nama Menu" maxlength="100" value="<?php echo $menu[$nn]; ?>" readonly>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Submenu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="submenu" name="submenu" placeholder="Nama Submenu" maxlength="100" required>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Link</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="link" name="link" placeholder="Link" maxlength="100" required>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
+        <button type="submit" class="btn bg-gradient-teal btn-xs"><i class="fas fa-save"></i>&ensp;Simpan</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <div class="modal fade mt-4" id="modal-em<?php echo $kode_menu[$nn]; ?>">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
