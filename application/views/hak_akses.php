@@ -110,7 +110,7 @@
                         if ($tanda2==TRUE) {
                   ?>
                               <tr data-widget="expandable-table" aria-expanded="true">
-                                <td style="padding-left: 3%">
+                                <td class="icon-tools" style="padding-left: 3%">
                                   <i class="far fa-circle nav-icon"></i>&ensp;<?php echo $submenu[$nn][$oo]; ?>&ensp;
                                   <?php
                                   if ($s_status[$nn][$oo]==1) {
@@ -124,10 +124,10 @@
                                   }
                                   ?>
                                   &ensp;
-                                  <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Tambah Subsubmenu">
+                                  <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Tambah Subsubmenu" data-target="#modal-tsb<?php echo $kode_submenu[$nn][$oo]; ?>">
                                     <i class="fas fa-plus"></i>
                                   </a>
-                                  <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
+                                  <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Edit" data-target="#modal-esm<?php echo $kode_submenu[$nn][$oo]; ?>">
                                     <i class="fas fa-edit"></i>
                                   </a>
                                   <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hsm<?php echo $kode_submenu[$nn][$oo]; ?>">
@@ -157,14 +157,96 @@
                                             }
                                             ?>
                                             &ensp;
-                                            <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Edit" data-target="#modal-ess<?php echo $kode_subsubmenu[$nn][$oo][$ss]; ?>">
                                               <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Hapus">
+                                            <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hss<?php echo $kode_subsubmenu[$nn][$oo][$ss]; ?>">
                                               <i class="fas fa-trash"></i>
                                             </a>
                                           </td>
                                         </tr>
+
+<div class="modal fade mt-4" id="modal-ess<?php echo $kode_subsubmenu[$nn][$oo][$ss]; ?>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Edit Data Subsubmenu</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="<?php echo site_url('Akses/proses_edit_subsubmenu'); ?>" method="post">
+          <input type="hidden" id="kode_subsubmenu" name="kode_subsubmenu" value="<?php echo $kode_subsubmenu[$nn][$oo][$ss]; ?>">
+          <input type="hidden" id="kode_submenu" name="kode_submenu" value="<?php echo $kode_submenu[$nn][$oo]; ?>">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Menu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="menu" name="menu" placeholder="Nama Menu" maxlength="100" value="<?php echo $menu[$nn]; ?>" readonly>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Submenu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="submenu" name="submenu" placeholder="Nama Submenu" maxlength="100" value="<?php echo $submenu[$nn][$oo]; ?>" readonly>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Subsubmenu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="subsubmenu" name="subsubmenu" placeholder="Nama Subsubmenu" maxlength="100" value="<?php echo $subsubmenu[$nn][$oo][$ss]; ?>" required>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Link</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="link" name="link" placeholder="Link" maxlength="100" value="<?php echo $ss_link[$nn][$oo][$ss]; ?>" required>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px; margin-bottom: -10px">
+            <label class="col-sm-3 col-form-label form-control-sm">Status</label>
+            <div class="col-sm-9 form-group">
+              <select class="form-control form-control-sm" id="status_aktif" name="status_aktif">
+                <option value="1" <?php if ($ss_status[$nn][$oo][$ss]==1) {echo 'selected';} ?>>Aktif</option>
+                <option value="0" <?php if ($ss_status[$nn][$oo][$ss]==0) {echo 'selected';} ?>>Non-Aktif</option>
+              </select>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
+        <button type="submit" class="btn bg-gradient-primary btn-xs"><i class="fas fa-save"></i>&ensp;Simpan Perubahan</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade mt-4" id="modal-hss<?php echo $kode_subsubmenu[$nn][$oo][$ss]; ?>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Hapus Data Subsubmenu</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Yakin ingin menghapus subsubmenu <b><?php echo $subsubmenu[$nn][$oo][$ss]; ?></b> ?<br></p>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
+        <a href="<?php echo site_url('Akses/proses_hapus_subsubmenu/'.$kode_subsubmenu[$nn][$oo][$ss]); ?>" class="btn bg-gradient-danger btn-xs"><i class="fas fa-check"></i>&ensp;Ya !</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
                   <?php
                           }
                   ?>
@@ -191,10 +273,10 @@
                                   }
                                   ?>
                                   &ensp;
-                                  <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Tambah Subsubmenu">
+                                  <a href="#" class="text-success o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Tambah Subsubmenu" data-target="#modal-tsb<?php echo $kode_submenu[$nn][$oo]; ?>">
                                     <i class="fas fa-plus"></i>
                                   </a>
-                                  <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit">
+                                  <a href="#" class="text-primary o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Edit" data-target="#modal-esm<?php echo $kode_submenu[$nn][$oo]; ?>">
                                     <i class="fas fa-edit"></i>
                                   </a>
                                   <a href="#" class="text-danger o" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hsm<?php echo $kode_submenu[$nn][$oo]; ?>">
@@ -205,6 +287,108 @@
                   <?php
                         }
                   ?>
+<div class="modal fade mt-4" id="modal-tsb<?php echo $kode_submenu[$nn][$oo]; ?>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Tambah Subsubmenu</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="<?php echo site_url('Akses/proses_tambah_subsubmenu'); ?>" method="post">
+          <input type="hidden" id="kode_submenu" name="kode_submenu" value="<?php echo $kode_submenu[$nn][$oo]; ?>">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Menu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="menu" name="menu" placeholder="Nama Menu" maxlength="100" value="<?php echo $menu[$nn]; ?>" readonly>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Submenu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="submenu" name="submenu" placeholder="Nama Submenu" maxlength="100" value="<?php echo $submenu[$nn][$oo]; ?>" readonly>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Subsubmenu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="subsubmenu" name="subsubmenu" placeholder="Nama Subsubmenu" maxlength="100" required>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Link</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="link" name="link" placeholder="Link" maxlength="100" required>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
+        <button type="submit" class="btn bg-gradient-teal btn-xs"><i class="fas fa-save"></i>&ensp;Simpan</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade mt-4" id="modal-esm<?php echo $kode_submenu[$nn][$oo]; ?>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Edit Data Submenu</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="<?php echo site_url('Akses/proses_edit_submenu'); ?>" method="post">
+          <input type="hidden" id="kode_submenu" name="kode_submenu" value="<?php echo $kode_submenu[$nn][$oo]; ?>">
+          <input type="hidden" id="kode_menu" name="kode_menu" value="<?php echo $kode_menu[$nn]; ?>">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Menu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="menu" name="menu" placeholder="Nama Menu" maxlength="100" value="<?php echo $menu[$nn]; ?>" readonly>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Nama Submenu</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="submenu" name="submenu" placeholder="Nama Submenu" maxlength="100" value="<?php echo $submenu[$nn][$oo]; ?>" required>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px">
+            <label class="col-sm-3 col-form-label form-control-sm">Link</label>
+            <div class="col-sm-9 form-group">
+              <input type="text" class="form-control form-control-sm" id="link" name="link" placeholder="Link" maxlength="100" value="<?php echo $s_link[$nn][$oo]; ?>" required>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-top: -20px; margin-bottom: -10px">
+            <label class="col-sm-3 col-form-label form-control-sm">Status</label>
+            <div class="col-sm-9 form-group">
+              <select class="form-control form-control-sm" id="status_aktif" name="status_aktif">
+                <option value="1" <?php if ($s_status[$nn][$oo]==1) {echo 'selected';} ?>>Aktif</option>
+                <option value="0" <?php if ($s_status[$nn][$oo]==0) {echo 'selected';} ?>>Non-Aktif</option>
+              </select>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
+        <button type="submit" class="btn bg-gradient-primary btn-xs"><i class="fas fa-save"></i>&ensp;Simpan Perubahan</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <div class="modal fade mt-4" id="modal-hsm<?php echo $kode_submenu[$nn][$oo]; ?>">
   <div class="modal-dialog">
     <div class="modal-content">

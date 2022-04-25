@@ -193,6 +193,28 @@ class Akses extends CI_Controller {
 		redirect('Akses/atur_menu');
 	}
 
+	public function proses_edit_submenu(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$kode_submenu = $this->input->post('kode_submenu');
+		$kode_menu = $this->input->post('kode_menu');
+	    $submenu = ucwords($this->input->post('submenu'));
+	    $link = $this->input->post('link');
+	    $status_aktif = $this->input->post('status_aktif');
+
+        $data_submenu = array(
+                      'submenu' => $submenu,
+                      'link' => $link,
+                      'status_aktif' => (int)$status_aktif
+                    );
+
+        $this->MainModel->updateData2('submenu',$data_submenu,'kode_submenu',$kode_submenu,'kode_menu',$kode_menu);
+
+        $this->session->set_flashdata('sukses', ' Data Submenu berhasil diupdate !!');
+
+		redirect('Akses/atur_menu');
+	}
+
 	public function proses_hapus_submenu($kode_submenu){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
@@ -214,6 +236,84 @@ class Akses extends CI_Controller {
 			$this->MainModel->deleteData('h_submenu','kode_submenu',$kode_submenu);
 			$this->MainModel->deleteData('submenu','kode_submenu',$kode_submenu);
 		}
+
+        $this->session->set_flashdata('sukses', ' Data berhasil dihapus !!');
+
+		redirect('Akses/atur_menu');
+	}
+
+	public function proses_tambah_subsubmenu(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$tgl = date('Y-m-d H:i:s');
+
+		$kode_submenu = $this->input->post('kode_submenu');
+	    $subsubmenu = ucwords($this->input->post('subsubmenu'));
+	    $link = $this->input->post('link');
+
+	    $data_uss = $this->MainModel->nuSubsubmenu();
+	    $kode_subsubmenu = $data_uss['uss']+1;
+
+	    $data_usss = $this->MainModel->numSubsubmenu();
+	    $no_subsubmenu = $data_usss['usss']+1;
+
+        $data_subsubmenu = array(
+        			  'kode_subsubmenu' => $kode_subsubmenu,
+                      'kode_submenu' => $kode_submenu,
+                      'subsubmenu' => $subsubmenu,
+                      'no_subsubmenu' => $no_subsubmenu,
+                      'link' => $link,
+                      'status_aktif' => 1
+                    );
+
+        $this->MainModel->insertSub($data_subsubmenu);
+
+        $data_hsubsubmenu = array(
+        			  'id_pegawai' => $id['id_pegawai'],
+        			  'c' => 1,
+        			  'r' => 1,
+        			  'u' => 1,
+        			  'd' => 1,
+        			  'p' => 1,
+                      'kode_subsubmenu' => $kode_subsubmenu,
+                      'user_entry' => $id['id_pegawai'],
+                      'tgl_entry' => $tgl
+                    );
+
+        $this->MainModel->insertHSubsubmenu($data_hsubsubmenu);
+
+        $this->session->set_flashdata('sukses', ' Data Subsubmenu berhasil ditambahkan !!');
+
+		redirect('Akses/atur_menu');
+	}
+
+	public function proses_edit_subsubmenu(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$kode_subsubmenu = $this->input->post('kode_subsubmenu');
+		$kode_submenu = $this->input->post('kode_submenu');
+	    $subsubmenu = ucwords($this->input->post('subsubmenu'));
+	    $link = $this->input->post('link');
+	    $status_aktif = $this->input->post('status_aktif');
+
+        $data_subsubmenu = array(
+                      'subsubmenu' => $subsubmenu,
+                      'link' => $link,
+                      'status_aktif' => (int)$status_aktif
+                    );
+
+        $this->MainModel->updateData2('subsubmenu',$data_subsubmenu,'kode_subsubmenu',$kode_subsubmenu,'kode_submenu',$kode_submenu);
+
+        $this->session->set_flashdata('sukses', ' Data Subsubmenu berhasil diupdate !!');
+
+		redirect('Akses/atur_menu');
+	}
+
+	public function proses_hapus_subsubmenu($kode_subsubmenu){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$this->MainModel->deleteData('h_subsubmenu','kode_subsubmenu',$kode_subsubmenu);
+		$this->MainModel->deleteData('subsubmenu','kode_subsubmenu',$kode_subsubmenu);
 
         $this->session->set_flashdata('sukses', ' Data berhasil dihapus !!');
 

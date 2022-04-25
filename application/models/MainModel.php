@@ -242,6 +242,25 @@ class MainModel extends CI_Model {
 		$query=$this->db->query("SELECT * FROM subsubmenu WHERE kode_submenu='$kode_submenu'")->result();
 		return $query;
 	}
+
+	public function nuSubsubmenu(){
+		$query=$this->db->query("SELECT
+										MAX(kode_subsubmenu) AS uss
+								FROM subsubmenu")->row_array();
+		return $query;
+	}
+
+	public function numSubsubmenu(){
+		$query=$this->db->query("SELECT
+										MAX(no_subsubmenu) AS usss
+								FROM subsubmenu")->row_array();
+		return $query;
+	}
+
+	public function insertSub($data){
+		$query=$this->db->insert("subsubmenu",$data);
+		return $query;
+	}
 /*akhir tabel subsubmenu*/
 
 /*tabel h_subsubmenu*/
@@ -252,6 +271,11 @@ class MainModel extends CI_Model {
 
 	public function getHMnSbb($kode_subsubmenu) {
 		$query=$this->db->query("SELECT * FROM h_subsubmenu WHERE kode_subsubmenu='$kode_subsubmenu'")->result();
+		return $query;
+	}
+
+	public function insertHSubsubmenu($data){
+		$query=$this->db->insert("h_subsubmenu",$data);
 		return $query;
 	}
 /*akhir tabel h_subsubmenu*/
