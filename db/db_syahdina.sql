@@ -11,7 +11,7 @@
  Target Server Version : 50626
  File Encoding         : 65001
 
- Date: 22/04/2022 15:34:10
+ Date: 29/04/2022 15:49:55
 */
 
 SET NAMES utf8mb4;
@@ -83,7 +83,6 @@ CREATE TABLE `h_menu`  (
 INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, NULL, NULL);
 INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, NULL, NULL, NULL, NULL);
 INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, NULL, NULL, NULL, NULL);
-INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 5, 'PG000001', '2022-04-22 14:24:12', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_submenu
@@ -134,6 +133,29 @@ CREATE TABLE `h_subsubmenu`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for icon
+-- ----------------------------
+DROP TABLE IF EXISTS `icon`;
+CREATE TABLE `icon`  (
+  `nama_icon` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`nama_icon`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of icon
+-- ----------------------------
+INSERT INTO `icon` VALUES ('fas fa-cog');
+INSERT INTO `icon` VALUES ('fas fa-database');
+INSERT INTO `icon` VALUES ('fas fa-edit');
+INSERT INTO `icon` VALUES ('fas fa-lock');
+INSERT INTO `icon` VALUES ('fas fa-save');
+INSERT INTO `icon` VALUES ('fas fa-table');
+INSERT INTO `icon` VALUES ('fas fa-tachometer-alt');
+INSERT INTO `icon` VALUES ('fas fa-times');
+INSERT INTO `icon` VALUES ('fas fa-trash');
+INSERT INTO `icon` VALUES ('fas fa-user');
+
+-- ----------------------------
 -- Table structure for jabatan
 -- ----------------------------
 DROP TABLE IF EXISTS `jabatan`;
@@ -169,7 +191,6 @@ INSERT INTO `menu` VALUES (1, 'Beranda', 1, 'Beranda', 'fas fa-tachometer-alt', 
 INSERT INTO `menu` VALUES (2, 'Profil', 2, 'Profil', 'fas fa-user', b'1');
 INSERT INTO `menu` VALUES (3, 'Master Data', 3, '#', 'fas fa-database', b'1');
 INSERT INTO `menu` VALUES (4, 'Hak Akses', 4, '#', 'fas fa-lock', b'1');
-INSERT INTO `menu` VALUES (5, 'Transaksi', 5, 'Transaksi', 'fas fa-cart-plus', b'1');
 
 -- ----------------------------
 -- Table structure for pegawai

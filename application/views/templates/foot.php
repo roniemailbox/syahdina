@@ -96,7 +96,23 @@ if ($this->session->flashdata('message')) {
       "autoWidth": false,
       "responsive": true,
 <?php
-if ($ttl=='Master Kota') {
+if ($subtitle=='Atur Akses') {
+?>
+      "processing": true,
+      "serverSide": true,
+      "ajax":{
+               /*"url": "ajax/ajax_kontak.php?action=table_data",*/
+              "url": "<?php echo site_url('Akses/data_akses'); ?>",
+               "dataType": "json",
+               "type": "POST"
+             },
+      "columns": [
+          { "data": "aksi" },
+          { "data": "nama" },
+          { "data": "status" },
+      ]
+<?php
+} elseif ($ttl=='Master Kota') {
 ?>
       "processing": true,
       "serverSide": true,

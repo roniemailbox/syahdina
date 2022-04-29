@@ -18,6 +18,129 @@ class Akses extends CI_Controller {
 		}
 	}
 
+	public function akses(){
+		$this->cek_sesi();
+
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$data = array(
+					'title' => '&ensp;/&ensp;Hak Akses',
+					'separator' => '',
+					'subtitle' => 'Atur Akses',
+					'ttl' => 'Hak Akses',
+					'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
+					);
+
+		$this->load->view('templates/header',$data);
+		$this->load->view('templates/sidebar',$this->menu());
+		$this->load->view('atur_akses');
+		$this->load->view('templates/foot');
+	}
+
+	public function data_akses(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$columns = array( 
+	                            0 => 'id_pegawai', 
+	                            1 => 'nama',
+	                            2 => 'status'
+	                        );
+
+		$datacount = $this->MainModel->countPegawai();	
+  
+        $totalData = $datacount['jumlah'];
+            
+        $totalFiltered = $totalData; 
+
+        $limit = $_POST['length'];
+        $start = $_POST['start'];
+        $order = $columns[$_POST['order']['0']['column']];
+        $dir = $_POST['order']['0']['dir'];
+            
+        if(empty($_POST['search']['value'])) {            
+        	$data_pegawai = $this->MainModel->dataPegawai($order,$dir,$limit,$start);
+        } else {
+            $search = $_POST['search']['value']; 
+            $data_pegawai = $this->MainModel->srcPegawai($search,$order,$dir,$limit,$start);
+
+			$datacount = $this->MainModel->jSrcPegawai($search);
+           	$totalFiltered = $datacount['jumlah'];
+        }
+
+        $data = array();
+
+        $no = $start + 1;
+        foreach ($data_pegawai as $rowdpg) 
+        {
+        	if ($rowdpg->status==1) {
+        		$status = "<small class='badge bg-info btn-flat mt-1'>Aktif</small>";
+        	} else {
+        		$status = "<small class='badge bg-danger btn-flat mt-1'>Non-Aktif</small>";
+        	}
+
+        	$nestedData['aksi'] = '
+        	<div class="text-center">
+				<a href="'.site_url("Akses/sesi_pgw/".$rowdpg->id_pegawai).'" class="btn bg-gradient-indigo btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Atur Akses"><i class="fas fa-cog"></i></a>
+        	</div>';
+        	$nestedData['nama'] = '<div class="text-left">'.$rowdpg->nama.'</div>';
+            $nestedData['status'] = '<div class="text-center">'.$status.'</div>';
+            $data[] = $nestedData;
+            $no++;
+        }
+          
+        $json_data = array(
+                    "draw"            => intval($_POST['draw']),  
+                    "recordsTotal"    => intval($totalData),  
+                    "recordsFiltered" => intval($totalFiltered), 
+                    "data"            => $data   
+                    );
+            
+        echo json_encode($json_data);
+	}
+
+	public function sesi_pgw($idpg=null){
+		if (!isset($idpg)||$idpg==null) {
+			redirect('Beranda');
+		} else {
+			$session = array(
+								'sesbas' => md5($idpg)
+							);
+
+			$this->session->set_userdata($session);
+
+			redirect('Akses/pegawai/'.$idpg);
+		}
+	}
+
+	public function pegawai($idpg=null){
+		if (!isset($idpg)||$idpg==null) {
+			redirect('Beranda');
+		} else {
+			$id['sesbas'] = $this->session->userdata('sesbas');
+
+			if ($id['sesbas']!=md5($idpg)) {
+				redirect('Beranda');
+			} else {
+				$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+				$data = array(
+							'title' => '&ensp;/&ensp;Atur Akses',
+							'separator' => '&ensp;/&ensp;Hak Akses',
+							'subtitle' => 'Daftar Menu',
+							'alternate' => 'Atur Akses',
+							'ttl' => 'Hak Akses',
+							'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai']),
+							'dpg' => $this->MainModel->pegawai()
+							);
+
+				$this->load->view('templates/header',$data);
+				$this->load->view('templates/sidebar',$this->menu());
+				$this->load->view('menu_pegawai',$this->menu3($idpg));
+				$this->load->view('templates/foot');
+			}
+		}
+	}
+
 	public function atur_menu(){
 		$this->cek_sesi();
 
@@ -474,6 +597,110 @@ class Akses extends CI_Controller {
 						$ii = 1;
 
 						$dss = $this->MainModel->subsubmenu2($id['id_pegawai'],$kode_submenu[$dd][$ff]);
+
+						foreach ($dss as $rowdss) {
+							$kode_subsubmenu[$dd][$ff][$ii] = $rowdss->kode_subsubmenu;
+							$subsubmenu[$dd][$ff][$ii] = $rowdss->subsubmenu;
+							$ss_link[$dd][$ff][$ii] = $rowdss->link;
+							$ss_icon[$dd][$ff][$ii] = $rowdss->icon;
+							$ss_status[$dd][$ff][$ii] = $rowdss->status_aktif;
+							$jii[$dd][$ff][$ii] = $ii;
+
+							$ii++;
+						}
+
+						$jumji[$dd][$ff] = $ii-1;
+					} else {
+						$jumji[$dd][$ff] = 0;
+					}
+
+					$ff++;
+				}
+
+				$jumjf[$dd] = $ff-1;
+			} else {
+				$jumjf[$dd] = 0;
+			}
+
+			$dd++;
+		}
+
+		$data_menu = array(
+						'jum_menu' => $dd-1,
+						'jum_submenu' => $jff,
+						'jum_subsubmenu' => $jii,
+						'jumjf' => $jumjf,
+						'jumji' => $jumji,
+						'kode_menu' => $kode_menu,
+						'menu' => $menu,
+						'm_link' => $m_link,
+						'm_icon' => $m_icon,
+						'm_status' => $m_status,
+						'kode_submenu' => $kode_submenu,
+						'submenu' => $submenu,
+						's_link' => $s_link,
+						's_icon' => $s_icon,
+						's_status' => $s_status,
+						'kode_subsubmenu' => $kode_subsubmenu,
+						'subsubmenu' => $subsubmenu,
+						'ss_link' => $ss_link,
+						'ss_icon' => $ss_icon,
+						'ss_status' => $ss_status
+					 );
+
+		return $data_menu;
+	}
+
+	public function menu3($id_pegawai) {
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$mnu = $this->MainModel->menu2($id_pegawai);
+
+		$dd = 1;
+		
+		$kode_subsubmenu[1][1] = '';
+		$submenu[1][1] = '';
+		$s_link[1][1] = '';
+		$s_icon[1][1] = '';
+		$s_status[1][1] = '';
+		$jff[1][1] = 0;
+		$kode_subsubmenu[1][1][1] = '';
+		$subsubmenu[1][1][1] = '';
+		$ss_link[1][1][1] = '';
+		$ss_icon[1][1][1] = '';
+		$ss_status[1][1][1] = '';
+		$jii[1][1][1] = 0;
+		$jumji[1][1] = 0;
+		$jumjf[1] = 0;
+
+		foreach ($mnu as $rowmnu) {
+			$kode_menu[$dd] = $rowmnu->kode_menu;
+			$menu[$dd] = $rowmnu->menu;
+			$m_link[$dd] = $rowmnu->link;
+			$m_icon[$dd] = $rowmnu->icon;
+			$m_status[$dd] = $rowmnu->status_aktif;
+
+			$csm = $this->MainModel->cek_submenu2($id_pegawai,$kode_menu[$dd]);
+
+			if ($csm!=0) {
+				$ff = 1;
+
+				$dsm = $this->MainModel->submenu2($id_pegawai,$kode_menu[$dd]);
+
+				foreach ($dsm as $rowdsm) {
+					$kode_submenu[$dd][$ff] = $rowdsm->kode_submenu;
+					$submenu[$dd][$ff] = $rowdsm->submenu;
+					$s_link[$dd][$ff] = $rowdsm->link;
+					$s_icon[$dd][$ff] = $rowdsm->icon;
+					$s_status[$dd][$ff] = $rowdsm->status_aktif;
+					$jff[$dd][$ff] = $ff;
+
+					$css = $this->MainModel->cek_subsubmenu2($id_pegawai,$kode_submenu[$dd][$ff]);
+
+					if ($css!=0) {
+						$ii = 1;
+
+						$dss = $this->MainModel->subsubmenu2($id_pegawai,$kode_submenu[$dd][$ff]);
 
 						foreach ($dss as $rowdss) {
 							$kode_subsubmenu[$dd][$ff][$ii] = $rowdss->kode_subsubmenu;

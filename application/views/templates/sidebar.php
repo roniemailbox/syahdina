@@ -59,7 +59,7 @@
               for ($oo=1; $oo <= $jumjf[$nn] ; $oo++) {
           ?>
               <li class="nav-item">
-                <a href="<?php echo site_url($s_link[$nn][$oo]); ?>" class="nav-link <?php if($subtitle==$submenu[$nn][$oo]) { echo 'text-light active'; } else { echo 'text-light'; }  ?>">
+                <a href="<?php echo site_url($s_link[$nn][$oo]); ?>" class="nav-link <?php if($subtitle==$submenu[$nn][$oo]||$alternate==$submenu[$nn][$oo]) { echo 'text-light active'; } else { echo 'text-light'; }  ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
           <?php
