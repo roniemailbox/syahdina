@@ -38,7 +38,15 @@
               <div class="form-group row" style="margin-top: -20px">
                 <label class="col-sm-3 col-form-label form-control-sm">Icon</label>
                 <div class="col-sm-9 form-group">
-                  <input type="text" class="form-control form-control-sm" id="icon" name="icon" placeholder="Icon" maxlength="100" required>
+                  <select class="form-control form-control-sm" id="icon" name="icon">
+                  <?php
+                  foreach ($data_icon as $rowdic) {
+                  ?>
+                    <option value="<?php echo $rowdic->nama_icon; ?>"><?php echo "&#x".$rowdic->font.";"; ?>&ensp;<?php echo ucfirst(substr($rowdic->nama_icon, 7)); ?></option>
+                  <?php
+                  }
+                  ?>
+                  </select>
                 </div>
               </div>
               <div class="form-group float-right" style="margin-top: -10px">

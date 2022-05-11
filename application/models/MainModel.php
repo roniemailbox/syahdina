@@ -50,6 +50,7 @@ class MainModel extends CI_Model {
         						LEFT JOIN menu AS m
         							ON hm.kode_menu = m.kode_menu
         						WHERE hm.id_pegawai = '$id'
+        							AND hm.r = '1'
         							AND m.status_aktif='1'")->result();
     }
 
@@ -60,6 +61,7 @@ class MainModel extends CI_Model {
         							ON hm.kode_submenu = m.kode_submenu
         						WHERE hm.id_pegawai = '$id'
         							AND m.kode_menu='$kode_menu'
+        							AND hm.r = '1'
         							AND m.status_aktif='1'")->result();
     }
 
@@ -70,6 +72,7 @@ class MainModel extends CI_Model {
         							ON hm.kode_submenu = m.kode_submenu
         						WHERE hm.id_pegawai = '$id'
         							AND m.kode_menu='$kode_menu'
+        							AND hm.r = '1'
         							AND m.status_aktif='1'")->num_rows();
     }
 
@@ -79,6 +82,7 @@ class MainModel extends CI_Model {
         						LEFT JOIN subsubmenu AS m
         							ON hm.kode_subsubmenu = m.kode_subsubmenu
         						WHERE hm.id_pegawai = '$id'
+        							AND hm.r = '1'
         							AND m.kode_submenu='$kode_submenu'
         							AND m.status_aktif='1'")->result();
     }
@@ -89,11 +93,13 @@ class MainModel extends CI_Model {
         						LEFT JOIN subsubmenu AS m
         							ON hm.kode_subsubmenu = m.kode_subsubmenu
         						WHERE hm.id_pegawai = '$id'
+        							AND hm.r = '1'
         							AND m.kode_submenu='$kode_submenu'
         							AND m.status_aktif='1'")->num_rows();
     }
 
     /*================================================================*/
+
     function menu2($id) {
         return $this->db->query("SELECT *
         							FROM h_menu AS hm
@@ -158,6 +164,11 @@ class MainModel extends CI_Model {
 		$query=$this->db->insert("menu",$data);
 		return $query;
 	}
+
+	public function all_ha_menu(){
+		$query=$this->db->query("SELECT * FROM menu")->result();
+		return $query;
+	}
 /*akhir tabel menu*/
 
 /*tabel h_menu*/
@@ -170,6 +181,36 @@ class MainModel extends CI_Model {
 		$query=$this->db->query("SELECT *
 								FROM h_menu
 									WHERE id_pegawai='$id_pegawai'")->result();
+		return $query;
+	}
+
+	public function HMenuArray($kode_menu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM h_menu
+									WHERE kode_menu='$kode_menu' AND id_pegawai='$id_pegawai'")->row_array();
+		return $query;
+	}
+
+	public function CekHMenu($kode_menu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM h_menu
+									WHERE kode_menu='$kode_menu' AND id_pegawai='$id_pegawai'")->num_rows();
+		return $query;
+	}
+
+	public function HMA($menu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM menu LEFT JOIN h_menu
+									ON menu.kode_menu = h_menu.kode_menu
+								WHERE menu.menu='$menu' AND H_menu.id_pegawai='$id_pegawai'")->row_array();
+		return $query;
+	}
+
+	public function CHMA($menu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM menu LEFT JOIN h_menu
+									ON menu.kode_menu = h_menu.kode_menu
+								WHERE menu.menu='$menu' AND H_menu.id_pegawai='$id_pegawai'")->num_rows();
 		return $query;
 	}
 /*akhir tabel h_menu*/
@@ -220,6 +261,36 @@ class MainModel extends CI_Model {
 		$query=$this->db->insert("h_submenu",$data);
 		return $query;
 	}
+
+	public function HSubmenuArray($kode_submenu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM h_submenu
+									WHERE kode_submenu='$kode_submenu' AND id_pegawai='$id_pegawai'")->row_array();
+		return $query;
+	}
+
+	public function CekHSubmenu($kode_submenu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM h_submenu
+									WHERE kode_submenu='$kode_submenu' AND id_pegawai='$id_pegawai'")->num_rows();
+		return $query;
+	}
+
+	public function HSA($submenu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM submenu LEFT JOIN h_submenu
+									ON submenu.kode_submenu = h_submenu.kode_submenu
+								WHERE submenu.submenu='$submenu' AND h_submenu.id_pegawai='$id_pegawai'")->row_array();
+		return $query;
+	}
+
+	public function CHSA($submenu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM submenu LEFT JOIN h_submenu
+									ON submenu.kode_submenu = h_submenu.kode_submenu
+								WHERE submenu.submenu='$submenu' AND h_submenu.id_pegawai='$id_pegawai'")->num_rows();
+		return $query;
+	}
 /*akhir tabel h_submenu*/
 
 /*tabel subsubmenu*/
@@ -268,7 +339,153 @@ class MainModel extends CI_Model {
 		$query=$this->db->insert("h_subsubmenu",$data);
 		return $query;
 	}
+
+	public function HSubsubmenuArray($kode_subsubmenu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM h_subsubmenu
+									WHERE kode_subsubmenu='$kode_subsubmenu' AND id_pegawai='$id_pegawai'")->row_array();
+		return $query;
+	}
+
+	public function CekHSubsubmenu($kode_subsubmenu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM h_subsubmenu
+									WHERE kode_subsubmenu='$kode_subsubmenu' AND id_pegawai='$id_pegawai'")->num_rows();
+		return $query;
+	}
+
+	public function HSBA($subsubmenu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM subsubmenu LEFT JOIN h_subsubmenu
+									ON subsubmenu.kode_subsubmenu = h_subsubmenu.kode_subsubmenu
+								WHERE subsubmenu.subsubmenu='$subsubmenu' AND h_subsubmenu.id_pegawai='$id_pegawai'")->row_array();
+		return $query;
+	}
+
+	public function CHSBA($kode_subsubmenu, $id_pegawai){
+		$query=$this->db->query("SELECT *
+								FROM subsubmenu LEFT JOIN h_subsubmenu
+									ON subsubmenu.kode_subsubmenu = h_subsubmenu.kode_subsubmenu
+								WHERE subsubmenu.subsubmenu='$subsubmenu' AND h_subsubmenu.id_pegawai='$id_pegawai'")->num_rows();
+		return $query;
+	}
 /*akhir tabel h_subsubmenu*/
+
+/*tabel icon*/
+	public function icon() {
+		$query=$this->db->query("SELECT * FROM icon ORDER BY nama_icon ASC")->result();
+		return $query;
+	}
+
+	public function countIcon(){
+		$query=$this->db->query("SELECT
+									COUNT(nama_icon) AS jumlah
+								FROM icon
+								")->row_array();
+		return $query;
+	}
+
+	public function dataIcon($order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM icon
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function srcIcon($search,$order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM icon
+								WHERE
+									nama_icon LIKE '%$search%'
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function jSrcIcon($search){
+		$query=$this->db->query("SELECT
+									COUNT(nama_icon) AS jumlah
+								FROM icon
+								WHERE
+									nama_icon LIKE '%$search%'
+								")->row_array();
+		return $query;
+	}
+
+	public function cekIcon($nama_icon) {
+		$query=$this->db->query("SELECT * FROM icon WHERE nama_icon = '$nama_icon'")->num_rows();
+		return $query;
+	}
+
+	public function insertIcon($data){
+		$query=$this->db->insert("icon",$data);
+		return $query;
+	}
+/*akhir tabel icon*/
+
+/*tabel jabatan*/
+	public function countJabatan(){
+		$query=$this->db->query("SELECT
+									COUNT(id_jabatan) AS jumlah
+								FROM jabatan
+								")->row_array();
+		return $query;
+	}
+
+	public function dataJabatan($order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM jabatan
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function srcJabatan($search,$order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM jabatan
+								WHERE
+									nama_jabatan LIKE '%$search%'
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function jSrcJabatan($search){
+		$query=$this->db->query("SELECT
+									COUNT(id_jabatan) AS jumlah
+								FROM jabatan
+								WHERE
+									nama_jabatan LIKE '%$search%'
+								")->row_array();
+		return $query;
+	}
+
+	public function nuJabatan(){
+		$query=$this->db->query("SELECT
+										MAX(no_urut) AS ujb
+								FROM jabatan")->row_array();
+		return $query;
+	}
+
+	public function insertJabatan($data){
+		$query=$this->db->insert("jabatan",$data);
+		return $query;
+	}
+
+	public function getJabatan($id) {
+		$query=$this->db->query("SELECT * FROM jabatan WHERE id_jabatan='$id'")->row_array();
+		return $query;
+	}
+/*akhir tabel jabatan*/
 
 /*tabel pegawai*/
 	public function user_pegawai($id,$psw) {

@@ -15,7 +15,13 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
+<?php
+if($subtitle!='Daftar Menu') {
+?>
 <script src="<?php echo base_url('assets/'); ?>plugins/jquery/jquery.min.js"></script>
+<?php
+}
+?>
 <!-- jQuery UI 1.11.4 -->
 <script src="<?php echo base_url('assets/'); ?>plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -110,6 +116,44 @@ if ($subtitle=='Atur Akses') {
           { "data": "aksi" },
           { "data": "nama" },
           { "data": "status" },
+      ]
+<?php
+} elseif ($subtitle=='Daftar Menu') {
+?>
+      "searching": false,
+      "ordering": false,
+      "paging": false,
+<?php
+} elseif ($subtitle=='Master Icon') {
+?>
+      "processing": true,
+      "serverSide": true,
+      "ajax":{
+               /*"url": "ajax/ajax_kontak.php?action=table_data",*/
+              "url": "<?php echo site_url('MasterIcon/data_icon/'.str_replace(" ", "_", $subtitle)); ?>",
+               "dataType": "json",
+               "type": "POST"
+             },
+      "columns": [
+          { "data": "aksi" },
+          { "data": "picture" },
+          { "data": "nama" },
+      ]
+<?php
+} elseif ($subtitle=='Master Jabatan') {
+?>
+      "processing": true,
+      "serverSide": true,
+      "ajax":{
+               /*"url": "ajax/ajax_kontak.php?action=table_data",*/
+              "url": "<?php echo site_url('MasterJabatan/data_jabatan/'.str_replace(" ", "_", $subtitle)); ?>",
+               "dataType": "json",
+               "type": "POST"
+             },
+      "columns": [
+          { "data": "aksi" },
+          { "data": "nama" },
+          { "data": "keterangan" },
       ]
 <?php
 } elseif ($ttl=='Master Kota') {

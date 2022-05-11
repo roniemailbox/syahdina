@@ -58,7 +58,30 @@
       opacity: 1;
       transition-delay: 0s;
     }
+
+<?php
+if ($subtitle=='Menu') {
+?>
+    @font-face {
+      font-family:'FO';
+      src:url(<?php echo base_url('assets/'); ?>plugins/fontawesome-free/webfonts/fa-solid-900.ttf);
+    }
+
+    select {
+      font-family: 'FO';
+    }
+<?php
+}
+?>
   </style>
+
+<?php
+if($subtitle=='Daftar Menu') {
+?>
+<script src="<?php echo base_url('assets/'); ?>plugins/jquery/jquery.min.js"></script>
+<?php
+}
+?>
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed">
 <div class="wrapper">

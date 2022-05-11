@@ -22,12 +22,12 @@ class Login extends CI_Controller {
 		if($cek_us > 0){
 			$data_us = $this->MainModel->getAccPegawai($id,$psw);
 			$id_pegawai = $data_us['id_pegawai'];
-			$status = $data_us['status'];
+			/*$status = $data_us['status'];
 
 			if ($status=='0') {
 				$this->session->set_flashdata('warning', 'Maaf, login gagal !! Akun anda tidak aktif !!');
 				redirect('Login');
-			} else {
+			} else {*/
 				$session = array(
 								'id_pegawai'=>$id_pegawai,
 								'auth_pegawai'=>true
@@ -35,7 +35,7 @@ class Login extends CI_Controller {
 
 				$this->session->set_userdata($session);
 	            redirect('Beranda');
-			}
+			/*}*/
 		} else {
 			$this->session->set_flashdata('message', 'Maaf, login gagal !!');
 			redirect('Login');
