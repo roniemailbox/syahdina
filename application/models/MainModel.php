@@ -485,6 +485,11 @@ class MainModel extends CI_Model {
 		$query=$this->db->query("SELECT * FROM jabatan WHERE id_jabatan='$id'")->row_array();
 		return $query;
 	}
+
+	public function jabatan() {
+		$query=$this->db->query("SELECT * FROM jabatan ORDER BY no_urut DESC")->result();
+		return $query;
+	}
 /*akhir tabel jabatan*/
 
 /*tabel pegawai*/
@@ -519,6 +524,8 @@ class MainModel extends CI_Model {
 	public function dataPegawai($order,$dir,$limit,$start){
 		$query=$this->db->query("SELECT *
 								FROM pegawai
+								LEFT JOIN jabatan
+								ON pegawai.id_jabatan = jabatan.id_jabatan
 								ORDER BY $order $dir 
         						LIMIT $limit 
         						OFFSET $start
@@ -529,18 +536,16 @@ class MainModel extends CI_Model {
 	public function srcPegawai($search,$order,$dir,$limit,$start){
 		$query=$this->db->query("SELECT *
 								FROM pegawai
+								LEFT JOIN jabatan
+								ON pegawai.id_jabatan = jabatan.id_jabatan
 								WHERE
-									id_pegawai LIKE '%search%'
+									pegawai.id_pegawai LIKE '%search%'
 								OR
-									nama LIKE '%$search%'
+									pegawai.nama LIKE '%$search%'
 								OR
-									alamat LIKE '%$search%'
+									pegawai.status LIKE '%$search%'
 								OR
-									jk LIKE '%$search%'
-								OR
-									username LIKE '%$search%'
-								OR
-									status LIKE '%$search%'
+									jabatan.nama_jabatan LIKE '%$search%'
 								ORDER BY $order $dir 
         						LIMIT $limit 
         						OFFSET $start
@@ -552,19 +557,34 @@ class MainModel extends CI_Model {
 		$query=$this->db->query("SELECT
 									COUNT(id_pegawai) AS jumlah
 								FROM pegawai
+								LEFT JOIN jabatan
+								ON pegawai.id_jabatan = jabatan.id_jabatan
 								WHERE
-									id_pegawai LIKE '%search%'
+									pegawai.id_pegawai LIKE '%search%'
 								OR
-									nama LIKE '%$search%'
+									pegawai.nama LIKE '%$search%'
 								OR
-									alamat LIKE '%$search%'
+									pegawai.status LIKE '%$search%'
 								OR
-									jk LIKE '%$search%'
-								OR
-									username LIKE '%$search%'
-								OR
-									status LIKE '%$search%'
+									jabatan.nama_jabatan LIKE '%$search%'
 								")->row_array();
+		return $query;
+	}
+
+	public function nuPegawai(){
+		$query=$this->db->query("SELECT
+										MAX(no_urut) AS upg
+								FROM pegawai")->row_array();
+		return $query;
+	}
+
+	public function insertPegawai($data){
+		$query=$this->db->insert("pegawai",$data);
+		return $query;
+	}
+
+	public function getUsernamePegawai($username) {
+		$query=$this->db->query("SELECT * FROM pegawai WHERE username='$username'")->num_rows();
 		return $query;
 	}
 /*akhir tabel pegawai*/

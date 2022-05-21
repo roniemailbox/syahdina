@@ -156,6 +156,25 @@ if ($subtitle=='Atur Akses') {
           { "data": "keterangan" },
       ]
 <?php
+} elseif ($subtitle=='Master Pegawai') {
+?>
+      "processing": true,
+      "serverSide": true,
+      "ajax":{
+               /*"url": "ajax/ajax_kontak.php?action=table_data",*/
+              "url": "<?php echo site_url('MasterPegawai/data_pegawai/'.str_replace(" ", "_", $subtitle)); ?>",
+               "dataType": "json",
+               "type": "POST"
+             },
+      "columns": [
+          { "data": "aksi" },
+          { "data": "foto" },
+          { "data": "nama" },
+          { "data": "jk" },
+          { "data": "jabatan" },
+          { "data": "status" },
+      ]
+<?php
 } elseif ($ttl=='Master Kota') {
 ?>
       "processing": true,
@@ -170,25 +189,6 @@ if ($subtitle=='Atur Akses') {
           { "data": "aksi" },
           { "data": "nama_kota" },
           { "data": "nama_provinsi" },
-      ]
-<?php
-} elseif ($ttl=='Master Admin') {
-?>
-      "processing": true,
-      "serverSide": true,
-      "ajax":{
-               /*"url": "ajax/ajax_kontak.php?action=table_data",*/
-              "url": "<?php echo site_url('MasterAdmin/data_admin'); ?>",
-               "dataType": "json",
-               "type": "POST"
-             },
-      "columns": [
-          { "data": "aksi" },
-          { "data": "foto" },
-          { "data": "nama" },
-          { "data": "jk" },
-          { "data": "no_telp" },
-          { "data": "status" },
       ]
 <?php
 } elseif ($ttl=='Master Lembaga') {
@@ -206,23 +206,6 @@ if ($subtitle=='Atur Akses') {
           { "data": "nama_sekolah" },
           { "data": "alamat" },
           { "data": "no_telp" },
-      ]
-<?php
-} elseif ($ttl=='Master Petugas') {
-?>
-      "processing": true,
-      "serverSide": true,
-      "ajax":{
-               /*"url": "ajax/ajax_kontak.php?action=table_data",*/
-              "url": "<?php echo site_url('MasterPetugas/data_petugas'); ?>",
-               "dataType": "json",
-               "type": "POST"
-             },
-      "columns": [
-          { "data": "aksi" },
-          { "data": "nama" },
-          { "data": "jk" },
-          { "data": "id_sekolah" },
       ]
 <?php
 } elseif ($ttl=='Master Siswa') {

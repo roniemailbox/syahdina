@@ -16,7 +16,7 @@
             $letter = substr($data_pegawai['nama'], 0, 1);
             $path_foto = base_url('img/'.$letter.'.png');
           } else {
-            $path_foto = base_url('file/pegawai/'.$data_pegawai['foto']);
+            $path_foto = base_url('file/pegawai/foto_profil/'.$data_pegawai['foto']);
           }
           ?>
           <img src="<?php echo $path_foto; ?>" class="img-circle elevation-2" alt="User Image">
