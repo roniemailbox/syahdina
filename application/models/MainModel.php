@@ -589,4 +589,10 @@ class MainModel extends CI_Model {
 	}
 /*akhir tabel pegawai*/
 
+/*tabel perusahaan*/
+	public function perusahaan() {
+		$query=$this->db->query("SELECT * FROM perusahaan")->row_array();
+		return $query;
+	}
+/*akhir tabel perusahaan*/
 }

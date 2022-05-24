@@ -83,7 +83,7 @@
               for ($ss=1; $ss <= $jumji[$nn][$oo] ; $ss++) {
           ?>
               <li class="nav-item">
-                <a href="<?php echo site_url($ss_link[$nn][$oo][$ss]); ?>" class="nav-link <?php if($ttl==$subsubmenu[$nn][$oo][$ss]) { echo 'text-light active'; } else { echo 'text-light'; }  ?>">
+                <a href="<?php echo site_url($ss_link[$nn][$oo][$ss]); ?>" class="nav-link <?php if($ttl==$subsubmenu[$nn][$oo][$ss]||$alternate==$subsubmenu[$nn][$oo][$ss]) { echo 'text-light active'; } else { echo 'text-light'; }  ?>">
                   <i class="fas fa-circle nav-icon"></i>
                   <p>
           <?php

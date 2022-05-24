@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MasterPegawai extends CI_Controller {
+class MasterPerusahaan extends CI_Controller {
 	public $CI = NULL;
 
 	public function __construct() {
@@ -30,15 +30,15 @@ class MasterPegawai extends CI_Controller {
 		$data = array(
 					'title' => '&ensp;/&ensp;Master Data',
 					'separator' => '',
-					'subtitle' => 'Master Pegawai',
+					'subtitle' => 'Master Perusahaan',
 					'ttl' => 'Master Data',
 					'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai']),
-					'data_jabatan' => $this->MainModel->jabatan()
+					'data_perusahaan' => $this->MainModel->perusahaan()
 					);
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/sidebar',$this->menu());
-		$this->load->view('master_pegawai');
+		$this->load->view('master_perusahaan');
 		$this->load->view('templates/foot');
 	}
 
@@ -590,9 +590,6 @@ class MasterPegawai extends CI_Controller {
 			unlink('./file/pegawai/foto_profil/'.$foto);
 		}
 
-		$this->MainModel->deleteData('h_subsubmenu','id_pegawai',$id_pegawai);
-		$this->MainModel->deleteData('h_submenu','id_pegawai',$id_pegawai);
-		$this->MainModel->deleteData('h_menu','id_pegawai',$id_pegawai);
 		$this->MainModel->deleteData('pegawai','id_pegawai',$id_pegawai);
 
         $this->session->set_flashdata('sukses', ' Data berhasil dihapus !!');

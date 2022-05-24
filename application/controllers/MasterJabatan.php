@@ -226,7 +226,7 @@ class MasterJabatan extends CI_Controller {
 							'title' => '&ensp;/&ensp;Master Jabatan',
 							'separator' => '&ensp;/&ensp;Master Data',
 							'subtitle' => 'Edit Jabatan',
-							'alternate' => 'Edit Jabatan',
+							'alternate' => 'Master Jabatan',
 							'ttl' => 'Master Data',
 							'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai']),
 							'data_jabatan' => $this->MainModel->getJabatan($idjb)
@@ -254,7 +254,7 @@ class MasterJabatan extends CI_Controller {
 
         $this->MainModel->updateData('jabatan',$data,'id_jabatan',$id_jabatan);
 
-        $this->session->set_flashdata('sukses', ' Data Jabatan berhasil ditambahkan !!');
+        $this->session->set_flashdata('sukses', ' Data Jabatan berhasil diupdate !!');
 
 		redirect('MasterJabatan');
 	}
