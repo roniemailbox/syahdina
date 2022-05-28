@@ -11,7 +11,7 @@
  Target Server Version : 50626
  File Encoding         : 65001
 
- Date: 24/05/2022 16:12:31
+ Date: 28/05/2022 15:13:47
 */
 
 SET NAMES utf8mb4;
@@ -80,10 +80,10 @@ CREATE TABLE `h_menu`  (
 -- ----------------------------
 -- Records of h_menu
 -- ----------------------------
-INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, 'PG000001', '2022-05-10 17:41:38');
-INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 2, NULL, NULL, 'PG000001', '2022-05-10 17:41:38');
-INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, NULL, NULL, 'PG000001', '2022-05-10 17:41:38');
-INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, NULL, NULL, 'PG000001', '2022-05-10 17:41:38');
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
+INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 2, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
 INSERT INTO `h_menu` VALUES ('PG000002', 1, 1, 1, 1, 1, 1, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
 INSERT INTO `h_menu` VALUES ('PG000002', 1, 1, 1, 1, 1, 2, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
 INSERT INTO `h_menu` VALUES ('PG000002', 1, 1, 1, 1, 1, 3, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
@@ -111,12 +111,12 @@ CREATE TABLE `h_submenu`  (
 -- ----------------------------
 -- Records of h_submenu
 -- ----------------------------
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, 'PG000001', '2022-05-10 17:41:38');
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 2, NULL, NULL, 'PG000001', '2022-05-10 17:41:38');
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, 'PG000001', '2022-05-07 08:39:02', 'PG000001', '2022-05-10 17:41:38');
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, 'PG000001', '2022-05-09 12:57:32', 'PG000001', '2022-05-10 17:41:38');
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 5, 'PG000001', '2022-05-15 08:14:58', NULL, NULL);
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 6, 'PG000001', '2022-05-24 06:05:51', NULL, NULL);
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 2, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, 'PG000001', '2022-05-07 08:39:02', 'PG000001', '2022-05-28 13:57:58');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, 'PG000001', '2022-05-09 12:57:32', 'PG000001', '2022-05-28 13:57:58');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 5, 'PG000001', '2022-05-15 08:14:58', 'PG000001', '2022-05-28 13:57:58');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 6, 'PG000001', '2022-05-24 06:05:51', 'PG000001', '2022-05-28 13:57:58');
 INSERT INTO `h_submenu` VALUES ('PG000002', 1, 1, 1, 1, 1, 1, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
 INSERT INTO `h_submenu` VALUES ('PG000002', 1, 1, 1, 1, 1, 2, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
 INSERT INTO `h_submenu` VALUES ('PG000002', 1, 1, 1, 1, 1, 3, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
@@ -379,7 +379,7 @@ CREATE TABLE `perusahaan`  (
 -- ----------------------------
 -- Records of perusahaan
 -- ----------------------------
-INSERT INTO `perusahaan` VALUES ('PR01', 'PT. Syahdina Land Putra\r\n', '', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `perusahaan` VALUES ('PR01', 'PT. Syahdina Land Putra', '', '', 'PR01.jpeg', 'image/jpeg', '', 1);
 
 -- ----------------------------
 -- Table structure for submenu

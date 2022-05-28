@@ -1,13 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MasterPerusahaan extends CI_Controller {
-	public $CI = NULL;
-
+class Profil extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
-
-		$this->CI = & get_instance();
 
 		date_default_timezone_set('Asia/Jakarta');
 
@@ -28,107 +24,17 @@ class MasterPerusahaan extends CI_Controller {
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
 		$data = array(
-					'title' => '&ensp;/&ensp;Master Data',
-					'separator' => '',
-					'subtitle' => 'Master Perusahaan',
-					'ttl' => 'Master Data',
-					'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai']),
-					'data_perusahaan' => $this->MainModel->perusahaan()
-					);
+						'title' => '',
+						'separator' => '',
+  						'subtitle' => 'Profil',
+  						'ttl' => 'Profil',
+						'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
+					 );
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/sidebar',$this->menu());
-		$this->load->view('master_perusahaan');
+		$this->load->view('profil');
 		$this->load->view('templates/foot');
-	}
-
-	public function proses_foto(){
-		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
-
-		$id_perusahaan = $this->input->post('id_perusahaan');
-
-		$config['upload_path']			= './file/perusahaan/logo/';
-        $config['allowed_types']        = 'gif|jpg|jpeg|png';
-        $config['file_name']            = $id_perusahaan;
-        $config['overwrite']            = true; // tindih file dengan file baru
-        $config['max_size']             = 6090; // batas ukuran file: 6MB
-        //$config['max_width']            = 1080; // batas lebar gambar dalam piksel
-        //$config['max_height']           = 1080; // batas tinggi gambar dalam piksel
- 
- 
-        $this->load->library('upload', $config);
- 
-        if (!$this->upload->do_upload('logo')) 
-        {
-            $this->session->set_flashdata('message', $this->upload->display_errors());
-        } 
-        else 
-        {
-            $gambar = $this->upload->data();
-
-            $data = array(
-            				'logo' => $gambar['file_name'],
-            				'mime' => $gambar['file_type']
-            			);
-
-            $this->MainModel->updateData('perusahaan',$data,'id_perusahaan',$id_perusahaan);
-
-            $this->session->set_flashdata('sukses', 'Selamat, logo berhasil di update');
-        }
-
-        redirect('MasterPerusahaan');
-	}
-
-	public function funcSubmenu($submenu, $id_pegawai){
-		$cek = $this->MainModel->CHSA($submenu, $id_pegawai);
-
-		if ($cek!=0) {
-			$data_sbm = $this->MainModel->HSA($submenu, $id_pegawai);
-			$c = $data_sbm['c'];
-			$r = $data_sbm['r'];
-			$u = $data_sbm['u'];
-			$d = $data_sbm['d'];
-			$p = $data_sbm['p'];
-		} else {
-			$c = 0;
-			$r = 0;
-			$u = 0;
-			$d = 0;
-			$p = 0;
-		}
-
-		$data = array(
-						'c' => $c,
-						'r' => $r,
-						'u' => $u,
-						'd' => $d,
-						'p' => $p
-					);
-
-		return $data;
-	}
-
-	public function proses_edit(){
-		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
-
-		$id_perusahaan = $this->input->post('id_perusahaan');
-	    $nama_perusahaan = ucwords($this->input->post('nama_perusahaan'));
-	    $alamat = ucwords($this->input->post('alamat'));
-	    $no_telp = $this->input->post('no_telp');
-	    $keterangan = ucfirst($this->input->post('keterangan'));
-
-    	$data = array(
-    				  'nama_perusahaan' => $nama_perusahaan,
-        			  'alamat' => $alamat,
-        			  'no_telp' => $no_telp,
-        			  'keterangan' => $keterangan
-                    );
-
-        $this->MainModel->updateData('perusahaan',$data,'id_perusahaan',$id_perusahaan);
-
-        $this->session->set_flashdata('sukses', ' Data Perusahaan berhasil diupdate !!');
-
-		redirect('MasterPerusahaan');
 	}
 
 	public function menu() {
@@ -233,5 +139,10 @@ class MasterPerusahaan extends CI_Controller {
 					 );
 
 		return $data_menu;
+	}
+
+	public function logout(){
+		$this->session->sess_destroy(); // Hapus semua session
+		redirect('Login'); // Redirect ke halaman login
 	}
 }

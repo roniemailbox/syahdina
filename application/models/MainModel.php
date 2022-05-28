@@ -504,7 +504,7 @@ class MainModel extends CI_Model {
 	}
 
 	public function getPegawai($id) {
-		$query=$this->db->query("SELECT * FROM pegawai WHERE id_pegawai='$id'")->row_array();
+		$query=$this->db->query("SELECT * FROM pegawai LEFT JOIN jabatan ON pegawai.id_jabatan = jabatan.id_jabatan WHERE pegawai.id_pegawai='$id'")->row_array();
 		return $query;
 	}
 
