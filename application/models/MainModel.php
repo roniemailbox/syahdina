@@ -202,7 +202,7 @@ class MainModel extends CI_Model {
 		$query=$this->db->query("SELECT *
 								FROM menu LEFT JOIN h_menu
 									ON menu.kode_menu = h_menu.kode_menu
-								WHERE menu.menu='$menu' AND H_menu.id_pegawai='$id_pegawai'")->row_array();
+								WHERE menu.menu='$menu' AND h_menu.id_pegawai='$id_pegawai'")->row_array();
 		return $query;
 	}
 
@@ -210,7 +210,7 @@ class MainModel extends CI_Model {
 		$query=$this->db->query("SELECT *
 								FROM menu LEFT JOIN h_menu
 									ON menu.kode_menu = h_menu.kode_menu
-								WHERE menu.menu='$menu' AND H_menu.id_pegawai='$id_pegawai'")->num_rows();
+								WHERE menu.menu='$menu' AND h_menu.id_pegawai='$id_pegawai'")->num_rows();
 		return $query;
 	}
 /*akhir tabel h_menu*/
@@ -595,4 +595,11 @@ class MainModel extends CI_Model {
 		return $query;
 	}
 /*akhir tabel perusahaan*/
+
+/*tabel perumahan*/
+	public function perumahan() {
+		$query=$this->db->query("SELECT * FROM perumahan")->row_array();
+		return $query;
+	}
+/*akhir tabel perumahan*/
 }

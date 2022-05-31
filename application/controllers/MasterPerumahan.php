@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Profil extends CI_Controller {
+class MasterPerumahan extends CI_Controller {
 	public $CI = NULL;
 
 	public function __construct() {
@@ -28,24 +28,62 @@ class Profil extends CI_Controller {
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
 		$data = array(
-						'title' => '',
-						'separator' => '',
-  						'subtitle' => 'Profil',
-  						'ttl' => 'Profil',
-						'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
-					 );
+					'title' => '&ensp;/&ensp;Master Data',
+					'separator' => '',
+					'subtitle' => 'Master Perumahan',
+					'ttl' => 'Master Data',
+					'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai']),
+					'data_perumahan' => $this->MainModel->perumahan()
+					);
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/sidebar',$this->menu());
-		$this->load->view('profil');
+		$this->load->view('master_perumahan');
 		$this->load->view('templates/foot');
 	}
 
-	public function funcMenu($menu, $id_pegawai){
-		$cek = $this->MainModel->CHMA($menu, $id_pegawai);
+	public function proses_foto(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$id_perumahan = $this->input->post('id_perumahan');
+
+		$config['upload_path']			= './file/perumahan/gambar/';
+        $config['allowed_types']        = 'gif|jpg|jpeg|png';
+        $config['file_name']            = $id_perumahan;
+        $config['overwrite']            = true; // tindih file dengan file baru
+        $config['max_size']             = 6090; // batas ukuran file: 6MB
+        //$config['max_width']            = 1080; // batas lebar gambar dalam piksel
+        //$config['max_height']           = 1080; // batas tinggi gambar dalam piksel
+ 
+ 
+        $this->load->library('upload', $config);
+ 
+        if (!$this->upload->do_upload('gambar')) 
+        {
+            $this->session->set_flashdata('message', $this->upload->display_errors());
+        } 
+        else 
+        {
+            $gambar = $this->upload->data();
+
+            $data = array(
+            				'gambar' => $gambar['file_name'],
+            				'mime' => $gambar['file_type']
+            			);
+
+            $this->MainModel->updateData('perumahan',$data,'id_perumahan',$id_perumahan);
+
+            $this->session->set_flashdata('sukses', 'Selamat, gambar berhasil di update');
+        }
+
+        redirect('MasterPerumahan');
+	}
+
+	public function funcSubmenu($submenu, $id_pegawai){
+		$cek = $this->MainModel->CHSA($submenu, $id_pegawai);
 
 		if ($cek!=0) {
-			$data_sbm = $this->MainModel->HMA($menu, $id_pegawai);
+			$data_sbm = $this->MainModel->HSA($submenu, $id_pegawai);
 			$c = $data_sbm['c'];
 			$r = $data_sbm['r'];
 			$u = $data_sbm['u'];
@@ -68,6 +106,29 @@ class Profil extends CI_Controller {
 					);
 
 		return $data;
+	}
+
+	public function proses_edit(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$id_perumahan = $this->input->post('id_perumahan');
+	    $nama= ucwords($this->input->post('nama'));
+	    $alamat = ucwords($this->input->post('alamat'));
+	    $no_telp = $this->input->post('no_telp');
+	    $keterangan = ucfirst($this->input->post('keterangan'));
+
+    	$data = array(
+    				  'nama' => $nama,
+        			  'alamat' => $alamat,
+        			  'no_telp' => $no_telp,
+        			  'keterangan' => $keterangan
+                    );
+
+        $this->MainModel->updateData('perumahan',$data,'id_perumahan',$id_perumahan);
+
+        $this->session->set_flashdata('sukses', ' Data Perumahan berhasil diupdate !!');
+
+		redirect('MasterPerumahan');
 	}
 
 	public function menu() {

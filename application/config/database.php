@@ -75,10 +75,14 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '202.6.226.178',
+	'username' => 'adminserver',
+	'password' => 'kopkar234',
+	'database' => 'db_syahdina',
+	/*'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-	'database' => 'db_syahdina',
+	'database' => 'db_syahdina',*/
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
