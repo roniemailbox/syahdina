@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MasterJabatan extends CI_Controller {
+class MasterType extends CI_Controller {
 	public $CI = NULL;
 
 	public function __construct() {
@@ -30,18 +30,18 @@ class MasterJabatan extends CI_Controller {
 		$data = array(
 					'title' => '&ensp;/&ensp;Master Data',
 					'separator' => '',
-					'subtitle' => 'Master Jabatan',
+					'subtitle' => 'Master Type',
 					'ttl' => 'Master Data',
 					'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
 					);
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/sidebar',$this->menu());
-		$this->load->view('master_jabatan');
+		$this->load->view('master_type');
 		$this->load->view('templates/foot');
 	}
 
-	public function data_jabatan($sbm){
+	public function data_icon($sbm){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
 		$submenu = str_replace("_", " ", $sbm);
@@ -49,12 +49,12 @@ class MasterJabatan extends CI_Controller {
 		$dt = $this->funcSubmenu($submenu,$id['id_pegawai']);
 
 		$columns = array( 
-	                            0 => 'nama_jabatan', 
-	                            1 => 'nama_jabatan',
-	                            2 => 'keterangan'
+	                            0 => 'nama_icon', 
+	                            1 => 'nama_icon',
+	                            2 => 'nama_icon'
 	                        );
 
-		$datacount = $this->MainModel->countJabatan();	
+		$datacount = $this->MainModel->countIcon();	
   
         $totalData = $datacount['jumlah'];
             
@@ -66,39 +66,41 @@ class MasterJabatan extends CI_Controller {
         $dir = $_POST['order']['0']['dir'];
             
         if(empty($_POST['search']['value'])) {            
-        	$data_jabatan = $this->MainModel->dataJabatan($order,$dir,$limit,$start);
+        	$data_icon = $this->MainModel->dataIcon($order,$dir,$limit,$start);
         } else {
             $search = $_POST['search']['value']; 
-            $data_jabatan = $this->MainModel->srcJabatan($search,$order,$dir,$limit,$start);
+            $data_icon = $this->MainModel->srcIcon($search,$order,$dir,$limit,$start);
 
-			$datacount = $this->MainModel->jSrcJabatan($search);
+			$datacount = $this->MainModel->jSrcIcon($search);
            	$totalFiltered = $datacount['jumlah'];
         }
 
         $data = array();
 
         $no = $start + 1;
-        foreach ($data_jabatan as $rowdjb) 
+        foreach ($data_icon as $rowdic) 
         {
         	if ($dt['d']!=0) {
         		$delete = '
-				<a href="#" class="btn bg-gradient-danger btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hapus'.$rowdjb->id_jabatan.'"><i class="fas fa-trash"></i></a>
+        	<div class="text-center">
+				<a href="#" class="btn bg-gradient-danger btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hapus'.$rowdic->font.'"><i class="fas fa-trash"></i></a>
+        	</div>
 
-<div class="modal fade mt-4" id="modal-hapus'.$rowdjb->id_jabatan.'">
+<div class="modal fade mt-4" id="modal-hapus'.$rowdic->font.'">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">Hapus Data Jabatan</h6>
+        <h6 class="modal-title">Hapus Data Icon</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p class="text-left">Yakin ingin menghapus data jabatan <b>'.ucwords($rowdjb->nama_jabatan).'</b> ?<br></p>
+        <p>Yakin ingin menghapus data icon <b>'.ucfirst(substr($rowdic->nama_icon, 7)).'</b> ?<br></p>
       </div>
       <div class="modal-footer text-right">
         <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
-        <a href="'.site_url("MasterJabatan/proses_hapus/".$rowdjb->id_jabatan).'" class="btn bg-gradient-danger btn-xs"><i class="fas fa-check"></i>&ensp;Ya !</a>
+        <a href="'.site_url("MasterIcon/proses_hapus/".$rowdic->font).'" class="btn bg-gradient-danger btn-xs"><i class="fas fa-check"></i>&ensp;Ya !</a>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -110,16 +112,9 @@ class MasterJabatan extends CI_Controller {
         		$delete = '';
         	}
 
-        	if ($dt['u']!=0) {
-        		$update = '
-				<a href="'.site_url("MasterJabatan/sesi_edjb/".$rowdjb->id_jabatan).'" class="btn bg-gradient-primary btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>';
-        	} else {
-        		$update = '';
-        	}
-
-        	$nestedData['aksi'] = '<div class="text-center">'.$update.$delete.'</div>';
-        	$nestedData['nama'] = '<div class="text-center">'.$rowdjb->nama_jabatan.'</div>';
-            $nestedData['keterangan'] = '<div class="text-left">'.ucfirst($rowdjb->keterangan).'</div>';
+        	$nestedData['aksi'] = $delete;
+        	$nestedData['picture'] = '<div class="text-center"><i class="'.$rowdic->nama_icon.'" style="font-size: 15px"></i></div>';
+            $nestedData['nama'] = '<div class="text-left">'.ucfirst(substr($rowdic->nama_icon, 7)).'</div>';
             $data[] = $nestedData;
             $no++;
         }
@@ -162,111 +157,42 @@ class MasterJabatan extends CI_Controller {
 
 		return $data;
 	}
-
 	public function proses_tambah(){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-	    $nama_jabatan = ucwords($this->input->post('nama_jabatan'));
-	    $keterangan = ucfirst($this->input->post('keterangan'));
+	    $ni = strtolower($this->input->post('nama_icon'));
+	    $font = strtolower($this->input->post('font'));
 
-	    $data_nu = $this->MainModel->nuJabatan();
-	    $ujb = $data_nu['ujb']+1;
-	    $jum_ujb = strlen($ujb);
+	    $nama_icon = 'fas fa-'.$ni;
 
-	    if ($jum_ujb==1) {
-	    	$no_urut = "00".$ujb;
-	    } elseif ($jum_ujb==2) {
-	    	$no_urut = "0".$ujb;
-	    } elseif ($jum_ujb==3) {
-	    	$no_urut = $ujb;
+	    $cek = $this->MainModel->cekIcon($nama_icon);
+	    
+	    if ($cek!=0) {
+	    	$this->session->set_flashdata('message', ' Icon sudah ada !!');
+
+			redirect('MasterIcon');
+	    } else {
+	    	$data = array(
+	        			  'nama_icon' => $nama_icon,
+	        			  'font' => $font
+	                    );
+
+	        $this->MainModel->insertIcon($data);
+
+	        $this->session->set_flashdata('sukses', ' Data Icon berhasil ditambahkan !!');
+
+			redirect('MasterIcon');
 	    }
-
-	    $id_jabatan = "JB".$no_urut;
-
-    	$data = array(
-        			  'id_jabatan' => $id_jabatan,
-        			  'nama_jabatan' => $nama_jabatan,
-        			  'keterangan' => $keterangan,
-        			  'no_urut' => $ujb
-                    );
-
-        $this->MainModel->insertJabatan($data);
-
-        $this->session->set_flashdata('sukses', ' Data Jabatan berhasil ditambahkan !!');
-
-		redirect('MasterJabatan');
 	}
 
-	public function sesi_edjb($idjb=null){
-		if (!isset($idjb)||$idjb==null) {
-			redirect('Beranda');
-		} else {
-			$session = array(
-								'sesbas' => md5($idjb)
-							);
-
-			$this->session->set_userdata($session);
-
-			redirect('MasterJabatan/edit_jabatan/'.$idjb);
-		}
-	}
-
-	public function edit_jabatan($idjb=null){
-		if (!isset($idjb)||$idjb==null) {
-			redirect('Beranda');
-		} else {
-			$id['sesbas'] = $this->session->userdata('sesbas');
-
-			if ($id['sesbas']!=md5($idjb)) {
-				redirect('Beranda');
-			} else {
-				$id['id_pegawai'] = $this->session->userdata('id_pegawai');
-
-				$data = array(
-							'title' => '&ensp;/&ensp;Master Jabatan',
-							'separator' => '&ensp;/&ensp;Master Data',
-							'subtitle' => 'Edit Jabatan',
-							'alternate' => 'Master Jabatan',
-							'ttl' => 'Master Data',
-							'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai']),
-							'data_jabatan' => $this->MainModel->getJabatan($idjb)
-							);
-
-				$this->load->view('templates/header',$data);
-				$this->load->view('templates/sidebar',$this->menu());
-				$this->load->view('edit_jabatan');
-				$this->load->view('templates/foot');
-			}
-		}
-	}
-
-	public function proses_edit(){
+	public function proses_hapus($font){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-		$id_jabatan = $this->input->post('id_jabatan');
-	    $nama_jabatan = ucwords($this->input->post('nama_jabatan'));
-	    $keterangan = ucfirst($this->input->post('keterangan'));
-
-    	$data = array(
-        			  'nama_jabatan' => $nama_jabatan,
-        			  'keterangan' => $keterangan
-                    );
-
-        $this->MainModel->updateData('jabatan',$data,'id_jabatan',$id_jabatan);
-
-        $this->session->set_flashdata('sukses', ' Data Jabatan berhasil diupdate !!');
-
-		redirect('MasterJabatan');
-	}
-
-	public function proses_hapus($id_jabatan){
-		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
-
-		$this->MainModel->deleteData('jabatan','id_jabatan',$id_jabatan);
+		$this->MainModel->deleteData('icon','font',$font);
 
         $this->session->set_flashdata('sukses', ' Data berhasil dihapus !!');
 
-		redirect('MasterJabatan');
+		redirect('MasterIcon');
 	}
 
 	public function menu() {

@@ -11,7 +11,7 @@
  Target Server Version : 50626
  File Encoding         : 65001
 
- Date: 28/05/2022 15:13:47
+ Date: 02/06/2022 11:03:47
 */
 
 SET NAMES utf8mb4;
@@ -22,16 +22,43 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `blok`;
 CREATE TABLE `blok`  (
-  `kode_blok` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `kode_cluster` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `kode_blok` char(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `keterangan` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `status` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`kode_blok`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of blok
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for blok_cluster
+-- ----------------------------
+DROP TABLE IF EXISTS `blok_cluster`;
+CREATE TABLE `blok_cluster`  (
+  `kode_bc` varchar(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'BC010001000001 (BC,id_perusahaan,id_perumahan,no_urut)',
+  `kode_type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `kode_blok` char(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `kode_cluster` char(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `gambar` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `mime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `status` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `tgl_utj` datetime NULL DEFAULT NULL,
+  `tgl_dp` datetime NULL DEFAULT NULL,
+  `tgl_akad` datetime NULL DEFAULT NULL,
+  `id_pic` char(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `nama_pic` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `user_entry` char(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `tgl_entry` datetime NULL DEFAULT NULL,
+  `user_edit` char(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `tgl_edit` datetime NULL DEFAULT NULL,
+  `no_urut` double NULL DEFAULT NULL,
+  PRIMARY KEY (`kode_bc`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of blok_cluster
 -- ----------------------------
 
 -- ----------------------------
@@ -39,18 +66,9 @@ CREATE TABLE `blok`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `cluster`;
 CREATE TABLE `cluster`  (
-  `kode_cluster` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'CL01000100001 (CL,id_perusahaan,id_perumahan,no_urut)',
-  `nama` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `id_perumahan` char(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `gambar` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `mime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `status` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `keterangan` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `user_entry` char(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `tgl_entry` datetime NULL DEFAULT NULL,
-  `user_edit` char(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `tgl_edit` datetime NULL DEFAULT NULL,
-  `no_urut` double NULL DEFAULT NULL,
+  `kode_cluster` char(5) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'CN5, dst',
+  `nama` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Nabawi',
+  `alias` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'The Ummah Project, dst',
   PRIMARY KEY (`kode_cluster`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
@@ -80,14 +98,11 @@ CREATE TABLE `h_menu`  (
 -- ----------------------------
 -- Records of h_menu
 -- ----------------------------
-INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 2, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_menu` VALUES ('PG000002', 1, 1, 1, 1, 1, 1, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
-INSERT INTO `h_menu` VALUES ('PG000002', 1, 1, 1, 1, 1, 2, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
-INSERT INTO `h_menu` VALUES ('PG000002', 1, 1, 1, 1, 1, 3, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
-INSERT INTO `h_menu` VALUES ('PG000002', 1, 1, 1, 1, 1, 4, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_menu` VALUES ('PG000001', 0, 0, 0, 0, 0, 2, NULL, NULL, 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, NULL, NULL, 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, NULL, NULL, 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_menu` VALUES ('PG000001', 1, 1, 1, 1, 1, 5, 'PG000001', '2022-06-01 06:50:13', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_submenu
@@ -111,18 +126,18 @@ CREATE TABLE `h_submenu`  (
 -- ----------------------------
 -- Records of h_submenu
 -- ----------------------------
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 2, NULL, NULL, 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, 'PG000001', '2022-05-07 08:39:02', 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, 'PG000001', '2022-05-09 12:57:32', 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 5, 'PG000001', '2022-05-15 08:14:58', 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 6, 'PG000001', '2022-05-24 06:05:51', 'PG000001', '2022-05-28 13:57:58');
-INSERT INTO `h_submenu` VALUES ('PG000002', 1, 1, 1, 1, 1, 1, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
-INSERT INTO `h_submenu` VALUES ('PG000002', 1, 1, 1, 1, 1, 2, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
-INSERT INTO `h_submenu` VALUES ('PG000002', 1, 1, 1, 1, 1, 3, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
-INSERT INTO `h_submenu` VALUES ('PG000002', 1, 1, 1, 1, 1, 4, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
-INSERT INTO `h_submenu` VALUES ('PG000002', 1, 1, 1, 1, 1, 5, 'PG000001', '2022-05-20 23:24:41', NULL, NULL);
-INSERT INTO `h_submenu` VALUES ('PG000002', 1, 1, 1, 1, 1, 6, 'PG000001', '2022-05-24 06:05:51', NULL, NULL);
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 1, NULL, NULL, 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 2, NULL, NULL, 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 3, 'PG000001', '2022-05-07 08:39:02', 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 4, 'PG000001', '2022-05-09 12:57:32', 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 5, 'PG000001', '2022-05-15 08:14:58', 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 6, 'PG000001', '2022-05-24 06:05:51', 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 7, 'PG000001', '2022-05-29 23:47:02', 'PG000001', '2022-05-31 19:42:31');
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 8, 'PG000001', '2022-06-01 06:46:47', NULL, NULL);
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 9, 'PG000001', '2022-06-01 06:47:04', NULL, NULL);
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 10, 'PG000001', '2022-06-01 06:47:28', NULL, NULL);
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 11, 'PG000001', '2022-06-01 06:51:01', NULL, NULL);
+INSERT INTO `h_submenu` VALUES ('PG000001', 1, 1, 1, 1, 1, 12, 'PG000001', '2022-06-01 06:51:17', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_subsubmenu
@@ -282,6 +297,39 @@ INSERT INTO `jabatan` VALUES ('JB002', 'Chief Finance Officer (CFO)', '', 2);
 INSERT INTO `jabatan` VALUES ('JB003', 'Chief Marketing Officer (CMO)', '', 3);
 INSERT INTO `jabatan` VALUES ('JB004', 'HR Officer', '', 4);
 INSERT INTO `jabatan` VALUES ('JB005', 'Administrator Aplikasi', '', 5);
+INSERT INTO `jabatan` VALUES ('JB006', 'GA & Purchasing', '', 6);
+INSERT INTO `jabatan` VALUES ('JB007', 'Legal & Complience', '', 7);
+INSERT INTO `jabatan` VALUES ('JB008', 'Accounting', '', 8);
+
+-- ----------------------------
+-- Table structure for kavling_cluster
+-- ----------------------------
+DROP TABLE IF EXISTS `kavling_cluster`;
+CREATE TABLE `kavling_cluster`  (
+  `kode_kc` varchar(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'KC010001000001 (KC,id_perusahaan,id_perumahan,no_urut)',
+  `kode_type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `kode_blok` char(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `kode_cluster` char(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `gambar` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `mime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `status` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `tgl_utj` datetime NULL DEFAULT NULL,
+  `tgl_dp` datetime NULL DEFAULT NULL,
+  `tgl_akad` datetime NULL DEFAULT NULL,
+  `id_pic` char(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `nama_pic` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `keterangan` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `user_entry` char(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `tgl_entry` datetime NULL DEFAULT NULL,
+  `user_edit` char(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `tgl_edit` datetime NULL DEFAULT NULL,
+  `no_urut` double NULL DEFAULT NULL,
+  PRIMARY KEY (`kode_kc`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of kavling_cluster
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for menu
@@ -304,6 +352,7 @@ INSERT INTO `menu` VALUES (1, 'Beranda', 1, 'Beranda', 'fas fa-tachometer-alt', 
 INSERT INTO `menu` VALUES (2, 'Profil', 2, 'Profil', 'fas fa-user', b'1');
 INSERT INTO `menu` VALUES (3, 'Master Data', 3, '#', 'fas fa-database', b'1');
 INSERT INTO `menu` VALUES (4, 'Hak Akses', 4, '#', 'fas fa-lock', b'1');
+INSERT INTO `menu` VALUES (5, 'Perumahan', 5, '#', 'fas fa-fas fa-landmark', b'1');
 
 -- ----------------------------
 -- Table structure for pegawai
@@ -332,7 +381,6 @@ CREATE TABLE `pegawai`  (
 -- Records of pegawai
 -- ----------------------------
 INSERT INTO `pegawai` VALUES ('PG000001', 'Yusuf', 'Jl. Pulo Wonokromo 223', 'L', 'JB005', NULL, NULL, '', 'yusuf', 'dd2eb170076a5dec97cdbbbbff9a4405', 'PG000001', '2022-04-04 14:51:57', NULL, NULL, 1);
-INSERT INTO `pegawai` VALUES ('PG000002', 'Agnes Monica', 'Jl. Erlangga No. 23', 'P', 'JB001', NULL, NULL, 'Tetap', 'agnes', '2d8463b5c3a3c6c8854a175683fe6303', 'PG000001', '2022-05-20 23:24:41', NULL, NULL, 2);
 
 -- ----------------------------
 -- Table structure for perumahan
@@ -359,6 +407,7 @@ CREATE TABLE `perumahan`  (
 -- ----------------------------
 -- Records of perumahan
 -- ----------------------------
+INSERT INTO `perumahan` VALUES ('PM010001', 'Syahdina Land Development', '', '', 'PR01', '', '', '1', '', NULL, NULL, NULL, NULL, 1);
 
 -- ----------------------------
 -- Table structure for perusahaan
@@ -379,7 +428,7 @@ CREATE TABLE `perusahaan`  (
 -- ----------------------------
 -- Records of perusahaan
 -- ----------------------------
-INSERT INTO `perusahaan` VALUES ('PR01', 'PT. Syahdina Land Putra', '', '', 'PR01.jpeg', 'image/jpeg', '', 1);
+INSERT INTO `perusahaan` VALUES ('PR01', 'PT. Syahdina Land Putra', '', '', '', '', '', 1);
 
 -- ----------------------------
 -- Table structure for submenu
@@ -405,6 +454,12 @@ INSERT INTO `submenu` VALUES (3, 3, 'Master Icon', 3, 'MasterIcon', NULL, b'1');
 INSERT INTO `submenu` VALUES (4, 3, 'Master Jabatan', 4, 'MasterJabatan', NULL, b'1');
 INSERT INTO `submenu` VALUES (5, 3, 'Master Pegawai', 5, 'MasterPegawai', NULL, b'1');
 INSERT INTO `submenu` VALUES (6, 3, 'Master Perusahaan', 6, 'MasterPerusahaan', NULL, b'1');
+INSERT INTO `submenu` VALUES (7, 3, 'Master Perumahan', 7, 'MasterPerumahan', NULL, b'1');
+INSERT INTO `submenu` VALUES (8, 3, 'Master Type', 8, 'MasterType', NULL, b'1');
+INSERT INTO `submenu` VALUES (9, 3, 'Master Blok', 9, 'MasterBlok', NULL, b'1');
+INSERT INTO `submenu` VALUES (10, 3, 'Master Cluster', 10, 'MasterCluster', NULL, b'1');
+INSERT INTO `submenu` VALUES (11, 5, 'Blok Cluster', 11, 'BlockCluster', NULL, b'1');
+INSERT INTO `submenu` VALUES (12, 5, 'Kavling Cluster', 12, 'KavlingCluster', NULL, b'1');
 
 -- ----------------------------
 -- Table structure for subsubmenu
@@ -430,7 +485,7 @@ CREATE TABLE `subsubmenu`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `type`;
 CREATE TABLE `type`  (
-  `kode_type` char(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '32,46,dst',
+  `kode_type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '32,46,dst',
   `luas_bangunan` double NULL DEFAULT NULL COMMENT 'm3',
   `panjang` double NULL DEFAULT NULL COMMENT 'm',
   `lebar` double NULL DEFAULT NULL COMMENT 'm',

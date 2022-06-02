@@ -50,12 +50,16 @@ class MasterPegawai extends CI_Controller {
 		$dt = $this->funcSubmenu($submenu,$id['id_pegawai']);
 
 		$columns = array( 
-	                            0 => 'pegawai.id_pegawai', 
+	                            0 => 'pegawai.no_urut', 
 	                            1 => 'pegawai.foto',
 	                            2 => 'pegawai.nama',
 	                            3 => 'pegawai.jk',
 	                            4 => 'jabatan.nama_jabatan',
 	                            5 => 'pegawai.status'
+	                        );
+
+		$dirs = array( 
+	                            'asc' => 'desc'
 	                        );
 
 		$datacount = $this->MainModel->countPegawai();	
@@ -67,7 +71,7 @@ class MasterPegawai extends CI_Controller {
         $limit = $_POST['length'];
         $start = $_POST['start'];
         $order = $columns[$_POST['order']['0']['column']];
-        $dir = $_POST['order']['0']['dir'];
+        $dir = $dirs[$_POST['order']['0']['dir']];
             
         if(empty($_POST['search']['value'])) {            
         	$data_pegawai = $this->MainModel->dataPegawai($order,$dir,$limit,$start);
