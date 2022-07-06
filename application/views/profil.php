@@ -16,7 +16,7 @@
                   $letter = substr($data_pegawai['nama'], 0, 1);
                   $path_foto = base_url('img/'.$letter.'.png');
                 } else {
-                  $path_foto = base_url('file/petugas/foto_profil/'.$data_pegawai['foto']);
+                  $path_foto = base_url('file/pegawai/foto_profil/'.$data_pegawai['foto']);
                 }
                 ?>
                   <a href="#" data-toggle="modal" data-target="#modal-foto">
@@ -104,23 +104,35 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form" class="form-horizontal" action="<?php echo site_url('Beranda/proses_foto'); ?>" method="post" enctype="multipart/form-data">
-          <input type="hidden" id="id_petugas" name="id_petugas" value="<?php echo $data_petugas['id_petugas']; ?>">
+          <input type="hidden" id="id_pegawai" name="id_pegawai" value="<?php echo $data_pegawai['id_pegawai']; ?>">
           <div class="form-group row text-center">
             <img src="<?php echo $path_foto; ?>" class="col-sm-12" style="width: 100px; height: auto">
           </div>
+      <?php      
+      if ($dt['u']!=0) {
+      ?>
+          <form id="form" class="form-horizontal" action="<?php echo site_url('Profil/proses_foto'); ?>" method="post" enctype="multipart/form-data">
           <div class="form-group row">
             <label class="col-sm-3 col-form-label form-control-sm">File Foto</label>
             <div class="col-sm-9 form-group">
               <input type="file" class="form-control-file form-control-sm" id="foto" name="foto" placeholder="File Foto Baru" accept="image/*">
             </div>
           </div>
+      <?php
+      }
+      ?>
       </div>
+      <?php      
+      if ($dt['u']!=0) {
+      ?>
       <div class="modal-footer text-right">
         <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
-        <button type="submit" class="btn bg-gradient-warning btn-xs" id="btnGP" name="btnGP"><i class="fas fa-save"></i>&ensp;Simpan Perubahan</button>
+        <button type="submit" class="btn bg-gradient-teal btn-xs" id="btnGP" name="btnGP"><i class="fas fa-save"></i>&ensp;Simpan Perubahan</button>
         </form>
       </div>
+      <?php
+      }
+      ?>
     </div>
     <!-- /.modal-content -->
   </div>
@@ -129,84 +141,69 @@
 <!-- /.modal -->
 
 <div class="modal fade mt-5" id="modal-edit">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5>Edit Profil</h5>
       </div>
       <div class="modal-body">
-        <form action="<?php echo site_url('Beranda/edit_profil'); ?>" method="post">
-          <input type="hidden" id="us" name="us" value="<?php echo $data_petugas['username']; ?>">
+        <form action="<?php echo site_url('Profil/edit_profil'); ?>" method="post">
+          <input type="hidden" id="us" name="us" value="<?php echo $data_pegawai['username']; ?>">
           <div class="form-group row">
             <label class="col-sm-3 col-form-label form-control-sm">ID</label>
             <div class="col-sm-9 form-group">
-              <input type="text" class="form-control form-control-sm" value="<?php echo $data_petugas['id_petugas']; ?>" readonly>
+              <input type="text" class="form-control form-control-sm" value="<?php echo $data_pegawai['id_pegawai']; ?>" readonly>
             </div>
           </div>
           <div class="form-group row" style="margin-top: -20px">
             <label class="col-sm-3 col-form-label form-control-sm">Nama</label>
             <div class="col-sm-9 form-group">
-              <input type="text" class="form-control form-control-sm" id="nama" name="nama" placeholder="Nama Lengkap" maxlength="100" value="<?php echo $data_petugas['nama']; ?>" required>
+              <input type="text" class="form-control form-control-sm" id="nama" name="nama" placeholder="Nama Lengkap" maxlength="100" value="<?php echo $data_pegawai['nama']; ?>" required>
             </div>
           </div>
           <div class="form-group row" style="margin-top: -20px">
             <label class="col-sm-3 col-form-label form-control-sm">Alamat</label>
             <div class="col-sm-9 form-group">
-              <textarea class="form-control form-control-sm" id="alamat" name="alamat" placeholder="Alamat Lengkap" maxlength="150"><?php echo $data_petugas['alamat']; ?></textarea>
-            </div>
-          </div>
-          <div class="form-group row" style="margin-top: -20px">
-            <label class="col-sm-3 col-form-label form-control-sm">Kota Kelahiran</label>
-            <div class="col-sm-9 form-group">
-              <select type="text" class="form-control select2 form-control-sm" id="kota_kelahiran" name="kota_kelahiran" style="width: 100%" required>
-                <?php
-                foreach ($dkt as $rowdkt) {
-                  $kt = $rowdkt->nama_kota.', '.$rowdkt->nama_provinsi;
-                ?>
-                  <option value="<?php echo $kt; ?>" <?php if($kt==$data_petugas['kota_kelahiran']) echo 'selected'; ?>><?php echo $kt; ?></option>
-                <?php
-                }
-                ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row" style="margin-top: -20px">
-            <label class="col-sm-3 col-form-label form-control-sm">Tanggal Lahir</label>
-            <div class="col-sm-9 form-group">
-              <input type="date" class="form-control form-control-sm" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal Lahir" value="<?php echo $data_petugas['tgl_lahir']; ?>">
+              <textarea class="form-control form-control-sm" id="alamat" name="alamat" placeholder="Alamat Lengkap" maxlength="200"><?php echo $data_pegawai['alamat']; ?></textarea>
             </div>
           </div>
           <div class="form-group row" style="margin-top: -20px">
             <label class="col-sm-3 col-form-label form-control-sm">Jenis Kelamin</label>
             <div class="col-sm-9 form-group">
               <div class="form-check d-inline">
-                <input class="form-check-input" type="radio" id="rbJK" name="rbJK" value="L" <?php if($data_petugas['jk']=='L') echo 'checked'; ?>>
+                <input class="form-check-input" type="radio" id="rbJK" name="rbJK" value="L" <?php if($data_pegawai['jk']=='L') echo 'checked'; ?>>
                 <label class="form-check-label">Laki - laki</label>
               </div>&ensp;
               <div class="form-check d-inline">
-                <input class="form-check-input" type="radio" id="rbJK" name="rbJK" value="P" <?php if($data_petugas['jk']=='P') echo 'checked'; ?>>
+                <input class="form-check-input" type="radio" id="rbJK" name="rbJK" value="P" <?php if($data_pegawai['jk']=='P') echo 'checked'; ?>>
                 <label class="form-check-label">Perempuan</label>
               </div>
             </div>
           </div>
           <div class="form-group row" style="margin-top: -20px">
-            <label class="col-sm-3 col-form-label form-control-sm">No Telp</label>
+            <label class="col-sm-3 col-form-label form-control-sm">Jabatan</label>
             <div class="col-sm-9 form-group">
-              <input type="text" class="form-control form-control-sm" id="no_telp" name="no_telp" onkeypress="return hanyaAngka(event)" placeholder="08XXXXXXXX" maxlength="15" value="<?php echo $data_petugas['no_telp']; ?>">
+              <input type="text" class="form-control form-control-sm" id="jabatan" name="jabatan" value="<?php echo $data_pegawai['nama_jabatan']; ?>" readonly>
             </div>
           </div>
           <div class="form-group row" style="margin-top: -20px">
             <label class="col-sm-3 col-form-label form-control-sm">Username</label>
             <div class="col-sm-9 form-group">
-              <input type="text" class="form-control form-control-sm" id="username" name="username" maxlength="25" placeholder="Username" value="<?php echo $data_petugas['username']; ?>" required>
+              <input type="text" class="form-control form-control-sm" id="username" name="username" maxlength="25" placeholder="Username" value="<?php echo $data_pegawai['username']; ?>" required>
             </div>
           </div>      
       </div>
+      <?php      
+      if ($dt['u']!=0) {
+      ?>
       <div class="modal-footer text-right">
         <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Tutup</button>
-        <button type="submit" class="btn bg-gradient-warning btn-xs" id="btnEP" name="btnEP"><i class="fas fa-save"></i>&ensp;Simpan Perubahan</button>
+        <button type="submit" class="btn bg-gradient-teal btn-xs" id="btnEP" name="btnEP"><i class="fas fa-save"></i>&ensp;Simpan Perubahan</button>
         </form>
       </div>
+      <?php
+      }
+      ?>
     </div>
     <!-- /.modal-content -->
   </div>
@@ -215,24 +212,24 @@
 <!-- /.modal -->
 
 <div class="modal fade mt-5" id="modal-password">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5>Ganti Password</h5>
       </div>
       <div class="modal-body">
-        <form action="<?php echo site_url('Beranda/ganti_password'); ?>" method="post">
-          <input type="hidden" id="ps" name="ps" value="<?php echo $data_petugas['password']; ?>">
+        <form action="<?php echo site_url('Profil/ganti_password'); ?>" method="post">
+          <input type="hidden" id="ps" name="ps" value="<?php echo $data_pegawai['password']; ?>">
           <div class="form-group row">
             <label class="col-sm-3 col-form-label form-control-sm">Nama</label>
             <div class="col-sm-9 form-group">
-              <input type="text" class="form-control form-control-sm" value="<?php echo $data_petugas['nama']; ?>" readonly>
+              <input type="text" class="form-control form-control-sm" value="<?php echo $data_pegawai['nama']; ?>" readonly>
             </div>
           </div>
           <div class="form-group row" style="margin-top: -20px">
             <label class="col-sm-3 col-form-label form-control-sm">Username</label>
             <div class="col-sm-9 form-group">
-              <input type="text" class="form-control form-control-sm" value="<?php echo $data_petugas['username']; ?>" readonly>
+              <input type="text" class="form-control form-control-sm" value="<?php echo $data_pegawai['username']; ?>" readonly>
             </div>
           </div>
           <div class="form-group row" style="margin-top: -20px">
@@ -254,11 +251,17 @@
             </div>
           </div>
       </div>
+      <?php      
+      if ($dt['u']!=0) {
+      ?>
       <div class="modal-footer text-right">
         <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Tutup</button>
-        <button type="submit" class="btn bg-gradient-indigo btn-xs" id="btnGP" name="btnGP"><i class="fas fa-save"></i>&ensp;Simpan Perubahan</button>
+        <button type="submit" class="btn bg-gradient-fuchsia btn-xs" id="btnGP" name="btnGP"><i class="fas fa-save"></i>&ensp;Simpan Perubahan</button>
         </form>
       </div>
+      <?php
+      }
+      ?>
     </div>
     <!-- /.modal-content -->
   </div>

@@ -29,20 +29,42 @@
           <div class="card-body">
             <form id="form" class="form-horizontal" action="<?php echo site_url('MasterType/proses_tambah'); ?>" method="post">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label form-control-sm">Nama Type</label>
+                <label class="col-sm-3 col-form-label form-control-sm">Type</label>
                 <div class="col-sm-9 form-group">
-                  <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text form-control-sm">fas fa-</span>
-                  </div>
-                  <input type="text" class="form-control form-control-sm" id="nama_Type" name="nama_Type" placeholder="Nama Type" maxlength="30" required>
-                </div>
+                  <input type="text" class="form-control form-control-sm" id="type" name="type" placeholder="Nama Type" maxlength="20" required>
                 </div>
               </div>
               <div class="form-group row" style="margin-top: -20px">
-                <label class="col-sm-3 col-form-label form-control-sm">Font</label>
+                <label class="col-sm-3 col-form-label form-control-sm">Luas Bangunan</label>
                 <div class="col-sm-9 form-group">
-                  <input type="text" class="form-control form-control-sm" id="font" name="font" placeholder="Ex: f00c" maxlength="5" required>
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" id="luas_bangunan" name="luas_bangunan" onkeypress="return hanyaAngka(event)">
+                    <div class="input-group-append">
+                      <span class="input-group-text">meter</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row" style="margin-top: -20px">
+                <label class="col-sm-3 col-form-label form-control-sm">Panjang</label>
+                <div class="col-sm-9 form-group">
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" id="panjang" name="panjang" onkeypress="return hanyaAngka(event)">
+                    <div class="input-group-append">
+                      <span class="input-group-text">meter</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row" style="margin-top: -20px">
+                <label class="col-sm-3 col-form-label form-control-sm">Lebar</label>
+                <div class="col-sm-9 form-group">
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" id="lebar" name="lebar" onkeypress="return hanyaAngka(event)">
+                    <div class="input-group-append">
+                      <span class="input-group-text">meter</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group float-right" style="margin-top: -10px">
@@ -69,8 +91,7 @@
                   $htg = '
                           <tr style="text-align: center">
                             <th>ACTION</th>
-                            <th>Picture</th>
-                            <th>Nama Type</th>
+                            <th>Type</th>
                           </tr>
                           ';
 

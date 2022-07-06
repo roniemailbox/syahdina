@@ -70,6 +70,126 @@ class Profil extends CI_Controller {
 		return $data;
 	}
 
+	public function proses_foto(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$tgl = date('Y-m-d H:i:s');
+
+		$config['upload_path']			= './file/pegawai/foto_profil/';
+        $config['allowed_types']        = 'gif|jpg|jpeg|png';
+        $config['file_name']            = $id['id_pegawai'];
+        $config['overwrite']            = true; // tindih file dengan file baru
+        $config['max_size']             = 6090; // batas ukuran file: 6MB
+        //$config['max_width']            = 1080; // batas lebar gambar dalam piksel
+        //$config['max_height']           = 1080; // batas tinggi gambar dalam piksel
+ 
+ 
+        $this->load->library('upload', $config);
+ 
+        if (!$this->upload->do_upload('foto')) 
+        {
+            $this->session->set_flashdata('message', $this->upload->display_errors());
+        } 
+        else 
+        {
+            $gambar = $this->upload->data();
+
+            $data = array(
+            				'foto' => $gambar['file_name'],
+            				'mime' => $gambar['file_type'],
+            				'user_edit' => $id['id_pegawai'],
+            				'tgl_edit' => $tgl
+            			);
+
+            $this->MainModel->updateData('pegawai',$data,'id_pegawai',$id['id_pegawai']);
+
+            $this->session->set_flashdata('sukses', 'Selamat, foto berhasil di update');
+        }
+
+        redirect('Profil');
+	}
+
+	public function edit_profil(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$tgl = date('Y-m-d H:i:s');
+		$us = $this->input->post('us');
+
+		$nama = ucwords($this->input->post('nama'));
+		$alamat = ucwords($this->input->post('alamat'));
+		$jk = $this->input->post('rbJK');
+		$username = $this->input->post('username');
+
+		$cek = $this->MainModel->getUsernamePegawai($username);
+
+		if ($username!=$us) {
+			if ($cek!=0) {
+				$this->session->set_flashdata('message', ' Username sudah ada!!');
+			} else {
+				$data = array(
+								'nama' => $nama,
+								'alamat' => $alamat,
+								'jk' => $jk,
+								'username' => $username,
+								'user_edit' => $id['id_pegawai'],
+								'tgl_edit' => $tgl
+							);
+
+				$this->MainModel->updateData('pegawai',$data,'id_pegawai',$id['id_pegawai']);
+
+				$this->session->set_flashdata('sukses', ' Proses update profil berhasil !!');
+			}			
+		} else {
+			$data = array(
+							'nama' => $nama,
+							'alamat' => $alamat,
+							'jk' => $jk,
+							'username' => $username,
+							'user_edit' => $id['id_pegawai'],
+							'tgl_edit' => $tgl
+						);
+
+			$this->MainModel->updateData('pegawai',$data,'id_pegawai',$id['id_pegawai']);
+
+			$this->session->set_flashdata('sukses', ' Proses update profil berhasil !!');
+		}
+
+		redirect('Profil');
+	}
+
+	public function ganti_password(){
+		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
+
+		$tgl = date('Y-m-d H:i:s');
+		$ps = $this->input->post('ps');
+
+		$psl = md5($this->input->post('psl'));
+		$psb = $this->input->post('psb');
+		$psb2 = $this->input->post('psb2');
+
+		if ($psl!=$ps) {
+			$this->session->set_flashdata('message', ' Password lama anda tidak sama !!');
+		} else {
+			if ($psb!=$psb2) {
+				$this->session->set_flashdata('message', ' Password baru anda tidak sama !!');
+			} else {
+				$psw = md5($psb2);
+
+				$data = array(
+								'password' => $psw,
+								'user_edit' => $id['id_pegawai'],
+								'tgl_edit' => $tgl
+							);
+
+				$this->MainModel->updateData('pegawai',$data,'id_pegawai',$id['id_pegawai']);
+
+				$this->session->set_flashdata('sukses', ' Proses ganti password berhasil !!');
+			}
+		}
+
+		redirect('Profil');
+	}
+
 	public function menu() {
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 

@@ -13,7 +13,7 @@
         <div class="card card-teal collapsed-card">
           <div class="card-header">
             <h3 class="card-title" data-card-widget="collapse" style="cursor:pointer">
-              <i class="fas fa-plus"></i>&ensp;Tambah Jabatan
+              <i class="fas fa-plus"></i>&ensp;Tambah Blok Cluster
             </h3>
 
             <div class="card-tools">
@@ -27,29 +27,53 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <form id="form" class="form-horizontal" action="<?php echo site_url('MasterJabatan/proses_tambah'); ?>" method="post">
+            <form id="form" class="form-horizontal" action="<?php echo site_url('MasterBlokCluster/proses_tambah'); ?>" method="post" enctype="multipart/form-data">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label form-control-sm">Nama Jabatan</label>
+                <label class="col-sm-3 col-form-label form-control-sm">Cluster</label>
                 <div class="col-sm-9 form-group">
-                  <input type="text" class="form-control form-control-sm" id="nama_jabatan" name="nama_jabatan" placeholder="Nama Jabatan" maxlength="30" required>
+                  <select type="text" class="form-control form-control-sm" id="kode_cluster" name="kode_cluster">
+                  <?php
+                  foreach ($data_cluster as $rowdcl) {
+                  ?>
+                  <option value="<?php echo $rowdcl->kode_cluster; ?>"><?php echo $rowdcl->nama.' '.$rowdcl->no_urut.' '.$rowdcl->alias;  ?></option>
+                  <?php
+                  }
+                  ?>
+                  </select>
                 </div>
               </div>
               <div class="form-group row" style="margin-top: -20px">
-                <label class="col-sm-3 col-form-label form-control-sm">Standard Requirement</label>
+                <label class="col-sm-3 col-form-label form-control-sm">Type</label>
                 <div class="col-sm-9 form-group">
-                  <textarea class="form-control form-control-sm" id="sr" name="sr" placeholder="Deskripsi" style="white-space: pre-line;"></textarea>
+                  <select class="form-control select2 form-control-sm" id="kode_type" name="kode_type">
+                  <?php
+                  foreach ($data_type as $rowdtp) {
+                  ?>
+                  <option value="<?php echo $rowdtp->nama_type; ?>"><?php echo $rowdtp->nama_type; ?></option>
+                  <?php
+                  }
+                  ?>
+                  </select>
                 </div>
               </div>
               <div class="form-group row" style="margin-top: -20px">
-                <label class="col-sm-3 col-form-label form-control-sm">Job Description</label>
+                <label class="col-sm-3 col-form-label form-control-sm">Blok</label>
                 <div class="col-sm-9 form-group">
-                  <textarea class="form-control form-control-sm" id="jd" name="jd" placeholder="Deskripsi" style="white-space: pre-line;"></textarea>
+                  <select class="form-control select2 form-control-sm" id="kode_blok" name="kode_blok">
+                  <?php
+                  foreach ($data_blok as $rowdbl) {
+                  ?>
+                  <option value="<?php echo $rowdbl->blok; ?>"><?php echo $rowdbl->blok; ?></option>
+                  <?php
+                  }
+                  ?>
+                  </select>
                 </div>
               </div>
               <div class="form-group row" style="margin-top: -20px">
-                <label class="col-sm-3 col-form-label form-control-sm">Keterangan</label>
+                <label class="col-sm-3 col-form-label form-control-sm">Foto</label>
                 <div class="col-sm-9 form-group">
-                  <textarea class="form-control form-control-sm" id="keterangan" name="keterangan" placeholder="Optional" maxlength="40"></textarea>
+                  <input type="file" class="form-control-file form-control-sm" id="foto" name="foto" accept="image/*" placeholder="File Foto Pegawai">
                 </div>
               </div>
               <div class="form-group float-right" style="margin-top: -10px">
@@ -66,7 +90,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-table"></i>&ensp;Daftar Jabatan</h3>
+                <h3 class="card-title"><i class="fas fa-table"></i>&ensp;Daftar Blok Cluster</h3>
               </div>
               <!-- ./card-header -->
               <div class="card-body">
@@ -76,8 +100,10 @@
                   $htg = '
                           <tr style="text-align: center">
                             <th>ACTION</th>
-                            <th>Nama Jabatan</th>
-                            <th>Keterangan</th>
+                            <th>Foto</th>
+                            <th>Cluster</th>
+                            <th>Type</th>
+                            <th>Blok</th>
                           </tr>
                           ';
 

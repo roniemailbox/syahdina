@@ -12,8 +12,8 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <?php
-          if ($data_pegawai['foto']=='') {
-            $letter = substr($data_pegawai['nama'], 0, 1);
+          if ($data_pegawai['foto']==''||$data_pegawai['foto']==NULL) {
+            $letter = strtolower(substr($data_pegawai['nama'], 0, 1));
             $path_foto = base_url('img/'.$letter.'.png');
           } else {
             $path_foto = base_url('file/pegawai/foto_profil/'.$data_pegawai['foto']);

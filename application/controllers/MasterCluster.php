@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MasterJabatan extends CI_Controller {
+class MasterCluster extends CI_Controller {
 	public $CI = NULL;
 
 	public function __construct() {
@@ -30,31 +30,37 @@ class MasterJabatan extends CI_Controller {
 		$data = array(
 					'title' => '&ensp;/&ensp;Master Data',
 					'separator' => '',
-					'subtitle' => 'Master Jabatan',
+					'subtitle' => 'Master Cluster',
 					'ttl' => 'Master Data',
-					'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
+					'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai']),
+					'data_cluster' => $this->MainModel->nuCluster()
 					);
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/sidebar',$this->menu());
-		$this->load->view('master_jabatan');
+		$this->load->view('master_cluster');
 		$this->load->view('templates/foot');
 	}
 
-	public function data_jabatan($sbm){
+	public function data_cluster($sbm){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-		$submenu = str_replace("_", " ", $sbm);
+		$submenu = str_replace("_"," ", $sbm);
 
 		$dt = $this->funcSubmenu($submenu,$id['id_pegawai']);
 
 		$columns = array( 
-	                            0 => 'nama_jabatan', 
-	                            1 => 'nama_jabatan',
-	                            2 => 'keterangan'
+	                            0 => 'no_urut', 
+	                            1 => 'kode_cluster',
+	                            2 => 'alias'
 	                        );
 
-		$datacount = $this->MainModel->countJabatan();	
+		$dirs = array( 
+	                            'asc' => 'desc',
+	                            'desc' => 'asc'
+	                        );
+
+		$datacount = $this->MainModel->countCluster();	
   
         $totalData = $datacount['jumlah'];
             
@@ -63,42 +69,42 @@ class MasterJabatan extends CI_Controller {
         $limit = $_POST['length'];
         $start = $_POST['start'];
         $order = $columns[$_POST['order']['0']['column']];
-        $dir = $_POST['order']['0']['dir'];
+        $dir = $dirs[$_POST['order']['0']['dir']];
             
         if(empty($_POST['search']['value'])) {            
-        	$data_jabatan = $this->MainModel->dataJabatan($order,$dir,$limit,$start);
+        	$data_cluster = $this->MainModel->dataCluster($order,$dir,$limit,$start);
         } else {
             $search = $_POST['search']['value']; 
-            $data_jabatan = $this->MainModel->srcJabatan($search,$order,$dir,$limit,$start);
+            $data_cluster = $this->MainModel->srcCluster($search,$order,$dir,$limit,$start);
 
-			$datacount = $this->MainModel->jSrcJabatan($search);
+			$datacount = $this->MainModel->jSrcCluster($search);
            	$totalFiltered = $datacount['jumlah'];
         }
 
         $data = array();
 
         $no = $start + 1;
-        foreach ($data_jabatan as $rowdjb) 
+        foreach ($data_cluster as $rowdcl) 
         {
         	if ($dt['d']!=0) {
         		$delete = '
-				<a href="#" class="btn bg-gradient-danger btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hapus'.$rowdjb->id_jabatan.'"><i class="fas fa-trash"></i></a>
+				<a href="#" class="btn bg-gradient-danger btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hapus'.$rowdcl->kode_cluster.'"><i class="fas fa-trash"></i></a>
 
-<div class="modal fade mt-4" id="modal-hapus'.$rowdjb->id_jabatan.'">
+<div class="modal fade mt-4" id="modal-hapus'.$rowdcl->kode_cluster.'">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">Hapus Data Jabatan</h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h6 class="modal-title">Hapus Data Cluster</h6>
+        <button cluster="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <p class="text-left">Yakin ingin menghapus data jabatan <b>'.ucwords($rowdjb->nama_jabatan).'</b> ?<br></p>
+      <div class="modal-body text-left">
+        <p>Yakin ingin menghapus data cluster <b>'.$rowdcl->alias.'</b> ?<br></p>
       </div>
       <div class="modal-footer text-right">
-        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
-        <a href="'.site_url("MasterJabatan/proses_hapus/".$rowdjb->id_jabatan).'" class="btn bg-gradient-danger btn-xs"><i class="fas fa-check"></i>&ensp;Ya !</a>
+        <button cluster="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
+        <a href="'.site_url("MasterCluster/proses_hapus/".$rowdcl->kode_cluster).'" class="btn bg-gradient-danger btn-xs"><i class="fas fa-check"></i>&ensp;Ya !</a>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -110,16 +116,16 @@ class MasterJabatan extends CI_Controller {
         		$delete = '';
         	}
 
-        	if ($dt['u']!=0) {
+			if ($dt['u']!=0) {
         		$update = '
-				<a href="'.site_url("MasterJabatan/sesi_edjb/".$rowdjb->id_jabatan).'" class="btn bg-gradient-primary btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>';
+				<a href="'.site_url("MasterCluster/sesi_edcl/".$rowdcl->kode_cluster).'" class="btn bg-gradient-primary btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>';
         	} else {
         		$update = '';
         	}
 
         	$nestedData['aksi'] = '<div class="text-center">'.$update.$delete.'</div>';
-        	$nestedData['nama'] = '<div class="text-center">'.$rowdjb->nama_jabatan.'</div>';
-            $nestedData['keterangan'] = '<div class="text-left">'.ucfirst($rowdjb->keterangan).'</div>';
+            $nestedData['kode'] = '<div class="text-center"><strong class="text-info">'.$rowdcl->kode_cluster.'</strong></div>';
+            $nestedData['nama'] = '<div class="text-center">'.$rowdcl->nama.' '.$rowdcl->no_urut.' '.$rowdcl->alias.'</div>';
             $data[] = $nestedData;
             $no++;
         }
@@ -166,79 +172,71 @@ class MasterJabatan extends CI_Controller {
 	public function proses_tambah(){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-	    $nama_jabatan = ucwords($this->input->post('nama_jabatan'));
-	    $sr = ucfirst($this->input->post('sr'));
-	    $jd = ucfirst($this->input->post('jd'));
-	    $keterangan = ucfirst($this->input->post('keterangan'));
+	    $alias = ucwords($this->input->post('alias'));
 
-	    $data_nu = $this->MainModel->nuJabatan();
-	    $ujb = $data_nu['ujb']+1;
-	    $jum_ujb = strlen($ujb);
-
-	    if ($jum_ujb==1) {
-	    	$no_urut = "00".$ujb;
-	    } elseif ($jum_ujb==2) {
-	    	$no_urut = "0".$ujb;
-	    } elseif ($jum_ujb==3) {
-	    	$no_urut = $ujb;
-	    }
-
-	    $id_jabatan = "JB".$no_urut;
+	    $qrjm = $this->MainModel->nuCluster();
+	    $nucl = $qrjm['ucl']+1;
 
     	$data = array(
-        			  'id_jabatan' => $id_jabatan,
-        			  'nama_jabatan' => $nama_jabatan,
-        			  'sr' => $sr,
-        			  'jd' => $jd,
-        			  'keterangan' => $keterangan,
-        			  'no_urut' => $ujb
+        			  'kode_cluster' => 'CN'.$nucl,
+        			  'nama' => 'Nabawi',
+        			  'alias' => $alias,
+        			  'no_urut' => $nucl
                     );
 
-        $this->MainModel->insertJabatan($data);
+        $this->MainModel->insertCluster($data);
 
-        $this->session->set_flashdata('sukses', ' Data Jabatan berhasil ditambahkan !!');
+        $this->session->set_flashdata('sukses', ' Data Cluster berhasil ditambahkan !!');
 
-		redirect('MasterJabatan');
+		redirect('MasterCluster');
 	}
 
-	public function sesi_edjb($idjb=null){
-		if (!isset($idjb)||$idjb==null) {
+	public function sesi_edcl($idcl=null){
+		if (!isset($idcl)||$idcl==null) {
 			redirect('Beranda');
 		} else {
 			$session = array(
-								'sesbas' => md5($idjb)
+								'sesbas' => md5($idcl)
 							);
 
 			$this->session->set_userdata($session);
 
-			redirect('MasterJabatan/edit_jabatan/'.$idjb);
+			redirect('MasterCluster/edit_cluster/'.$idcl);
 		}
 	}
 
-	public function edit_jabatan($idjb=null){
-		if (!isset($idjb)||$idjb==null) {
+	public function edit_cluster($idcl=null){
+		if (!isset($idcl)||$idcl==null) {
 			redirect('Beranda');
 		} else {
 			$id['sesbas'] = $this->session->userdata('sesbas');
 
-			if ($id['sesbas']!=md5($idjb)) {
+			if ($id['sesbas']!=md5($idcl)) {
 				redirect('Beranda');
 			} else {
 				$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
+				$dtcl = $this->MainModel->getCluster($idcl);
+
+				$data_cl = array(
+								'kode_cluster' => $idcl,
+								'nama' => $dtcl['nama'],
+								'alias' => $dtcl['alias'],
+								'no_urut' => $dtcl['no_urut']
+							);
+
 				$data = array(
-							'title' => '&ensp;/&ensp;Master Jabatan',
+							'title' => '&ensp;/&ensp;Master Cluster',
 							'separator' => '&ensp;/&ensp;Master Data',
-							'subtitle' => 'Edit Jabatan',
-							'alternate' => 'Master Jabatan',
+							'subtitle' => 'Edit Cluster',
+							'alternate' => 'Master Cluster',
 							'ttl' => 'Master Data',
-							'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai']),
-							'data_jabatan' => $this->MainModel->getJabatan($idjb)
+							'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
 							);
 
 				$this->load->view('templates/header',$data);
 				$this->load->view('templates/sidebar',$this->menu());
-				$this->load->view('edit_jabatan');
+				$this->load->view('edit_cluster',$data_cl);
 				$this->load->view('templates/foot');
 			}
 		}
@@ -247,30 +245,28 @@ class MasterJabatan extends CI_Controller {
 	public function proses_edit(){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-		$id_jabatan = $this->input->post('id_jabatan');
-	    $nama_jabatan = ucwords($this->input->post('nama_jabatan'));
-	    $keterangan = ucfirst($this->input->post('keterangan'));
+		$kode_cluster = $this->input->post('kode_cluster');
+	    $alias = $this->input->post('alias');
 
     	$data = array(
-        			  'nama_jabatan' => $nama_jabatan,
-        			  'keterangan' => $keterangan
+        			  'alias' => $alias
                     );
 
-        $this->MainModel->updateData('jabatan',$data,'id_jabatan',$id_jabatan);
+        $this->MainModel->updateData('cluster',$data,'kode_cluster',$kode_cluster);
 
-        $this->session->set_flashdata('sukses', ' Data Jabatan berhasil diupdate !!');
+        $this->session->set_flashdata('sukses', ' Data Cluster berhasil diupdate !!');
 
-		redirect('MasterJabatan');
+		redirect('MasterCluster');
 	}
 
-	public function proses_hapus($id_jabatan){
+	public function proses_hapus($kode_cluster){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-		$this->MainModel->deleteData('jabatan','id_jabatan',$id_jabatan);
+		$this->MainModel->deleteData('cluster','kode_cluster',$kode_cluster);
 
         $this->session->set_flashdata('sukses', ' Data berhasil dihapus !!');
 
-		redirect('MasterJabatan');
+		redirect('MasterCluster');
 	}
 
 	public function menu() {

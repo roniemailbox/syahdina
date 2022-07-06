@@ -52,14 +52,15 @@ class MasterPegawai extends CI_Controller {
 		$columns = array( 
 	                            0 => 'pegawai.no_urut', 
 	                            1 => 'pegawai.foto',
-	                            2 => 'pegawai.nama',
+	                            2 => 'nama_pegawai',
 	                            3 => 'pegawai.jk',
 	                            4 => 'jabatan.nama_jabatan',
 	                            5 => 'pegawai.status'
 	                        );
 
 		$dirs = array( 
-	                            'asc' => 'desc'
+	                            'asc' => 'desc',
+	                            'desc' => 'asc'
 	                        );
 
 		$datacount = $this->MainModel->countPegawai();	
@@ -94,8 +95,8 @@ class MasterPegawai extends CI_Controller {
         		$jk = '<font class="text-danger">Perempuan</font>';
         	}
 
-        	if ($rowdpg->foto=='') {
-		        $letter = substr($rowdpg->nama, 0, 1);
+        	if ($rowdpg->foto==''||$rowdpg->foto==NULL) {
+            	$letter = strtolower(substr($rowdpg->nama_pegawai, 0, 1));
 		        $path_foto = base_url('img/'.$letter.'.png');
 		    } else {
 		        $path_foto = base_url('file/pegawai/foto_profil/'.$rowdpg->foto);
@@ -150,7 +151,7 @@ class MasterPegawai extends CI_Controller {
             <div class="form-group row" style="margin-top: -20px">
               <label class="col-sm-4 col-form-label form-control-sm">Nama Lengkap</label>
               <label class="col-sm-8 col-form-label form-control-sm" style="font-weight: normal">
-              '.$rowdpg->nama.'
+              '.$rowdpg->nama_pegawai.'
               </label>
             </div>
             <div class="form-group row" style="margin-top: -20px">
@@ -207,7 +208,7 @@ class MasterPegawai extends CI_Controller {
         </button>
       </div>
       <div class="modal-body">
-        <p class="text-left">Yakin ingin menghapus data pegawai <b>'.$rowdpg->nama.'</b> ?<br></p>
+        <p class="text-left">Yakin ingin menghapus data pegawai <b>'.$rowdpg->nama_pegawai.'</b> ?<br></p>
       </div>
       <div class="modal-footer text-right">
         <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
@@ -233,7 +234,7 @@ class MasterPegawai extends CI_Controller {
 
         	$nestedData['aksi'] = '<div class="text-center">'.$detail.$update.$delete.'</div>';
         	$nestedData['foto'] = '<div class="text-center"><img src="'.$path_foto.'" style="height: 30px; width: auto"></div>';
-        	$nestedData['nama'] = '<div class="text-center">'.$rowdpg->nama.'</div>';
+        	$nestedData['nama'] = '<div class="text-center">'.$rowdpg->nama_pegawai.'</div>';
             $nestedData['jk'] = '<div class="text-center">'.$jk.'</div>';
             $nestedData['jabatan'] = '<div class="text-center">'.$rowdpg->nama_jabatan.'</div>';
             $nestedData['status'] = '<div class="text-center">'.$rowdpg->status.'</div>';

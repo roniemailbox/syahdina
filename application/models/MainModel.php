@@ -522,7 +522,7 @@ class MainModel extends CI_Model {
 	}
 
 	public function dataPegawai($order,$dir,$limit,$start){
-		$query=$this->db->query("SELECT *
+		$query=$this->db->query("SELECT *, pegawai.nama AS nama_pegawai
 								FROM pegawai
 								LEFT JOIN jabatan
 								ON pegawai.id_jabatan = jabatan.id_jabatan
@@ -534,7 +534,7 @@ class MainModel extends CI_Model {
 	}
 
 	public function srcPegawai($search,$order,$dir,$limit,$start){
-		$query=$this->db->query("SELECT *
+		$query=$this->db->query("SELECT *, pegawai.nama AS nama_pegawai
 								FROM pegawai
 								LEFT JOIN jabatan
 								ON pegawai.id_jabatan = jabatan.id_jabatan
@@ -602,4 +602,376 @@ class MainModel extends CI_Model {
 		return $query;
 	}
 /*akhir tabel perumahan*/
+
+/*tabel type*/
+	public function allType(){
+		$query=$this->db->query("SELECT *
+								FROM type
+								ORDER BY kode_type DESC
+								")->result();
+		return $query;
+	}
+
+	public function countType(){
+		$query=$this->db->query("SELECT
+									COUNT(kode_type) AS jumlah
+								FROM type
+								")->row_array();
+		return $query;
+	}
+
+	public function dataType($order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM type
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function srcType($search,$order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM type
+								WHERE
+									nama_type LIKE '%$search%'
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function jSrcType($search){
+		$query=$this->db->query("SELECT
+									COUNT(kode_type) AS jumlah
+								FROM type
+								WHERE
+									nama_type LIKE '%$search%'
+								")->row_array();
+		return $query;
+	}
+
+	public function cekType($type) {
+		$query=$this->db->query("SELECT * FROM type WHERE nama_type = '$type'")->num_rows();
+		return $query;
+	}
+
+	public function insertType($data){
+		$query=$this->db->insert("type",$data);
+		return $query;
+	}
+
+	public function getType($id) {
+		$query=$this->db->query("SELECT * FROM type WHERE kode_type='$id'")->row_array();
+		return $query;
+	}
+
+	public function nuType(){
+		$query=$this->db->query("SELECT
+										MAX(kode_type) AS utp
+								FROM type")->row_array();
+		return $query;
+	}
+/*akhir tabel type*/
+
+/*tabel blok*/
+	public function allBlok(){
+		$query=$this->db->query("SELECT *
+								FROM blok
+								ORDER BY kode_blok DESC
+								")->result();
+		return $query;
+	}
+
+	public function countBlok(){
+		$query=$this->db->query("SELECT
+									COUNT(kode_blok) AS jumlah
+								FROM blok
+								")->row_array();
+		return $query;
+	}
+
+	public function dataBlok($order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM blok
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function srcBlok($search,$order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM blok
+								WHERE
+									blok LIKE '%$search%'
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function jSrcBlok($search){
+		$query=$this->db->query("SELECT
+									COUNT(kode_blok) AS jumlah
+								FROM blok
+								WHERE
+									blok LIKE '%$search%'
+								")->row_array();
+		return $query;
+	}
+
+	public function cekBlok($blok) {
+		$query=$this->db->query("SELECT * FROM blok WHERE blok = '$blok'")->num_rows();
+		return $query;
+	}
+
+	public function insertBlok($data){
+		$query=$this->db->insert("blok",$data);
+		return $query;
+	}
+
+	public function getBlok($id) {
+		$query=$this->db->query("SELECT * FROM blok WHERE kode_blok='$id'")->row_array();
+		return $query;
+	}
+/*akhir tabel blok*/
+
+/*tabel cluster*/
+	public function allCluster(){
+		$query=$this->db->query("SELECT *
+								FROM cluster
+								ORDER BY no_urut DESC
+								")->result();
+		return $query;
+	}
+
+	public function countCluster(){
+		$query=$this->db->query("SELECT
+									COUNT(kode_cluster) AS jumlah
+								FROM cluster
+								")->row_array();
+		return $query;
+	}
+
+	public function dataCluster($order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM cluster
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function srcCluster($search,$order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *
+								FROM cluster
+								WHERE
+									kode_cluster LIKE '%$search%'
+								OR
+									alias LIKE '%$search%'
+								ORDER BY $order $dir 
+        						LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function jSrcCluster($search){
+		$query=$this->db->query("SELECT
+									COUNT(kode_cluster) AS jumlah
+								FROM cluster
+								WHERE
+									kode_cluster LIKE '%$search%'
+								OR
+									alias LIKE '%$search%'
+								")->row_array();
+		return $query;
+	}
+
+	public function nuCluster(){
+		$query=$this->db->query("SELECT
+										MAX(no_urut) AS ucl
+								FROM cluster")->row_array();
+		return $query;
+	}
+
+	public function insertCluster($data){
+		$query=$this->db->insert("cluster",$data);
+		return $query;
+	}
+
+	public function getCluster($id) {
+		$query=$this->db->query("SELECT * FROM cluster WHERE kode_cluster='$id'")->row_array();
+		return $query;
+	}
+/*akhir tabel cluster*/
+
+/*tabel blok_cluster*/
+	public function countBlokCluster(){
+		$query=$this->db->query("SELECT
+									COUNT(kode_bc) AS jumlah
+								FROM blok_cluster
+								")->row_array();
+		return $query;
+	}
+
+	public function dataBlokCluster($order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *, cluster.no_urut AS urut_cluster
+								FROM blok_cluster
+									LEFT JOIN cluster
+								ON blok_cluster.kode_cluster = cluster.kode_cluster
+									ORDER BY $order $dir
+        						LIMIT $limit 
+        							OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function srcBlokCluster($search,$order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *, cluster.no_urut AS urut_cluster
+								FROM blok_cluster
+									LEFT JOIN cluster
+								ON blok_cluster.kode_cluster = cluster.kode_cluster
+								WHERE
+									blok_cluster.kode_cluster LIKE '%$search%'
+								OR
+									cluster.alias LIKE '%$search%'
+								OR
+									blok_cluster.type LIKE '%$search%'	
+								OR
+									blok_cluster.blok LIKE '%$search%'
+								ORDER BY $order $dir 
+        							LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function jSrcBlokCluster($search){
+		$query=$this->db->query("SELECT
+									COUNT(kode_bc) AS jumlah
+								FROM blok_cluster
+									LEFT JOIN cluster
+								ON blok_cluster.kode_cluster = cluster.kode_cluster
+								WHERE
+									blok_cluster.kode_cluster LIKE '%$search%'
+								OR
+									cluster.alias LIKE '%$search%'
+								OR
+									blok_cluster.type LIKE '%$search%'	
+								OR
+									blok_cluster.blok LIKE '%$search%'
+								")->row_array();
+		return $query;
+	}
+
+	public function nuBlokCluster(){
+		$query=$this->db->query("SELECT
+										MAX(no_urut) AS ubc
+								FROM blok_cluster")->row_array();
+		return $query;
+	}
+
+	public function insertBlokCluster($data){
+		$query=$this->db->insert("blok_cluster",$data);
+		return $query;
+	}
+
+	public function cekBlokCluster($kode_cluster, $type, $blok) {
+		$query=$this->db->query("SELECT * FROM blok_cluster WHERE kode_cluster='$kode_cluster' AND type='$type' AND blok='$blok'")->num_rows();
+		return $query;
+	}
+
+	public function getBlokCluster($id) {
+		$query=$this->db->query("SELECT * FROM blok_cluster WHERE kode_bc='$id'")->row_array();
+		return $query;
+	}
+/*akhir tabel blok_cluster*/
+
+/*tabel kavling_cluster*/
+	public function countKavlingCluster(){
+		$query=$this->db->query("SELECT
+									COUNT(kode_kc) AS jumlah
+								FROM kavling_cluster
+								")->row_array();
+		return $query;
+	}
+
+	public function dataKavlingCluster($order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *, cluster.no_urut AS urut_cluster
+								FROM kavling_cluster
+									LEFT JOIN cluster
+								ON kavling_cluster.kode_cluster = cluster.kode_cluster
+									ORDER BY $order $dir
+        						LIMIT $limit 
+        							OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function srcKavlingCluster($search,$order,$dir,$limit,$start){
+		$query=$this->db->query("SELECT *, cluster.no_urut AS urut_cluster
+								FROM kavling_cluster
+									LEFT JOIN cluster
+								ON kavling_cluster.kode_cluster = cluster.kode_cluster
+								WHERE
+									kavling_cluster.kode_cluster LIKE '%$search%'
+								OR
+									cluster.alias LIKE '%$search%'
+								OR
+									kavling_cluster.type LIKE '%$search%'	
+								OR
+									kavling_cluster.blok LIKE '%$search%'
+								ORDER BY $order $dir 
+        							LIMIT $limit 
+        						OFFSET $start
+								")->result();
+		return $query;
+	}
+
+	public function jSrcKavlingCluster($search){
+		$query=$this->db->query("SELECT
+									COUNT(kode_kc) AS jumlah
+								FROM kavling_cluster
+									LEFT JOIN cluster
+								ON kavling_cluster.kode_cluster = cluster.kode_cluster
+								WHERE
+									kavling_cluster.kode_cluster LIKE '%$search%'
+								OR
+									cluster.alias LIKE '%$search%'
+								OR
+									kavling_cluster.type LIKE '%$search%'	
+								OR
+									kavling_cluster.blok LIKE '%$search%'
+								")->row_array();
+		return $query;
+	}
+
+	public function cekKavlingCluster($kode_cluster, $type, $blok) {
+		$query=$this->db->query("SELECT * FROM kavling_cluster WHERE kode_cluster='$kode_cluster' AND type='$type' AND blok='$blok'")->num_rows();
+		return $query;
+	}
+
+	public function nuKavlingCluster(){
+		$query=$this->db->query("SELECT
+										MAX(no_urut) AS ukc
+								FROM kavling_cluster")->row_array();
+		return $query;
+	}
+
+	public function insertKavlingCluster($data){
+		$query=$this->db->insert("kavling_cluster",$data);
+		return $query;
+	}
+
+	public function getKavlingCluster($id) {
+		$query=$this->db->query("SELECT * FROM kavling_cluster WHERE kode_kc='$id'")->row_array();
+		return $query;
+	}
+/*akhir tabel kavling_cluster*/
 }

@@ -175,127 +175,87 @@ if ($subtitle=='Atur Akses') {
           { "data": "status" },
       ]
 <?php
-} elseif ($ttl=='Master Kota') {
+} elseif ($subtitle=='Master Type') {
 ?>
       "processing": true,
       "serverSide": true,
       "ajax":{
                /*"url": "ajax/ajax_kontak.php?action=table_data",*/
-              "url": "<?php echo site_url('MasterKota/data_kota'); ?>",
+              "url": "<?php echo site_url('MasterType/data_type/'.str_replace(" ", "_", $subtitle)); ?>",
                "dataType": "json",
                "type": "POST"
              },
       "columns": [
           { "data": "aksi" },
-          { "data": "nama_kota" },
-          { "data": "nama_provinsi" },
+          { "data": "type" },
       ]
 <?php
-} elseif ($ttl=='Master Lembaga') {
+} elseif ($subtitle=='Master Blok') {
 ?>
       "processing": true,
       "serverSide": true,
       "ajax":{
                /*"url": "ajax/ajax_kontak.php?action=table_data",*/
-              "url": "<?php echo site_url('MasterLembaga/data_lembaga'); ?>",
+              "url": "<?php echo site_url('MasterBlok/data_blok/'.str_replace(" ", "_", $subtitle)); ?>",
                "dataType": "json",
                "type": "POST"
              },
       "columns": [
           { "data": "aksi" },
-          { "data": "nama_sekolah" },
-          { "data": "alamat" },
-          { "data": "no_telp" },
+          { "data": "blok" },
+          { "data": "keterangan" },
       ]
 <?php
-} elseif ($ttl=='Master Siswa') {
+} elseif ($subtitle=='Master Cluster') {
 ?>
       "processing": true,
       "serverSide": true,
       "ajax":{
                /*"url": "ajax/ajax_kontak.php?action=table_data",*/
-              "url": "<?php echo site_url('MasterSiswa/data_siswa'); ?>",
+              "url": "<?php echo site_url('MasterCluster/data_cluster/'.str_replace(" ", "_", $subtitle)); ?>",
                "dataType": "json",
                "type": "POST"
              },
       "columns": [
           { "data": "aksi" },
-          { "data": "nisn" },
+          { "data": "kode" },
           { "data": "nama" },
-          { "data": "jk" },
-          { "data": "id_sekolah" },
-          { "data": "kelas_siswa" },
       ]
 <?php
-} elseif ($ttl=='Master Mata Pelajaran') {
+} elseif ($subtitle=='Master Blok Cluster') {
 ?>
       "processing": true,
       "serverSide": true,
       "ajax":{
                /*"url": "ajax/ajax_kontak.php?action=table_data",*/
-              "url": "<?php echo site_url('MasterMapel/data_mapel'); ?>",
+              "url": "<?php echo site_url('MasterBlokCluster/data_blok_cluster/'.str_replace(" ", "_", $subtitle)); ?>",
                "dataType": "json",
                "type": "POST"
              },
       "columns": [
           { "data": "aksi" },
-          { "data": "nama" },
-          { "data": "kelas_mapel" },
-          { "data": "status" },
+          { "data": "foto" },
+          { "data": "cluster" },
+          { "data": "type" },
+          { "data": "blok" },
       ]
 <?php
-} elseif ($ttl=='Master Soal') {
+} elseif ($subtitle=='Master Kavling Cluster') {
 ?>
       "processing": true,
       "serverSide": true,
       "ajax":{
                /*"url": "ajax/ajax_kontak.php?action=table_data",*/
-              "url": "<?php echo site_url('MasterMapel/data_soal/'.$imp); ?>",
+              "url": "<?php echo site_url('MasterKavlingCluster/data_kavling_cluster/'.str_replace(" ", "_", $subtitle)); ?>",
                "dataType": "json",
                "type": "POST"
              },
       "columns": [
           { "data": "aksi" },
-          { "data": "no" },
-          { "data": "uraian" },
-      ]
-<?php
-} elseif ($ttl=='Ujian') {
-?>
-      "processing": true,
-      "serverSide": true,
-      "order": [[ 1, "desc" ]],
-      "ajax":{
-               /*"url": "ajax/ajax_kontak.php?action=table_data",*/
-              "url": "<?php echo site_url('Ujian/data_ujian'); ?>",
-               "dataType": "json",
-               "type": "POST"
-             },
-      "columns": [
-          { "data": "aksi" },
-          { "data": "tanggal" },
-          { "data": "id_sekolah" },
-          { "data": "judul_awal" },
-          { "data": "judul_akhir" },
-          { "data": "nama_mapel" },
-          { "data": "kelas" },
-          /*{ "data": "sesi" },*/
-          { "data": "status" },
-      ]
-<?php
-} elseif ($ttl=='Detail Soal Ujian') {
-?>
-      "processing": true,
-      "serverSide": true,
-      "ajax":{
-               /*"url": "ajax/ajax_kontak.php?action=table_data",*/
-               "url": "<?php echo site_url('Ujian/data_dsu/'.$iuj); ?>",
-               "dataType": "json",
-               "type": "POST"
-             },
-      "columns": [
-          { "data": "aksi" },
-          { "data": "uraian" },
+          { "data": "foto" },
+          { "data": "cluster" },
+          { "data": "type" },
+          { "data": "blok" },
       ]
 <?php
 }

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MasterType extends CI_Controller {
+class MasterBlok extends CI_Controller {
 	public $CI = NULL;
 
 	public function __construct() {
@@ -30,18 +30,18 @@ class MasterType extends CI_Controller {
 		$data = array(
 					'title' => '&ensp;/&ensp;Master Data',
 					'separator' => '',
-					'subtitle' => 'Master Type',
+					'subtitle' => 'Master Blok',
 					'ttl' => 'Master Data',
 					'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
 					);
 
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/sidebar',$this->menu());
-		$this->load->view('master_type');
+		$this->load->view('master_blok');
 		$this->load->view('templates/foot');
 	}
 
-	public function data_type($sbm){
+	public function data_blok($sbm){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
 		$submenu = str_replace("_", " ", $sbm);
@@ -49,8 +49,9 @@ class MasterType extends CI_Controller {
 		$dt = $this->funcSubmenu($submenu,$id['id_pegawai']);
 
 		$columns = array( 
-	                            0 => 'kode_type', 
-	                            1 => 'nama_type'
+	                            0 => 'kode_blok', 
+	                            1 => 'blok',
+	                            2 => 'keterangan'
 	                        );
 
 		$dirs = array( 
@@ -70,57 +71,45 @@ class MasterType extends CI_Controller {
         $dir = $dirs[$_POST['order']['0']['dir']];
             
         if(empty($_POST['search']['value'])) {            
-        	$data_type = $this->MainModel->dataType($order,$dir,$limit,$start);
+        	$data_blok = $this->MainModel->dataBlok($order,$dir,$limit,$start);
         } else {
             $search = $_POST['search']['value']; 
-            $data_type = $this->MainModel->srcType($search,$order,$dir,$limit,$start);
+            $data_blok = $this->MainModel->srcBlok($search,$order,$dir,$limit,$start);
 
-			$datacount = $this->MainModel->jSrcType($search);
+			$datacount = $this->MainModel->jSrcBlok($search);
            	$totalFiltered = $datacount['jumlah'];
         }
 
         $data = array();
 
         $no = $start + 1;
-        foreach ($data_type as $rowdtp) 
+        foreach ($data_blok as $rowdbl) 
         {
-        	if ($rowdtp->luas_bangunan==0) {
-        		$luas_bangunan = '<i class="text-danger">Belum diisi</i>';
+        	if ($rowdbl->keterangan=='') {
+        		$keterangan = '<i class="text-danger">Belum diisi</i>';
         	} else {
-        		$luas_bangunan = $rowdtp->luas_bangunan.' meter';
-        	}
-
-        	if ($rowdtp->panjang==0) {
-        		$panjang = '<i class="text-danger">Belum diisi</i>';
-        	} else {
-        		$panjang = $rowdtp->panjang.' meter';
-        	}
-
-        	if ($rowdtp->lebar==0) {
-        		$lebar = '<i class="text-danger">Belum diisi</i>';
-        	} else {
-        		$lebar = $rowdtp->lebar.' meter';
+        		$keterangan = $rowdbl->keterangan;
         	}
 
         	if ($dt['d']!=0) {
         		$delete = '
-				<a href="#" class="btn bg-gradient-danger btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hapus'.$rowdtp->kode_type.'"><i class="fas fa-trash"></i></a>
+				<a href="#" class="btn bg-gradient-danger btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Hapus" data-target="#modal-hapus'.$rowdbl->kode_blok.'"><i class="fas fa-trash"></i></a>
 
-<div class="modal fade mt-4" id="modal-hapus'.$rowdtp->kode_type.'">
+<div class="modal fade mt-4" id="modal-hapus'.$rowdbl->kode_blok.'">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">Hapus Data Type</h6>
+        <h6 class="modal-title">Hapus Data Blok</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body text-left">
-        <p>Yakin ingin menghapus data type <b>'.$rowdtp->nama_type.'</b> ?<br></p>
+        <p>Yakin ingin menghapus data blok <b>'.$rowdbl->blok.'</b> ?<br></p>
       </div>
       <div class="modal-footer text-right">
         <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Batal</button>
-        <a href="'.site_url("MasterType/proses_hapus/".$rowdtp->kode_type).'" class="btn bg-gradient-danger btn-xs"><i class="fas fa-check"></i>&ensp;Ya !</a>
+        <a href="'.site_url("MasterBlok/proses_hapus/".$rowdbl->kode_blok).'" class="btn bg-gradient-danger btn-xs"><i class="fas fa-check"></i>&ensp;Ya !</a>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -132,78 +121,16 @@ class MasterType extends CI_Controller {
         		$delete = '';
         	}
 
-        	$detail = '<a href="#" class="btn bg-gradient-purple btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="modal" data-placement="top" title="Detail" data-target="#modal-detail'.$rowdtp->kode_type.'"><i class="fas fa-list"></i></a>
-
-<div class="modal fade" id="modal-detail'.$rowdtp->kode_type.'">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h6 class="modal-title">Detail Type</h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <div class="row">
-      <div class="col-md-12">
-      <!-- Bagian Rinci -->
-        <div class="card card-default color-palette-box">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="fas fa-list"></i>
-              Data Rinci
-            </h3>
-          </div>
-          <div class="card-body text-left">
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label form-control-sm">Nama Type</label>
-              <label class="col-sm-8 col-form-label form-control-sm" style="font-weight: normal">
-              '.$rowdtp->nama_type.'
-              </label>
-            </div>
-            <div class="form-group row" style="margin-top: -20px">
-              <label class="col-sm-4 col-form-label form-control-sm">Luas Bangunan</label>
-              <label class="col-sm-8 col-form-label form-control-sm" style="font-weight: normal">
-              '.$luas_bangunan.'
-              </label>
-            </div>
-            <div class="form-group row" style="margin-top: -20px">
-              <label class="col-sm-4 col-form-label form-control-sm">Panjang</label>
-              <label class="col-sm-8 col-form-label form-control-sm" style="font-weight: normal">
-              '.$panjang.'
-              </label>
-            </div>
-            <div class="form-group row" style="margin-top: -20px">
-              <label class="col-sm-4 col-form-label form-control-sm">Lebar</label>
-              <label class="col-sm-8 col-form-label form-control-sm" style="font-weight: normal">
-              '.$lebar.'
-              </label>
-            </div>
-          </div>
-        </div>
-      <!-- Akhir Bagian Rinci -->
-      </div>
-      </div>
-      </div>
-      <div class="modal-footer text-right">
-        <button type="button" class="btn bg-gradient-secondary btn-xs" data-dismiss="modal" aria-label="Close">Tutup</button>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->';
-
 			if ($dt['u']!=0) {
         		$update = '
-				<a href="'.site_url("MasterType/sesi_edtp/".$rowdtp->kode_type).'" class="btn bg-gradient-primary btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>';
+				<a href="'.site_url("MasterBlok/sesi_edbl/".$rowdbl->kode_blok).'" class="btn bg-gradient-primary btn-xs" onmouseover="$(this).tooltip(show)" onmouseout="$(this).tooltip(hide)" onblur="$(this).tooltip(hide)" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>';
         	} else {
         		$update = '';
         	}
 
-        	$nestedData['aksi'] = '<div class="text-center">'.$detail.$update.$delete.'</div>';
-            $nestedData['type'] = '<div class="text-left">'.$rowdtp->nama_type.'</div>';
+        	$nestedData['aksi'] = '<div class="text-center">'.$update.$delete.'</div>';
+            $nestedData['blok'] = '<div class="text-center">'.$rowdbl->blok.'</div>';
+            $nestedData['keterangan'] = '<div class="text-left">'.$rowdbl->keterangan.'</div>';
             $data[] = $nestedData;
             $no++;
         }
@@ -250,84 +177,75 @@ class MasterType extends CI_Controller {
 	public function proses_tambah(){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-	    $type = ucwords($this->input->post('type'));
-	    $luas_bangunan = $this->input->post('luas_bangunan');
-	    $panjang = $this->input->post('panjang');
-	    $lebar = $this->input->post('lebar');
+	    $blok = ucwords($this->input->post('blok'));
+	    $keterangan = ucfirst($this->input->post('keterangan'));
 
-	    $cek = $this->MainModel->cekType($type);
+	    $cek = $this->MainModel->cekBlok($blok);
 	    
 	    if ($cek!=0) {
-	    	$this->session->set_flashdata('message', ' Type sudah ada !!');
+	    	$this->session->set_flashdata('message', ' Blok sudah ada !!');
 
-			redirect('MasterType');
+			redirect('MasterBlok');
 	    } else {
-	    	$qrtyp = $this->MainModel->nuType();
-	    	$kode_type = $qrtyp['utp']+1;
-
 	    	$data = array(
-	        			  'kode_type' => $kode_type,
-	        			  'nama_type' => $type,
-	        			  'luas_bangunan' => $luas_bangunan,
-	        			  'panjang' => $panjang,
-	        			  'lebar' => $lebar
+	        			  'kode_blok' => NULL,
+	        			  'blok' => $blok,
+	        			  'keterangan' => $keterangan
 	                    );
 
-	        $this->MainModel->insertType($data);
+	        $this->MainModel->insertBlok($data);
 
-	        $this->session->set_flashdata('sukses', ' Data Type berhasil ditambahkan !!');
+	        $this->session->set_flashdata('sukses', ' Data Blok berhasil ditambahkan !!');
 
-			redirect('MasterType');
+			redirect('MasterBlok');
 	    }
 	}
 
-	public function sesi_edtp($idtp=null){
-		if (!isset($idtp)||$idtp==null) {
+	public function sesi_edbl($idbl=null){
+		if (!isset($idbl)||$idbl==null) {
 			redirect('Beranda');
 		} else {
 			$session = array(
-								'sesbas' => md5($idtp)
+								'sesbas' => md5($idbl)
 							);
 
 			$this->session->set_userdata($session);
 
-			redirect('MasterType/edit_type/'.$idtp);
+			redirect('MasterBlok/edit_blok/'.$idbl);
 		}
 	}
 
-	public function edit_type($idtp=null){
-		if (!isset($idtp)||$idtp==null) {
+	public function edit_blok($idbl=null){
+		if (!isset($idbl)||$idbl==null) {
 			redirect('Beranda');
 		} else {
 			$id['sesbas'] = $this->session->userdata('sesbas');
 
-			if ($id['sesbas']!=md5($idtp)) {
+			if ($id['sesbas']!=md5($idbl)) {
 				redirect('Beranda');
 			} else {
 				$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-				$dttp = $this->MainModel->getType($idtp);
+				$dtbl = $this->MainModel->getBlok($idbl);
 
-				$data_tp = array(
-								'kode_type' => $idtp,
-								'type' => $dttp['nama_type'],
-								'luas_bangunan' => $dttp['luas_bangunan'],
-								'panjang' => $dttp['panjang'],
-								'lebar' => $dttp['lebar']
+				$data_bl = array(
+								'kode_blok' => $idbl,
+								'blok' => $dtbl['blok'],
+								'keterangan' => $dtbl['keterangan']
 							);
 
 				$data = array(
-							'title' => '&ensp;/&ensp;Master Type',
+							'title' => '&ensp;/&ensp;Master Blok',
 							'separator' => '&ensp;/&ensp;Master Data',
-							'subtitle' => 'Edit Type',
-							'alternate' => 'Master Type',
+							'subtitle' => 'Edit Blok',
+							'alternate' => 'Master Blok',
 							'ttl' => 'Master Data',
 							'data_pegawai' => $this->MainModel->getPegawai($id['id_pegawai'])
 							);
 
 				$this->load->view('templates/header',$data);
 				$this->load->view('templates/sidebar',$this->menu());
-				$this->load->view('edit_type',$data_tp);
+				$this->load->view('edit_blok',$data_bl);
 				$this->load->view('templates/foot');
 			}
 		}
@@ -336,32 +254,28 @@ class MasterType extends CI_Controller {
 	public function proses_edit(){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-		$kode_type = $this->input->post('kode_type');
-	    $luas_bangunan = $this->input->post('luas_bangunan');
-	    $panjang = $this->input->post('panjang');
-	    $lebar = $this->input->post('lebar');
+		$kode_blok = $this->input->post('kode_blok');
+	    $keterangan = $this->input->post('keterangan');
 
     	$data = array(
-        			  'luas_bangunan' => $luas_bangunan,
-        			  'panjang' => $panjang,
-            		  'lebar' => $lebar
+        			  'keterangan' => $keterangan
                     );
 
-        $this->MainModel->updateData('type',$data,'kode_type',$kode_type);
+        $this->MainModel->updateData('blok',$data,'kode_blok',$kode_blok);
 
-        $this->session->set_flashdata('sukses', ' Data Type berhasil diupdate !!');
+        $this->session->set_flashdata('sukses', ' Data Blok berhasil diupdate !!');
 
-		redirect('MasterType');
+		redirect('MasterBlok');
 	}
 
-	public function proses_hapus($kode_type){
+	public function proses_hapus($kode_blok){
 		$id['id_pegawai'] = $this->session->userdata('id_pegawai');
 
-		$this->MainModel->deleteData('type','kode_type',$kode_type);
+		$this->MainModel->deleteData('blok','kode_blok',$kode_blok);
 
         $this->session->set_flashdata('sukses', ' Data berhasil dihapus !!');
 
-		redirect('MasterType');
+		redirect('MasterBlok');
 	}
 
 	public function menu() {
